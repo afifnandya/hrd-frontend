@@ -114,7 +114,6 @@ app.use(router)
 
 app.directive('tooltip', Tooltip)
 app.directive('ripple', Ripple)
-app.directive('code', CodeHighlight)
 app.directive('badge', BadgeDirective)
 app.directive('styleclass', StyleClass)
 
