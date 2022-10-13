@@ -12,11 +12,11 @@
       <AppFooter />
     </div>
 
-    <AppConfig :layoutMode="layoutMode" @layout-change="onLayoutChange" />
+    <AppConfig :layout-mode="layoutMode" @layout-change="onLayoutChange" />
     <transition name="layout-mask">
       <div
-        class="layout-mask p-component-overlay"
         v-if="mobileMenuActive"
+        class="layout-mask p-component-overlay"
       ></div>
     </transition>
   </div>
@@ -29,6 +29,12 @@ import AppConfig from './AppConfig.vue'
 import AppFooter from './AppFooter.vue'
 
 export default {
+  components: {
+    AppTopBar: AppTopBar,
+    AppMenu: AppMenu,
+    AppConfig: AppConfig,
+    AppFooter: AppFooter
+  },
   emits: ['change-theme'],
   data() {
     return {
@@ -44,6 +50,27 @@ export default {
               label: 'Dashboard',
               icon: 'pi pi-fw pi-home',
               to: '/'
+            }
+          ]
+        },
+        {
+          label: 'Data Peserta',
+          icon: 'pi pi-fw pi-sitemap',
+          items: [
+            {
+              label: 'Karyawan',
+              icon: 'pi pi-fw pi-id-card',
+              to: '/karyawan'
+            },
+            {
+              label: 'Harian Lepas',
+              icon: 'pi pi-fw pi-check-square',
+              to: '/input'
+            },
+            {
+              label: 'Data Pelamar',
+              icon: 'pi pi-fw pi-bookmark',
+              to: '/floatlabel'
             }
           ]
         },
@@ -206,11 +233,39 @@ export default {
       ]
     }
   },
+  computed: {
+    containerClass() {
+      return [
+        'layout-wrapper',
+        {
+          'layout-overlay': this.layoutMode === 'overlay',
+          'layout-static': this.layoutMode === 'static',
+          'layout-static-sidebar-inactive':
+            this.staticMenuInactive && this.layoutMode === 'static',
+          'layout-overlay-sidebar-active':
+            this.overlayMenuActive && this.layoutMode === 'overlay',
+          'layout-mobile-sidebar-active': this.mobileMenuActive,
+          'p-input-filled': this.$primevue.config.inputStyle === 'filled',
+          'p-ripple-disabled': this.$primevue.config.ripple === false
+        }
+      ]
+    },
+    logo() {
+      return this.$appState.darkTheme
+        ? 'images/logo-white.svg'
+        : 'images/logo.svg'
+    }
+  },
   watch: {
     $route() {
       this.menuActive = false
       this.$toast.removeAllGroups()
     }
+  },
+  beforeUpdate() {
+    if (this.mobileMenuActive)
+      this.addClass(document.body, 'body-overflow-hidden')
+    else this.removeClass(document.body, 'body-overflow-hidden')
   },
   methods: {
     onWrapperClick() {
@@ -279,40 +334,6 @@ export default {
 
       return true
     }
-  },
-  computed: {
-    containerClass() {
-      return [
-        'layout-wrapper',
-        {
-          'layout-overlay': this.layoutMode === 'overlay',
-          'layout-static': this.layoutMode === 'static',
-          'layout-static-sidebar-inactive':
-            this.staticMenuInactive && this.layoutMode === 'static',
-          'layout-overlay-sidebar-active':
-            this.overlayMenuActive && this.layoutMode === 'overlay',
-          'layout-mobile-sidebar-active': this.mobileMenuActive,
-          'p-input-filled': this.$primevue.config.inputStyle === 'filled',
-          'p-ripple-disabled': this.$primevue.config.ripple === false
-        }
-      ]
-    },
-    logo() {
-      return this.$appState.darkTheme
-        ? 'images/logo-white.svg'
-        : 'images/logo.svg'
-    }
-  },
-  beforeUpdate() {
-    if (this.mobileMenuActive)
-      this.addClass(document.body, 'body-overflow-hidden')
-    else this.removeClass(document.body, 'body-overflow-hidden')
-  },
-  components: {
-    AppTopBar: AppTopBar,
-    AppMenu: AppMenu,
-    AppConfig: AppConfig,
-    AppFooter: AppFooter
   }
 }
 </script>

@@ -368,7 +368,7 @@
 </template>
 
 <script>
-import EventBus from '#src/AppEventBus'
+import EventBus from '@/AppEventBus'
 import ProductService from '../service/ProductService'
 
 export default {

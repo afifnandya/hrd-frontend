@@ -1,0 +1,9 @@
+File Template database karyawan
+
+DOH = tanggal ttd kontrak
+POH = place of hire
+
+Penerimaan karyawan
+Manage data keryawan
+Payroll
+Absensi

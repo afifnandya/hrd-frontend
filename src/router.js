@@ -13,6 +13,11 @@ const routes = [
         component: () => import('./components/Dashboard.vue')
       },
       {
+        path: '/karyawan',
+        name: 'karyawan',
+        component: () => import('@/pages/Karyawan.vue')
+      },
+      {
         path: '/formlayout',
         name: 'formlayout',
         component: () => import('./components/FormLayoutDemo.vue')
