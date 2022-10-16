@@ -1,8 +1,8 @@
 <template>
   <div class="layout-topbar">
     <router-link to="/" class="layout-topbar-logo">
-      <img alt="Logo" :src="topbarImage()" />
-      <span>SAKAI</span>
+      <img alt="Logo" :src="logo" />
+      <span>Aplikasi HRD</span>
     </router-link>
     <button
       class="p-link layout-menu-button layout-topbar-button"
@@ -12,7 +12,6 @@
     </button>
 
     <button
-      class="p-link layout-topbar-menu-button layout-topbar-button"
       v-styleclass="{
         selector: '@next',
         enterClass: 'hidden',
@@ -21,6 +20,7 @@
         leaveActiveClass: 'fadeout',
         hideOnOutsideClick: true
       }"
+      class="p-link layout-topbar-menu-button layout-topbar-button"
     >
       <i class="pi pi-ellipsis-v"></i>
     </button>
@@ -48,7 +48,18 @@
 </template>
 
 <script>
+import logo from '@/assets/images/logo.jpeg'
 export default {
+  data() {
+    return {
+      logo
+    }
+  },
+  computed: {
+    darkTheme() {
+      return this.$appState.darkTheme
+    }
+  },
   methods: {
     onMenuToggle(event) {
       this.$emit('menu-toggle', event)
@@ -60,11 +71,6 @@ export default {
       return this.$appState.darkTheme
         ? 'images/logo-white.svg'
         : 'images/logo-dark.svg'
-    }
-  },
-  computed: {
-    darkTheme() {
-      return this.$appState.darkTheme
     }
   }
 }

@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.input-label{
+  @apply flex items-center w-full mb-4 md:w-4/12 md:mb-0 flex-shrink-0;
+}

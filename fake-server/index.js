@@ -3,11 +3,12 @@ module.exports = () => {
 
   const data = { karyawan: [] }
   // Create 50 users
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 5; i++) {
     const karyawan = {
       nik: faker.datatype.number(),
       status: faker.helpers.arrayElement(['aktif', 'tidak aktif']),
       nama: faker.name.fullName(),
+      perusahaan: faker.helpers.arrayElement(['BEISHI', 'BAOSHUO']),
       departement: faker.helpers.arrayElement([
         'finance',
         'ga',
@@ -24,7 +25,7 @@ module.exports = () => {
         'tidak kawin',
         'cerai'
       ]),
-      ktp: 0,
+      ktp: faker.datatype.uuid(),
       asalKtp: faker.helpers.arrayElement(['jakarta', 'depok', 'malang']),
       kabupatenKtp: faker.address.state,
       kecamatanKtp: faker.address.cityName,

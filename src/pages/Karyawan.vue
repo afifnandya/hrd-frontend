@@ -2,12 +2,16 @@
   <div class="grid">
     <div class="col-12">
       <div class="card">
-        <h5>Frozen Columns</h5>
+        <h5 class="text-xl font-bold">Karyawan</h5>
 
         <DataTable
           :value="karyawans"
           :scrollable="true"
           :paginator="true"
+          paginator-template="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+          :rows-per-page-options="[10, 20, 50]"
+          responsive-layout="scroll"
+          current-page-report-template="Showing {first} to {last} of {totalRecords}"
           :rows="10"
           :lazy="true"
           :total-records="totalData"
@@ -17,12 +21,20 @@
           class="mt-3"
           @page="onPageChange"
         >
-          <Column
-            field="nama"
-            header="Nama"
-            :style="{ width: '250px' }"
-            frozen
-          ></Column>
+          <Column header="No" :style="{ width: '50px' }" frozen>
+            <template #body="{ index }">
+              <div>{{ index + 1 }}</div>
+            </template>
+          </Column>
+          <Column field="nama" header="Nama" :style="{ width: '250px' }" frozen>
+            <template #body="{ data }">
+              <router-link
+                class="hover:underline text-blue-500 hover:to-blue-400"
+                :to="`/karyawan/detail/${data.nik}`"
+                >{{ data.nama }}</router-link
+              >
+            </template>
+          </Column>
           <Column field="nik" header="Id" :style="{ width: '100px' }"></Column>
           <Column
             field="status"
@@ -59,10 +71,13 @@
 import { getKaryawan } from '@/service/karyawan'
 import type { Karyawan } from '@/typing/karyawan'
 import { onMounted, reactive, ref, Ref } from 'vue'
+import { isAuthenticated } from '@/service/user'
+import { ROUTE_KARYAWAN_DETAIL } from '@/constants'
 
 type PageChangeEvent = {
   page: number
   pageCount: number
+  rows: number
 }
 
 const karyawans: Ref<Karyawan[]> = ref([])
@@ -89,13 +104,18 @@ async function getKaryawanList() {
 }
 
 function onPageChange(event: PageChangeEvent) {
-  page.number = event.page + 1
+  const newPage = event.page + 1
+  if (page.number !== newPage) {
+    page.number = newPage
+  }
+  page.size = event.rows
   getKaryawanList()
   console.log('aa', event)
 }
 
 onMounted(() => {
   getKaryawanList()
+  isAuthenticated()
 })
 </script>
 <script lang="ts">

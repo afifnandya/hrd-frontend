@@ -66,6 +66,7 @@ interface Karyawan {
   statusPernikahan: string
   tanggalUpdateKK: string
   ktp: number
+  perusahaan: string
   asalKtp: string
   kabupatenKtp: string
   kecamatanKtp: string

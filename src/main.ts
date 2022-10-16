@@ -4,6 +4,7 @@ import 'primeicons/primeicons.css'
 import 'primevue/resources/themes/lara-light-indigo/theme.css'
 import './assets/styles/layout.scss'
 import './assets/demo/flags/flags.css'
+import './assets/styles/index.css'
 
 import { createApp, reactive } from 'vue'
 import router from './router'

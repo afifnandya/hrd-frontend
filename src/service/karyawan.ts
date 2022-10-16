@@ -1,14 +1,30 @@
 import useHttp from '@/composable/useHttp'
+import qs from 'qs'
+import { createKaryawan } from '@/model/karyawan'
+
+function createDummyKaryawan() {
+  return createKaryawan()
+}
 
 function getKaryawan({
-  pageSize = 1,
-  pageNumber = 10
+  pageSize,
+  pageNumber,
+  nik
 }: {
-  pageSize: number
-  pageNumber: number
+  pageSize?: number
+  pageNumber?: number
+  nik?: string
 }) {
-  const url = `/karyawan?_page=${pageNumber}&_limit=${pageSize}`
+  const filter = qs.stringify(
+    {
+      _page: pageNumber || null,
+      _limit: pageSize || null,
+      nik: nik || null
+    },
+    { skipNulls: true }
+  )
+  const url = `/karyawan?${filter}`
   return useHttp(url)
 }
 
-export { getKaryawan }
+export { getKaryawan, createDummyKaryawan }

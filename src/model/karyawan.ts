@@ -1,12 +1,13 @@
 import type { Karyawan } from '@/typing/karyawan'
 
-function createKaryawan(): Karyawan {
+export function createKaryawan(): Karyawan {
   const karyawan: Karyawan = {
     nik: '',
     status: '',
     nama: '',
     departement: '',
     pendidikan: '',
+    perusahaan: '',
     jurusan: '',
     tanggungan: '',
     tanggunganPajak: '',

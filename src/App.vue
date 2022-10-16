@@ -54,6 +54,31 @@ export default {
           ]
         },
         {
+          label: 'Master Data',
+          items: [
+            {
+              label: 'Jabatan',
+              icon: 'pi pi-fw pi-box',
+              to: '/'
+            },
+            {
+              label: 'Divisi',
+              icon: 'pi pi-fw pi-box',
+              to: '/'
+            },
+            {
+              label: 'Departemen',
+              icon: 'pi pi-fw pi-box',
+              to: '/'
+            },
+            {
+              label: 'Kategori',
+              icon: 'pi pi-fw pi-box',
+              to: '/'
+            }
+          ]
+        },
+        {
           label: 'Data Peserta',
           icon: 'pi pi-fw pi-sitemap',
           items: [
@@ -65,12 +90,12 @@ export default {
             {
               label: 'Harian Lepas',
               icon: 'pi pi-fw pi-check-square',
-              to: '/input'
+              to: '/karyawan'
             },
             {
               label: 'Data Pelamar',
               icon: 'pi pi-fw pi-bookmark',
-              to: '/floatlabel'
+              to: '/kayawan'
             }
           ]
         },
@@ -249,11 +274,6 @@ export default {
           'p-ripple-disabled': this.$primevue.config.ripple === false
         }
       ]
-    },
-    logo() {
-      return this.$appState.darkTheme
-        ? 'images/logo-white.svg'
-        : 'images/logo.svg'
     }
   },
   watch: {

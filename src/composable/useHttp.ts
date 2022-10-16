@@ -1,7 +1,7 @@
 import { createFetch } from '@vueuse/core'
 
 const useHttp = createFetch({
-  baseUrl: 'http://localhost:3333',
+  baseUrl: 'https://my-json-server.typicode.com/afifnandya/dummy-json',
   options: {
     afterFetch(ctx) {
       ctx.data = JSON.parse(ctx.data)
