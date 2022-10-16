@@ -1,8 +1,8 @@
 <template>
   <div
-    class="surface-0 flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden"
+    class="surface-0 flex items-center justify-center min-h-screen min-w-screen overflow-hidden"
   >
-    <div class="grid justify-content-center p-2 lg:p-0" style="min-width: 80%">
+    <div class="grid justify-center p-2 lg:p-0" style="min-width: 80%">
       <div class="col-12 mt-5 xl:mt-0 text-center">
         <img
           src="layout/images/logo-orange.svg"
@@ -34,14 +34,14 @@
             );
           "
         >
-          <div class="grid flex flex-column align-items-center">
+          <div class="grid flex flex-column items-center">
             <div
-              class="flex justify-content-center align-items-center bg-orange-500 border-circle"
+              class="flex justify-center items-center bg-orange-500 border-circle"
               style="width: 3.2rem; height: 3.2rem"
             >
               <i class="pi pi-fw pi-lock text-2xl text-50"></i>
             </div>
-            <h1 class="text-900 font-bold text-4xl lg:text-5xl mb-2">
+            <h1 class="text-gray-900 font-bold text-4xl lg:text-5xl mb-2">
               Access Denied
             </h1>
             <span class="text-600 text-center"

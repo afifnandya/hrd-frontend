@@ -6,7 +6,7 @@
         <Chart type="line" :data="lineData" :options="lineOptions" />
       </div>
 
-      <div class="card flex flex-column align-items-center">
+      <div class="card flex flex-column items-center">
         <h5 class="align-self-start">Pie Chart</h5>
         <Chart
           type="pie"
@@ -16,7 +16,7 @@
         />
       </div>
 
-      <div class="card flex flex-column align-items-center">
+      <div class="card flex flex-column items-center">
         <h5 class="align-self-start">Polar Area Chart</h5>
         <Chart
           type="polarArea"
@@ -32,7 +32,7 @@
         <Chart type="bar" :data="barData" :options="barOptions" />
       </div>
 
-      <div class="card flex flex-column align-items-center">
+      <div class="card flex flex-column items-center">
         <h5 class="align-self-start">Doughnut Chart</h5>
         <Chart
           type="doughnut"
@@ -42,7 +42,7 @@
         />
       </div>
 
-      <div class="card flex flex-column align-items-center">
+      <div class="card flex flex-column items-center">
         <h5 class="align-self-start">Radar Chart</h5>
         <Chart
           type="radar"

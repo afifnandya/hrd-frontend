@@ -8,8 +8,8 @@
           :layout="layout"
           :paginator="true"
           :rows="9"
-          :sortOrder="sortOrder"
-          :sortField="sortField"
+          :sort-order="sortOrder"
+          :sort-field="sortField"
         >
           <template #header>
             <div class="grid grid-nogutter">
@@ -17,7 +17,7 @@
                 <Dropdown
                   v-model="sortKey"
                   :options="sortOptions"
-                  optionLabel="label"
+                  option-label="label"
                   placeholder="Sort By Price"
                   @change="onSortChange($event)"
                 />
@@ -29,9 +29,7 @@
           </template>
           <template #list="slotProps">
             <div class="col-12">
-              <div
-                class="flex flex-column md:flex-row align-items-center p-3 w-full"
-              >
+              <div class="flex flex-column md:flex-row items-center p-3 w-full">
                 <img
                   :src="'images/product/' + slotProps.data.image"
                   :alt="slotProps.data.name"
@@ -43,12 +41,12 @@
                   </div>
                   <div class="mb-3">{{ slotProps.data.description }}</div>
                   <Rating
-                    :modelValue="slotProps.data.rating"
+                    :model-value="slotProps.data.rating"
                     :readonly="true"
                     :cancel="false"
                     class="mb-2"
                   ></Rating>
-                  <div class="flex align-items-center">
+                  <div class="flex items-center">
                     <i class="pi pi-tag mr-2"></i>
                     <span class="font-semibold">{{
                       slotProps.data.category
@@ -56,7 +54,7 @@
                   </div>
                 </div>
                 <div
-                  class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0"
+                  class="flex flex-row md:flex-column justify-content-between w-full md:w-auto items-center md:align-items-end mt-5 md:mt-0"
                 >
                   <span
                     class="text-2xl font-semibold mb-2 align-self-center md:align-self-end"
@@ -83,8 +81,8 @@
           <template #grid="slotProps">
             <div class="col-12 md:col-4">
               <div class="card m-3 border-1 surface-border">
-                <div class="flex align-items-center justify-content-between">
-                  <div class="flex align-items-center">
+                <div class="flex items-center justify-content-between">
+                  <div class="flex items-center">
                     <i class="pi pi-tag mr-2"></i>
                     <span class="font-semibold">{{
                       slotProps.data.category
@@ -109,12 +107,12 @@
                   </div>
                   <div class="mb-3">{{ slotProps.data.description }}</div>
                   <Rating
-                    :modelValue="slotProps.data.rating"
+                    :model-value="slotProps.data.rating"
                     :readonly="true"
                     :cancel="false"
                   ></Rating>
                 </div>
-                <div class="flex align-items-center justify-content-between">
+                <div class="flex items-center justify-content-between">
                   <span class="text-2xl font-semibold"
                     >${{ slotProps.data.price }}</span
                   >
@@ -135,8 +133,8 @@
         <h5>PickList</h5>
         <PickList
           v-model="picklistValue"
-          listStyle="height:250px"
-          dataKey="code"
+          list-style="height:250px"
+          data-key="code"
         >
           <template #sourceheader> From </template>
           <template #targetheader> To </template>
@@ -152,8 +150,8 @@
         <h5>OrderList</h5>
         <OrderList
           v-model="orderlistValue"
-          listStyle="height:250px"
-          dataKey="code"
+          list-style="height:250px"
+          data-key="code"
           :rows="10"
         >
           <template #header> Cities </template>

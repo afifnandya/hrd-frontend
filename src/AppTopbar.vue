@@ -24,8 +24,8 @@
     >
       <i class="pi pi-ellipsis-v"></i>
     </button>
-    <ul class="layout-topbar-menu hidden lg:flex origin-top">
-      <li>
+    <ul class="hidden origin-top layout-topbar-menu lg:flex">
+      <!-- <li>
         <button class="p-link layout-topbar-button">
           <i class="pi pi-calendar"></i>
           <span>Events</span>
@@ -36,12 +36,18 @@
           <i class="pi pi-cog"></i>
           <span>Settings</span>
         </button>
-      </li>
+      </li> -->
       <li>
-        <button class="p-link layout-topbar-button">
+        <button
+          class="p-link layout-topbar-button"
+          aria-haspopup="true"
+          aria-controls="overlay_menu"
+          @click="toggle"
+        >
           <i class="pi pi-user"></i>
           <span>Profile</span>
         </button>
+        <Menu id="overlay_menu" ref="menu" :model="items" :popup="true" />
       </li>
     </ul>
   </div>
@@ -49,9 +55,25 @@
 
 <script>
 import logo from '@/assets/images/logo.jpeg'
+import { logOut } from './service/user'
 export default {
   data() {
     return {
+      items: [
+        {
+          label: 'Profile',
+          icon: 'pi pi-refresh',
+          command: () => {}
+        },
+        {
+          label: 'Logut',
+          icon: 'pi pi-times',
+          command: () => {
+            logOut()
+            this.$router.push('/login')
+          }
+        }
+      ],
       logo
     }
   },
@@ -61,16 +83,14 @@ export default {
     }
   },
   methods: {
+    toggle(event) {
+      this.$refs.menu.toggle(event)
+    },
     onMenuToggle(event) {
       this.$emit('menu-toggle', event)
     },
     onTopbarMenuToggle(event) {
       this.$emit('topbar-menu-toggle', event)
-    },
-    topbarImage() {
-      return this.$appState.darkTheme
-        ? 'images/logo-white.svg'
-        : 'images/logo-dark.svg'
     }
   }
 }

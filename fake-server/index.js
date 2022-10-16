@@ -3,7 +3,7 @@ module.exports = () => {
 
   const data = { karyawan: [] }
   // Create 50 users
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 1; i++) {
     const karyawan = {
       nik: faker.datatype.number(),
       status: faker.helpers.arrayElement(['aktif', 'tidak aktif']),

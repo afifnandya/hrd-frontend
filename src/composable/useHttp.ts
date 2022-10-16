@@ -1,7 +1,7 @@
 import { createFetch } from '@vueuse/core'
 
 const useHttp = createFetch({
-  baseUrl: 'https://my-json-server.typicode.com/afifnandya/dummy-json',
+  baseUrl: 'https://projek.alwaysdata.net/api',
   options: {
     afterFetch(ctx) {
       ctx.data = JSON.parse(ctx.data)

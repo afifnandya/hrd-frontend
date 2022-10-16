@@ -5,10 +5,10 @@
         <h5>Carousel</h5>
         <Carousel
           :value="products"
-          :numVisible="3"
-          :numScroll="3"
+          :num-visible="3"
+          :num-scroll="3"
           :circular="false"
-          :responsiveOptions="carouselResponsiveOptions"
+          :responsive-options="carouselResponsiveOptions"
         >
           <template #item="product">
             <div class="product-item">
@@ -62,10 +62,10 @@
         <h5>Galleria</h5>
         <Galleria
           :value="images"
-          :responsiveOptions="galleriaResponsiveOptions"
-          :numVisible="7"
+          :responsive-options="galleriaResponsiveOptions"
+          :num-visible="7"
           :circular="true"
-          containerStyle="max-width: 800px; margin: auto"
+          container-style="max-width: 800px; margin: auto"
         >
           <template #item="slotProps">
             <img
@@ -88,7 +88,7 @@
     <div class="col-12">
       <div class="card">
         <h5>Image</h5>
-        <div class="flex justify-content-center">
+        <div class="flex justify-center">
           <Image
             src="images/galleria/galleria11.jpg"
             alt="Image"

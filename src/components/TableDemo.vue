@@ -4,18 +4,18 @@
       <div class="card">
         <h5>Filter Menu</h5>
         <DataTable
+          v-model:filters="filters1"
           :value="customer1"
           :paginator="true"
           class="p-datatable-gridlines"
           :rows="10"
-          dataKey="id"
-          :rowHover="true"
-          v-model:filters="filters1"
-          filterDisplay="menu"
+          data-key="id"
+          :row-hover="true"
+          filter-display="menu"
           :loading="loading1"
           :filters="filters1"
-          responsiveLayout="scroll"
-          :globalFilterFields="[
+          responsive-layout="scroll"
+          :global-filter-fields="[
             'name',
             'country.name',
             'representative.name',
@@ -50,8 +50,8 @@
             </template>
             <template #filter="{ filterModel }">
               <InputText
-                type="text"
                 v-model="filterModel.value"
+                type="text"
                 class="p-column-filter"
                 placeholder="Search by name"
               />
@@ -59,7 +59,7 @@
           </Column>
           <Column
             header="Country"
-            filterField="country.name"
+            filter-field="country.name"
             style="min-width: 12rem"
           >
             <template #body="{ data }">
@@ -77,8 +77,8 @@
             </template>
             <template #filter="{ filterModel }">
               <InputText
-                type="text"
                 v-model="filterModel.value"
+                type="text"
                 class="p-column-filter"
                 placeholder="Search by country"
               />
@@ -87,24 +87,24 @@
               <Button
                 type="button"
                 icon="pi pi-times"
-                @click="filterCallback()"
                 class="p-button-secondary"
+                @click="filterCallback()"
               ></Button>
             </template>
             <template #filterapply="{ filterCallback }">
               <Button
                 type="button"
                 icon="pi pi-check"
-                @click="filterCallback()"
                 class="p-button-success"
+                @click="filterCallback()"
               ></Button>
             </template>
           </Column>
           <Column
             header="Agent"
-            filterField="representative"
-            :showFilterMatchModes="false"
-            :filterMenuStyle="{ width: '14rem' }"
+            filter-field="representative"
+            :show-filter-match-modes="false"
+            :filter-menu-style="{ width: '14rem' }"
             style="min-width: 14rem"
           >
             <template #body="{ data }">
@@ -125,7 +125,7 @@
               <MultiSelect
                 v-model="filterModel.value"
                 :options="representatives"
-                optionLabel="name"
+                option-label="name"
                 placeholder="Any"
                 class="p-column-filter"
               >
@@ -149,8 +149,8 @@
           </Column>
           <Column
             header="Date"
-            filterField="date"
-            dataType="date"
+            filter-field="date"
+            data-type="date"
             style="min-width: 10rem"
           >
             <template #body="{ data }">
@@ -159,15 +159,15 @@
             <template #filter="{ filterModel }">
               <Calendar
                 v-model="filterModel.value"
-                dateFormat="mm/dd/yy"
+                date-format="mm/dd/yy"
                 placeholder="mm/dd/yyyy"
               />
             </template>
           </Column>
           <Column
             header="Balance"
-            filterField="balance"
-            dataType="numeric"
+            filter-field="balance"
+            data-type="numeric"
             style="min-width: 10rem"
           >
             <template #body="{ data }">
@@ -185,7 +185,7 @@
           <Column
             field="status"
             header="Status"
-            :filterMenuStyle="{ width: '14rem' }"
+            :filter-menu-style="{ width: '14rem' }"
             style="min-width: 12rem"
           >
             <template #body="{ data }">
@@ -199,12 +199,12 @@
                 :options="statuses"
                 placeholder="Any"
                 class="p-column-filter"
-                :showClear="true"
+                :show-clear="true"
               >
                 <template #value="slotProps">
                   <span
-                    :class="'customer-badge status-' + slotProps.value"
                     v-if="slotProps.value"
+                    :class="'customer-badge status-' + slotProps.value"
                     >{{ slotProps.value }}</span
                   >
                   <span v-else>{{ slotProps.placeholder }}</span>
@@ -220,19 +220,19 @@
           <Column
             field="activity"
             header="Activity"
-            :showFilterMatchModes="false"
+            :show-filter-match-modes="false"
             style="min-width: 12rem"
           >
             <template #body="{ data }">
               <ProgressBar
                 :value="data.activity"
-                :showValue="false"
+                :show-value="false"
                 style="height: 0.5rem"
               ></ProgressBar>
             </template>
             <template #filter="{ filterModel }">
               <Slider v-model="filterModel.value" range class="m-3"></Slider>
-              <div class="flex align-items-center justify-content-between px-2">
+              <div class="flex items-center justify-content-between px-2">
                 <span>{{ filterModel.value ? filterModel.value[0] : 0 }}</span>
                 <span>{{
                   filterModel.value ? filterModel.value[1] : 100
@@ -243,8 +243,8 @@
           <Column
             field="verified"
             header="Verified"
-            dataType="boolean"
-            bodyClass="text-center"
+            data-type="boolean"
+            body-class="text-center"
             style="min-width: 8rem"
           >
             <template #body="{ data }">
@@ -269,19 +269,19 @@
         <h5>Frozen Columns</h5>
         <ToggleButton
           v-model="idFrozen"
-          onIcon="pi pi-lock"
-          offIcon="pi pi-lock-open"
-          onLabel="Unfreeze Id"
-          offLabel="Freeze Id"
+          on-icon="pi pi-lock"
+          off-icon="pi pi-lock-open"
+          on-label="Unfreeze Id"
+          off-label="Freeze Id"
           style="width: 10rem"
         />
 
         <DataTable
           :value="customer2"
           :scrollable="true"
-          scrollHeight="400px"
+          scroll-height="400px"
           :loading="loading2"
-          scrollDirection="both"
+          scroll-direction="both"
           class="mt-3"
         >
           <Column
@@ -365,7 +365,7 @@
             header="Balance"
             :style="{ width: '150px' }"
             frozen
-            alignFrozen="right"
+            align-frozen="right"
           >
             <template #body="{ data }">
               <span class="text-bold">{{ formatCurrency(data.balance) }}</span>
@@ -379,28 +379,28 @@
       <div class="card">
         <h5>Row Expand</h5>
         <DataTable
-          :value="products"
           v-model:expandedRows="expandedRows"
-          dataKey="id"
-          responsiveLayout="scroll"
+          :value="products"
+          data-key="id"
+          responsive-layout="scroll"
         >
           <template #header>
             <div>
               <Button
                 icon="pi pi-plus"
                 label="Expand All"
-                @click="expandAll"
                 class="mr-2 mb-2"
+                @click="expandAll"
               />
               <Button
                 icon="pi pi-minus"
                 label="Collapse All"
-                @click="collapseAll"
                 class="mb-2"
+                @click="collapseAll"
               />
             </div>
           </template>
-          <Column :expander="true" headerStyle="width: 3rem" />
+          <Column :expander="true" header-style="width: 3rem" />
           <Column field="name" header="Name" :sortable="true">
             <template #body="slotProps">
               {{ slotProps.data.name }}
@@ -429,7 +429,7 @@
           <Column field="rating" header="Reviews" :sortable="true">
             <template #body="slotProps">
               <Rating
-                :modelValue="slotProps.data.rating"
+                :model-value="slotProps.data.rating"
                 :readonly="true"
                 :cancel="false"
               />
@@ -453,7 +453,7 @@
               <h5>Orders for {{ slotProps.data.name }}</h5>
               <DataTable
                 :value="slotProps.data.orders"
-                responsiveLayout="scroll"
+                responsive-layout="scroll"
               >
                 <Column field="id" header="Id" :sortable="true">
                   <template #body="slotProps">
@@ -488,7 +488,7 @@
                     >
                   </template>
                 </Column>
-                <Column headerStyle="width:4rem">
+                <Column header-style="width:4rem">
                   <template #body>
                     <Button icon="pi pi-search" />
                   </template>
@@ -505,13 +505,13 @@
         <h5>Subheader Grouping</h5>
         <DataTable
           :value="customer3"
-          rowGroupMode="subheader"
-          groupRowsBy="representative.name"
-          sortMode="single"
-          sortField="representative.name"
-          :sortOrder="1"
+          row-group-mode="subheader"
+          group-rows-by="representative.name"
+          sort-mode="single"
+          sort-field="representative.name"
+          :sort-order="1"
           scrollable
-          scrollHeight="400px"
+          scroll-height="400px"
         >
           <Column field="representative.name" header="Representative"></Column>
           <Column field="name" header="Name" style="min-width: 200px"></Column>

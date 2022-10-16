@@ -4,7 +4,7 @@
       <div class="card">
         <Toast />
         <Toolbar class="mb-4">
-          <template v-slot:start>
+          <template #start>
             <div class="my-2">
               <Button
                 label="New"
@@ -16,19 +16,19 @@
                 label="Delete"
                 icon="pi pi-trash"
                 class="p-button-danger"
-                @click="confirmDeleteSelected"
                 :disabled="!selectedProducts || !selectedProducts.length"
+                @click="confirmDeleteSelected"
               />
             </div>
           </template>
 
-          <template v-slot:end>
+          <template #end>
             <FileUpload
               mode="basic"
               accept="image/*"
-              :maxFileSize="1000000"
+              :max-file-size="1000000"
               label="Import"
-              chooseLabel="Import"
+              choose-label="Import"
               class="mr-2 inline-block"
             />
             <Button
@@ -42,20 +42,20 @@
 
         <DataTable
           ref="dt"
-          :value="products"
           v-model:selection="selectedProducts"
-          dataKey="id"
+          :value="products"
+          data-key="id"
           :paginator="true"
           :rows="10"
           :filters="filters"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-          responsiveLayout="scroll"
+          paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rows-per-page-options="[5, 10, 25]"
+          current-page-report-template="Showing {first} to {last} of {totalRecords} products"
+          responsive-layout="scroll"
         >
           <template #header>
             <div
-              class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+              class="flex flex-column md:flex-row md:justify-content-between md:items-center"
             >
               <h5 class="m-0">Manage Products</h5>
               <span class="block mt-2 md:mt-0 p-input-icon-left">
@@ -68,12 +68,12 @@
             </div>
           </template>
 
-          <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+          <Column selection-mode="multiple" header-style="width: 3rem"></Column>
           <Column
             field="code"
             header="Code"
             :sortable="true"
-            headerStyle="width:14%; min-width:10rem;"
+            header-style="width:14%; min-width:10rem;"
           >
             <template #body="slotProps">
               <span class="p-column-title">Code</span>
@@ -84,14 +84,14 @@
             field="name"
             header="Name"
             :sortable="true"
-            headerStyle="width:14%; min-width:10rem;"
+            header-style="width:14%; min-width:10rem;"
           >
             <template #body="slotProps">
               <span class="p-column-title">Name</span>
               {{ slotProps.data.name }}
             </template>
           </Column>
-          <Column header="Image" headerStyle="width:14%; min-width:10rem;">
+          <Column header="Image" header-style="width:14%; min-width:10rem;">
             <template #body="slotProps">
               <span class="p-column-title">Image</span>
               <img
@@ -106,7 +106,7 @@
             field="price"
             header="Price"
             :sortable="true"
-            headerStyle="width:14%; min-width:8rem;"
+            header-style="width:14%; min-width:8rem;"
           >
             <template #body="slotProps">
               <span class="p-column-title">Price</span>
@@ -117,7 +117,7 @@
             field="category"
             header="Category"
             :sortable="true"
-            headerStyle="width:14%; min-width:10rem;"
+            header-style="width:14%; min-width:10rem;"
           >
             <template #body="slotProps">
               <span class="p-column-title">Category</span>
@@ -128,12 +128,12 @@
             field="rating"
             header="Reviews"
             :sortable="true"
-            headerStyle="width:14%; min-width:10rem;"
+            header-style="width:14%; min-width:10rem;"
           >
             <template #body="slotProps">
               <span class="p-column-title">Rating</span>
               <Rating
-                :modelValue="slotProps.data.rating"
+                :model-value="slotProps.data.rating"
                 :readonly="true"
                 :cancel="false"
               />
@@ -143,7 +143,7 @@
             field="inventoryStatus"
             header="Status"
             :sortable="true"
-            headerStyle="width:14%; min-width:10rem;"
+            header-style="width:14%; min-width:10rem;"
           >
             <template #body="slotProps">
               <span class="p-column-title">Status</span>
@@ -158,7 +158,7 @@
               >
             </template>
           </Column>
-          <Column headerStyle="min-width:10rem;">
+          <Column header-style="min-width:10rem;">
             <template #body="slotProps">
               <Button
                 icon="pi pi-pencil"
@@ -182,9 +182,9 @@
           class="p-fluid"
         >
           <img
+            v-if="product.image"
             :src="'images/product/' + product.image"
             :alt="product.image"
-            v-if="product.image"
             width="150"
             class="mt-0 mx-auto mb-5 block shadow-2"
           />
@@ -197,7 +197,7 @@
               autofocus
               :class="{ 'p-invalid': submitted && !product.name }"
             />
-            <small class="p-invalid" v-if="submitted && !product.name"
+            <small v-if="submitted && !product.name" class="p-invalid"
               >Name is required.</small
             >
           </div>
@@ -218,7 +218,7 @@
               id="inventoryStatus"
               v-model="product.inventoryStatus"
               :options="statuses"
-              optionLabel="label"
+              option-label="label"
               placeholder="Select a Status"
             >
               <template #value="slotProps">
@@ -249,36 +249,36 @@
               <div class="field-radiobutton col-6">
                 <RadioButton
                   id="category1"
+                  v-model="product.category"
                   name="category"
                   value="Accessories"
-                  v-model="product.category"
                 />
                 <label for="category1">Accessories</label>
               </div>
               <div class="field-radiobutton col-6">
                 <RadioButton
                   id="category2"
+                  v-model="product.category"
                   name="category"
                   value="Clothing"
-                  v-model="product.category"
                 />
                 <label for="category2">Clothing</label>
               </div>
               <div class="field-radiobutton col-6">
                 <RadioButton
                   id="category3"
+                  v-model="product.category"
                   name="category"
                   value="Electronics"
-                  v-model="product.category"
                 />
                 <label for="category3">Electronics</label>
               </div>
               <div class="field-radiobutton col-6">
                 <RadioButton
                   id="category4"
+                  v-model="product.category"
                   name="category"
                   value="Fitness"
-                  v-model="product.category"
                 />
                 <label for="category4">Fitness</label>
               </div>
@@ -327,7 +327,7 @@
           header="Confirm"
           :modal="true"
         >
-          <div class="flex align-items-center justify-content-center">
+          <div class="flex items-center justify-center">
             <i
               class="pi pi-exclamation-triangle mr-3"
               style="font-size: 2rem"
@@ -359,7 +359,7 @@
           header="Confirm"
           :modal="true"
         >
-          <div class="flex align-items-center justify-content-center">
+          <div class="flex items-center justify-center">
             <i
               class="pi pi-exclamation-triangle mr-3"
               style="font-size: 2rem"

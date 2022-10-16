@@ -10,10 +10,10 @@ export default defineConfig({
     port: 5000
   },
   plugins: [
-    vue(),
-    legacy({
-      targets: ['defaults', 'not IE 11']
-    })
+    vue()
+    // legacy({
+    //   targets: ['defaults', 'not IE 11']
+    // })
   ],
   resolve: {
     alias: {
