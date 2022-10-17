@@ -1,8 +1,16 @@
 interface Kontrak {
-  nama: string
-  durasi: number
-  tanggalMulai: string
-  tanggalAkhir: string
+  id: number
+  companyId: number
+  areaCode: string
+  divisionId: number
+  positionId: number
+  contractType: string
+  grade: string
+  positionLevel: string
+  level: string
+  duration: number | null
+  startDate: null
+  endDate: null
 }
 
 interface Rekening {
@@ -16,28 +24,15 @@ interface BPJS {
   tenagaKerja: string
 }
 
-interface Anak {
-  nama: string
-  ktp: string
-  jenisKelamin: string
-  tempatLahir: string
-  tanggalLahir: string
-  umur: number
-}
-
-interface Pasangan {
-  nama: string
-  ktp: string
-  tanggalLahir: string
-  temparLahir: string
-}
-
-interface DataKeluarga {
-  kartuKeluarga: string
-  ibuKandung: string
-  pasangan: Pasangan
-  jumlahAnak: number
-  anak: Anak[]
+interface AnggotaKeluarga {
+  id: number
+  name: string
+  relationship: string
+  gender: string | null
+  birthPlace: string | null
+  birthDate: string | null
+  ktp: string | null
+  job: null
 }
 
 interface Mutasi {
@@ -58,28 +53,36 @@ interface Karyawan {
   nik: string
   status: string
   nama: string
-  departement: string
-  pendidikan: string
+  departement: number
+  pendidikan: {
+    id: number
+    stage: string
+    major: string
+  }
   jurusan: string
   tanggungan: string
   tanggunganPajak: string
   statusPernikahan: string
   tanggalUpdateKK: string
-  ktp: number
-  perusahaan: string
+  ktp: string
+  perusahaan: {
+    id: string | number
+    code: string | number
+    name: string
+  }
   asalKtp: string
   kabupatenKtp: string
   kecamatanKtp: string
   asalPOH: string
   kerjaPOH: string
   kategori: string
-  telepon: number
-  teleponDarurat: number
+  telepon: string
+  teleponDarurat: string
   alamat: string
   rekening: Rekening
   keluar: Keluar
   mutasi: Mutasi
-  dataKeluarga: DataKeluarga
+  dataKeluarga: AnggotaKeluarga[]
   kontrak: Kontrak[]
   npwp: string
   jenisKelamin: string
@@ -87,16 +90,21 @@ interface Karyawan {
   tanggalLahir: string
   bpjs: BPJS
   sim: string
-  kartuKeluarga: number
-
+  kartuKeluarga: string
   umur: number
   agama: string
-  divisi: string
-  jabatan: string
+  divisi: {
+    id: string | number
+    name: string
+  }
+  jabatan: {
+    id: string | number
+    name: string
+  }
   grade: string
   dateOfHiring: string
   kontrakSebelumnya: string
   kontrakSekarang: string
 }
 
-export { Karyawan, Keluar, DataKeluarga, Rekening, Kontrak, Anak, BPJS }
+export { Karyawan, Keluar, AnggotaKeluarga, Rekening, Kontrak, BPJS }

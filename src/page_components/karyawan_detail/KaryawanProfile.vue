@@ -2,29 +2,29 @@
   <div class="flex flex-col">
     <div class="flex flex-col items-center justify-center">
       <div
-        class="bg-blue-500 rounded-lg flex items-center justify-center text-white text-6xl"
+        class="flex items-center justify-center text-6xl text-white bg-blue-500 rounded-lg"
         style="width: 150px; height: 150px"
       >
         {{ nickName }}
       </div>
 
       <div class="flex items-center justify-center my-4">
-        <div class="text-2xl font-bold mr-2">{{ karyawan.nama }}</div>
+        <div class="mr-2 text-2xl font-bold">{{ karyawan.nama }}</div>
         <button
-          class="border rounded-lg px-3 py-1 hover:opacity-80"
+          class="px-3 py-1 border rounded-lg hover:opacity-80"
           :class="
-            enableEdit ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'
+            !enableEdit ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'
           "
           @click="enableEdit = !enableEdit"
         >
-          {{ enableEdit ? 'Edit' : 'Cancel' }}
+          {{ !enableEdit ? 'Edit' : 'Cancel' }}
         </button>
       </div>
     </div>
 
     <div class="flex">
       <div class="w-1/2">
-        <div class="flex mb-4 items-center justify-center">
+        <div class="flex items-center justify-center mb-4">
           <label for="nama" class="input-label">Nama</label>
           <div class="w-full md:w-10/12">
             <InputText
@@ -35,7 +35,7 @@
             />
           </div>
         </div>
-        <div class="flex mb-4 items-center justify-center">
+        <div class="flex items-center justify-center mb-4">
           <label for="tempatLahir" class="input-label">Tempat Lahir</label>
           <div class="w-full md:w-10/12">
             <InputText
@@ -46,7 +46,7 @@
             />
           </div>
         </div>
-        <div class="flex mb-4 items-center justify-center">
+        <div class="flex items-center justify-center mb-4">
           <label for="tanggalLahir" class="input-label">Tangal Lahir</label>
           <div class="w-full md:w-10/12">
             <InputText
@@ -57,7 +57,7 @@
             />
           </div>
         </div>
-        <div class="flex mb-4 items-center justify-center">
+        <div class="flex items-center justify-center mb-4">
           <label for="umur" class="input-label">Umur</label>
           <div class="w-full md:w-10/12">
             <InputText
@@ -68,7 +68,7 @@
             />
           </div>
         </div>
-        <div class="flex mb-4 items-center justify-center">
+        <div class="flex items-center justify-center mb-4">
           <label for="alamat" class="input-label">Alamat</label>
           <div class="w-full md:w-10/12">
             <InputText
@@ -79,7 +79,7 @@
             />
           </div>
         </div>
-        <div class="flex mb-4 items-center justify-center">
+        <div class="flex items-center justify-center mb-4">
           <label for="kategori" class="input-label">Kategori</label>
           <div class="w-full md:w-10/12">
             <InputText
@@ -90,7 +90,7 @@
             />
           </div>
         </div>
-        <div class="flex mb-4 items-center justify-center">
+        <div class="flex items-center justify-center mb-4">
           <label for="telp" class="input-label">No Telp</label>
           <div class="w-full md:w-10/12">
             <InputText
@@ -101,7 +101,7 @@
             />
           </div>
         </div>
-        <div class="flex mb-4 items-center justify-center">
+        <div class="flex items-center justify-center mb-4">
           <label for="telpDarurat" class="input-label">No Telp Darurat</label>
           <div class="w-full md:w-10/12">
             <InputText
@@ -112,7 +112,7 @@
             />
           </div>
         </div>
-        <div class="flex mb-4 items-center justify-center">
+        <div class="flex items-center justify-center mb-4">
           <label for="agama" class="input-label">Agama</label>
           <div class="w-full md:w-10/12">
             <InputText
@@ -144,7 +144,7 @@
               id="divisi"
               type="text"
               :disabled="!enableEdit"
-              :value="karyawan.divisi"
+              :value="karyawan.divisi.name"
             />
           </div>
         </div>
@@ -155,7 +155,7 @@
               id="jabatan"
               type="text"
               :disabled="!enableEdit"
-              :value="karyawan.jabatan"
+              :value="karyawan.jabatan.name"
             />
           </div>
         </div>
@@ -166,7 +166,7 @@
               id="perusahaan"
               type="text"
               :disabled="!enableEdit"
-              :value="karyawan.perusahaan"
+              :value="karyawan.perusahaan.name"
             />
           </div>
         </div>
@@ -183,7 +183,7 @@
           </div>
         </div>
 
-        <div class="my-4 pb-2 border-b text-black font-bold">Pendidikan</div>
+        <div class="pb-2 my-4 font-bold text-black border-b">Pendidikan</div>
 
         <div class="flex mb-4">
           <label for="pendidikan" class="input-label">Pendidikan</label>
@@ -193,20 +193,20 @@
                 id="pendidikan"
                 type="text"
                 :disabled="!enableEdit"
-                :value="karyawan.pendidikan"
+                :value="karyawan.pendidikan.stage"
               />
             </div>
             <div class="w-full md:w-10/12">
               <InputText
                 type="text"
                 :disabled="!enableEdit"
-                :value="karyawan.jurusan"
+                :value="karyawan.pendidikan.major"
               />
             </div>
           </div>
         </div>
 
-        <div class="my-4 pb-2 border-b text-black font-bold">Rekening</div>
+        <div class="pb-2 my-4 font-bold text-black border-b">Rekening</div>
 
         <div class="flex mb-4">
           <label for="pendidikan" class="input-label">Nama</label>

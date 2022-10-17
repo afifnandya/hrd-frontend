@@ -29,8 +29,8 @@
           <Column field="nama" header="Nama" :style="{ width: '250px' }" frozen>
             <template #body="{ data }">
               <router-link
-                class="hover:underline text-blue-500 hover:to-blue-400"
-                :to="`/karyawan/detail/${data.nik}`"
+                class="text-blue-500 hover:underline hover:to-blue-400"
+                :to="{ name: ROUTE_KARYAWAN_DETAIL, params: { id: '1' } }"
                 >{{ data.nama }}</router-link
               >
             </template>
@@ -51,7 +51,7 @@
           ></Column>
 
           <Column
-            field="jabatan"
+            field="jabatan.name"
             header="Jabatan"
             class="capitalize"
             :style="{ width: '200px' }"
@@ -72,6 +72,7 @@ import { getKaryawan } from '@/service/karyawan'
 import type { Karyawan } from '@/typing/karyawan'
 import { onMounted, reactive, ref, Ref } from 'vue'
 import { isAuthenticated } from '@/service/user'
+import { useToast } from 'primevue/usetoast'
 import { ROUTE_KARYAWAN_DETAIL } from '@/constants'
 
 type PageChangeEvent = {
@@ -88,15 +89,24 @@ const page = reactive({
   size: 10
 })
 
+const toast = useToast()
+
 async function getKaryawanList() {
   try {
     isLoading.value = true
-    const result = await getKaryawan({
+    const { success, data, links, message, meta } = await getKaryawan({
       pageNumber: page.number,
       pageSize: page.size
     })
-    console.log('aa', result.data.value)
-    karyawans.value = result.data.value as Karyawan[]
+    if (!success) {
+      toast.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Gagal menampilkan data karyawan'
+      })
+      return
+    }
+    karyawans.value = data
     isLoading.value = false
   } catch (err) {
     console.log('err', err)

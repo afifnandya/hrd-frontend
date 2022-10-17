@@ -1,4 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHashHistory,
+  createWebHistory
+} from 'vue-router'
 import App from './App.vue'
 import { isAuthenticated } from './service/user'
 import {
@@ -31,7 +35,7 @@ const routes = [
       },
       {
         path: '/master/jabatan',
-        name: ROUTE_KARYAWAN_DETAIL,
+        name: 'jabatan',
         props: true,
         component: () => import('@/pages/master/Jabatan.vue')
       }
@@ -45,7 +49,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 

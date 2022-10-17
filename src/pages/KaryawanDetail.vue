@@ -31,9 +31,9 @@ const props = defineProps({
 const karyawan: Ref<Karyawan> = ref(createDummyKaryawan())
 
 async function fetchKaryawan() {
-  const { data, error } = await getKaryawan({ nik: props.id })
-  if (!error.value) {
-    const result = data.value as Karyawan[]
+  const { success, data } = await getKaryawan({ id: props.id })
+  if (success) {
+    const result = data as Karyawan[]
     if (result.length) {
       karyawan.value = result[0]
     }

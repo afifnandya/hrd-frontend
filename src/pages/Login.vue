@@ -16,7 +16,7 @@
       </div>
 
       <div
-        class="w-full md:w-8/12"
+        class="w-full md:w-8/12 xl:w-5/12"
         style="
           border-radius: 56px;
           padding: 0.3rem;
@@ -69,7 +69,7 @@
                 input-style="padding:1rem"
               ></Password>
 
-              <div class="flex mb-5 items-center justify-content-between">
+              <div class="flex items-center mb-5 justify-content-between">
                 <div class="flex items-center">
                   <Checkbox
                     id="rememberme1"
