@@ -3,6 +3,7 @@ import type { Karyawan } from '@/typing/karyawan'
 
 export function createDummyKaryawan(): Karyawan {
   const karyawan: Karyawan = {
+    id: 0,
     nik: '',
     status: '',
     nama: '',
@@ -81,6 +82,7 @@ export function createDummyKaryawan(): Karyawan {
 
 export function createKaryawan(data: Karyawan): Karyawan {
   const karyawan: Karyawan = {
+    id: isNumber(data.id),
     nik: isString(data.nik),
     status: isString(data.status),
     nama: isString(data.nama),

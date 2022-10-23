@@ -50,6 +50,7 @@ interface Keluar {
 }
 
 interface Karyawan {
+  id: number
   nik: string
   status: string
   nama: string

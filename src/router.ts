@@ -37,7 +37,7 @@ const routes = [
         path: '/master/jabatan',
         name: 'jabatan',
         props: true,
-        component: () => import('@/pages/master/Jabatan.vue')
+        component: () => import('@/components/TableDemo.vue')
       }
     ]
   },

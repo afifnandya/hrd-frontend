@@ -16,6 +16,7 @@
     "allowJs": true,
     "types": [
       "vite/client",
+      "unplugin-icons/types/vue",
       "@types/cookie",
       "node"
     ],

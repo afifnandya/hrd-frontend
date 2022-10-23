@@ -26,16 +26,19 @@ type GetKaryawanResponse = {
 async function getKaryawan({
   pageSize,
   pageNumber,
-  id
+  id,
+  name
 }: {
   pageSize?: number
   pageNumber?: number
   id?: string
+  name?: string
 }): Promise<GetKaryawanResponse> {
   const filter = qs.stringify(
     {
       _page: pageNumber || null,
-      _limit: pageSize || null
+      limit: pageSize || null,
+      name
     },
     { skipNulls: true }
   )
@@ -78,6 +81,7 @@ async function getKaryawan({
 function mapper(karyawan: KaryawanAttribute) {
   const umur = dayjs().diff(dayjs(karyawan.birthDate, 'YYYY-MM-DD'), 'year')
   const karyawanObj = createKaryawan({
+    id: karyawan.id,
     nama: karyawan.name,
     nik: karyawan.nik,
     status: karyawan.activeStatus,
