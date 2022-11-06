@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+.button{
+  @apply px-3 py-1 text-lg leading-5 rounded-lg hover:bg-opacity-50 min-w-[50px] min-h-[30px] hover:bg-gray-200;
+}
+
+.button-large{
+  @apply px-6 py-2 text-xl;
+}
+
+.button-primary{
+  @apply text-white bg-blue-500 hover:bg-blue-700;
+}
+
+.input-group{
+  @apply flex items-center w-full mb-6;
+}
+
 .input-label{
   @apply flex items-center flex-shrink-0 w-full mb-4 md:w-4/12 md:mb-0;
 }

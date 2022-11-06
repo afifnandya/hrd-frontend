@@ -1,72 +1,31 @@
-import useHttp from '@/composable/useHttp'
-import qs from 'qs'
 import { createKaryawan, createDummyKaryawan } from '@/model/karyawan'
-import type {
-  GetKaryawan,
-  KaryawanAttribute,
-  Links,
-  Meta
-} from '@/typing/apiResponse'
 import { Karyawan } from '@/typing/karyawan'
 import dayjs from '@/lib/dayjs'
-import { camelizeKeys } from 'humps'
+import {
+  getKaryawan as fetchKaryawan,
+  GetKaryawanPayload,
+  KaryawanAttribute
+} from '@/api/karyawan/getKaryawan'
 
 function dummyKaryawan() {
   return createDummyKaryawan()
 }
 
-type GetKaryawanResponse = {
-  success: boolean
-  message: string | null
-  data: Karyawan[]
-  links: Links | null
-  meta: Meta | null
-}
+async function getKaryawan(payload: GetKaryawanPayload) {
+  const dataKaryawan = []
+  const { success, data, message, meta, links } = await fetchKaryawan(payload)
 
-async function getKaryawan({
-  pageSize,
-  pageNumber,
-  id,
-  name
-}: {
-  pageSize?: number
-  pageNumber?: number
-  id?: string
-  name?: string
-}): Promise<GetKaryawanResponse> {
-  const filter = qs.stringify(
-    {
-      _page: pageNumber || null,
-      limit: pageSize || null,
-      name
-    },
-    { skipNulls: true }
-  )
-  let success = false
-  const dataKaryawan = [] as Karyawan[]
-  let message = null
-  let links = null
-  let meta = null
-  const url = id ? `/employees/${id}?${filter}` : `/employees?${filter}`
-  const { data } = await useHttp(url)
-  const response = camelizeKeys(data.value) as GetKaryawan
-  const karyawanList = response.data
-  console.log('aaa', response)
-  links = response.links
-  message = response.message
-  meta = response.meta
-  if (response.status === 200) {
-    success = true
-  }
-  if (Array.isArray(karyawanList)) {
-    karyawanList.forEach((karyawan) => {
-      const karyawanObj = mapper(karyawan)
+  if (success && data) {
+    if (Array.isArray(data)) {
+      data.forEach((karyawan) => {
+        const karyawanObj = mapper(karyawan)
+        dataKaryawan.push(karyawanObj)
+      })
+    } else {
+      const karyawanObj = mapper(data)
+
       dataKaryawan.push(karyawanObj)
-    })
-  } else {
-    const karyawanObj = mapper(karyawanList)
-
-    dataKaryawan.push(karyawanObj)
+    }
   }
 
   return {

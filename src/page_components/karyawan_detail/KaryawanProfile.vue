@@ -11,7 +11,7 @@
       <div class="flex items-center justify-center my-4">
         <div class="mr-2 text-2xl font-bold">{{ karyawan.nama }}</div>
         <button
-          class="px-3 py-1 border rounded-lg hover:opacity-80"
+          class="px-3 py-1 mr-2 border rounded-lg hover:opacity-80"
           :class="
             !enableEdit ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'
           "
@@ -19,10 +19,17 @@
         >
           {{ !enableEdit ? 'Edit' : 'Cancel' }}
         </button>
+
+        <button
+          v-if="enableEdit"
+          class="px-3 py-1 border rounded-lg hover:opacity-80"
+        >
+          Save
+        </button>
       </div>
     </div>
 
-    <div class="flex">
+    <div class="flex mt-10">
       <div class="w-1/2">
         <div class="flex items-center justify-center mb-4">
           <label for="nama" class="input-label">Nama</label>
@@ -32,6 +39,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.nama"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -43,6 +51,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.tempatLahir"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -54,6 +63,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.tanggalLahir"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -65,6 +75,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.umur"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -76,6 +87,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.alamat"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -87,6 +99,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.kategori"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -98,6 +111,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.telepon"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -109,6 +123,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.teleponDarurat"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -120,6 +135,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.agama"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -134,6 +150,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.ktp"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -145,6 +162,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.divisi.name"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -156,6 +174,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.jabatan.name"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -167,6 +186,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.perusahaan.name"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -179,6 +199,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.tanggungan"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -188,19 +209,21 @@
         <div class="flex mb-4">
           <label for="pendidikan" class="input-label">Pendidikan</label>
           <div class="flex">
-            <div class="w-full md:w-2/12">
+            <div class="w-full md:w-3/12">
               <InputText
                 id="pendidikan"
                 type="text"
                 :disabled="!enableEdit"
                 :value="karyawan.pendidikan.stage"
+                class="md:w-9/12"
               />
             </div>
-            <div class="w-full md:w-10/12">
+            <div class="w-full md:w-9/12">
               <InputText
                 type="text"
                 :disabled="!enableEdit"
                 :value="karyawan.pendidikan.major"
+                class="w-full"
               />
             </div>
           </div>
@@ -210,11 +233,12 @@
 
         <div class="flex mb-4">
           <label for="pendidikan" class="input-label">Nama</label>
-          <div class="w-full md:w-5/12">
+          <div class="w-full">
             <InputText
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.rekening.name"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -227,6 +251,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.rekening.bank"
+              class="md:w-9/12"
             />
           </div>
         </div>
@@ -239,6 +264,7 @@
               type="text"
               :disabled="!enableEdit"
               :value="karyawan.rekening.rekening"
+              class="md:w-9/12"
             />
           </div>
         </div>

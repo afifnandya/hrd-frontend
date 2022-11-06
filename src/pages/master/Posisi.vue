@@ -2,14 +2,14 @@
   <div class="p-10 bg-white">
     <DataTable
       ref="dt"
-      :value="jabatans"
+      :value="posisi"
       :loading="loading"
       data-key="id"
       :paginator="true"
       :rows="10"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[5, 10, 25]"
-      current-page-report-template="Showing {first} to {last} of {totalRecords} Jabatan"
+      current-page-report-template="Showing {first} to {last} of {totalRecords} Divisi"
       responsive-layout="scroll"
       scroll-height="400px"
       scrollable
@@ -18,7 +18,7 @@
         <div
           class="flex flex-column md:flex-row md:justify-content-between md:items-center"
         >
-          <h5 class="m-0">Master Jabatan</h5>
+          <h5 class="m-0">Master Posisi</h5>
         </div>
       </template>
 
@@ -56,14 +56,14 @@
     <Dialog
       v-model:visible="showModal.edit"
       :style="{ width: '450px' }"
-      header="Edit Jabatan"
+      header="Edit Area"
       :modal="true"
       class="p-fluid"
     >
       <div class="field">
-        <label for="jabatanNama">Nama</label>
+        <label for="divisiNama">Nama</label>
 
-        <InputText id="jabatanNama" type="text" :value="selectedJabatan.nama" />
+        <InputText id="divisiNama" type="text" :value="selectedPosisi.nama" />
       </div>
 
       <template #footer>
@@ -77,7 +77,7 @@
           label="Save"
           icon="pi pi-check"
           class="p-button-text"
-          @click="editData(selectedJabatan)"
+          @click="editData(selectedPosisi)"
         />
       </template>
     </Dialog>
@@ -91,7 +91,7 @@
       <div class="flex items-center justify-center">
         <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
         <span
-          >Are you sure you want to delete <b>{{ selectedJabatan.nama }}</b
+          >Are you sure you want to delete <b>{{ selectedPosisi.nama }}</b
           >?</span
         >
       </div>
@@ -106,7 +106,7 @@
           label="Yes"
           icon="pi pi-check"
           class="p-button-text"
-          @click="deleteData(selectedJabatan)"
+          @click="deleteData(selectedPosisi)"
         />
       </template>
     </Dialog>
@@ -121,13 +121,13 @@ import Button from 'primevue/button'
 
 import { onMounted, reactive, ref } from 'vue'
 
-import { getJabatan } from '@/api/master/getJabatan'
-import { Jabatan } from '@/typing/dataMaster'
+import { getPosisi } from '@/api/master/getPosisi'
+import { Posisi } from '@/typing/dataMaster'
 
 const loading = ref(false)
-const jabatans = ref<Jabatan[]>([])
+const posisi = ref<Posisi[]>([])
 
-const selectedJabatan: Jabatan = reactive({
+const selectedPosisi: Posisi = reactive({
   id: 0,
   nama: ''
 })
@@ -139,33 +139,30 @@ const showModal = reactive({
 
 onMounted(async () => {
   loading.value = true
-  const { success, data, message } = await getJabatan()
+  const { success, data, message } = await getPosisi()
   if (success && data) {
-    jabatans.value = data.map((jabatan) => {
-      return {
-        id: jabatan.id,
-        nama: jabatan.name
-      }
+    posisi.value = data.map((posisi) => {
+      return { id: posisi.id, nama: posisi.name }
     })
     loading.value = false
     return
   }
 })
 
-function editData(data: Jabatan) {
-  selectedJabatan.id = data.id
-  selectedJabatan.nama = data.nama
+function editData(data: Posisi) {
+  selectedPosisi.id = data.id
+  selectedPosisi.nama = data.nama
   showModal.edit = true
 }
 
-function deleteData(data: Jabatan) {
-  selectedJabatan.id = data.id
-  selectedJabatan.nama = data.nama
+function deleteData(data: Posisi) {
+  selectedPosisi.id = data.id
+  selectedPosisi.nama = data.nama
   showModal.delete = true
 }
 </script>
 <script lang="ts">
 export default {
-  name: 'MasterJabatanPage'
+  name: 'MasterPosisiPage'
 }
 </script>

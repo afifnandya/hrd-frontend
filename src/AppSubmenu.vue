@@ -35,7 +35,7 @@
             @click="onMenuItemClick($event, item, i)"
           >
             <i :class="item.icon"></i>
-            <span>{{ item.label }}</span>
+            <span>{{ t(item.label) }}</span>
             <i
               v-if="item.items"
               class="pi pi-fw pi-angle-down menuitem-toggle-icon"
@@ -81,6 +81,7 @@
   </ul>
 </template>
 <script>
+import { useI18n } from 'vue-i18n'
 export default {
   name: 'Appsubmenu',
   props: {
@@ -88,6 +89,14 @@ export default {
     root: {
       type: Boolean,
       default: false
+    }
+  },
+  setup() {
+    const { t } = useI18n({
+      useScope: 'global'
+    })
+    return {
+      t
     }
   },
   data() {

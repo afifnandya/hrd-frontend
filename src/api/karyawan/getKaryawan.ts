@@ -1,3 +1,8 @@
+import useHttp from '@/composable/useHttp'
+import { camelizeKeys, decamelizeKeys } from 'humps'
+import qs from 'qs'
+import { isEmpty } from 'lodash-es'
+
 export type Links = {
   path: string | null
   first: string | null
@@ -108,4 +113,43 @@ export interface GetKaryawan {
   data: KaryawanAttribute[]
   meta: Meta
   links: Links
+}
+
+export type GetKaryawanPayload = Partial<KaryawanAttribute> & {
+  limit?: number
+  pageNumber?: number
+}
+
+export async function getKaryawan(payload: GetKaryawanPayload) {
+  const filter = qs.stringify(decamelizeKeys(payload), { skipNulls: true })
+  let success = false
+  let message = null
+  let links = null
+  let meta = null
+  let data = null
+  const url = payload.id
+    ? `/employees/${payload.id}?${filter}`
+    : `/employees?${filter}`
+  const { data: responseData } = await useHttp(url)
+  const response = camelizeKeys(responseData.value) as GetKaryawan
+  if (isEmpty(response)) {
+    success = false
+  } else {
+    if (response.status === 200) {
+      success = true
+      data = success ? response.data : null
+    }
+    console.log('aaa', response)
+    links = response.links
+    message = response.message
+    meta = response.meta
+  }
+
+  return {
+    success,
+    message,
+    meta,
+    data,
+    links
+  }
 }

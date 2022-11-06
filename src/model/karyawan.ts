@@ -1,8 +1,35 @@
 import { isNumber, isObject, isString } from '@/helper/dataType'
-import type { Karyawan } from '@/typing/karyawan'
+import type { AnggotaKeluarga, Karyawan } from '@/typing/karyawan'
 
-export function createDummyKaryawan(): Karyawan {
-  const karyawan: Karyawan = {
+type KaryawanInstance = Karyawan & {
+  getPasangan: () => AnggotaKeluarga[] | null
+  getAnak: () => AnggotaKeluarga[] | null
+  getOrangTua: () => AnggotaKeluarga[] | null
+}
+
+function getPasangan(dataKeluarga: AnggotaKeluarga[]) {
+  const filter = dataKeluarga.filter(
+    (keluarga) => keluarga.relationship === 'Pasangan'
+  )
+  return filter.length ? filter : null
+}
+
+function getAnak(dataKeluarga: AnggotaKeluarga[]) {
+  const filter = dataKeluarga.filter(
+    (keluarga) => keluarga.relationship === 'Anak'
+  )
+  return filter.length ? filter : null
+}
+
+function getOrangTua(dataKeluarga: AnggotaKeluarga[]) {
+  const filter = dataKeluarga.filter(
+    (keluarga) => keluarga.relationship === 'Pasangan'
+  )
+  return filter.length ? filter : null
+}
+
+export function createDummyKaryawan(): KaryawanInstance {
+  const karyawan: KaryawanInstance = {
     id: 0,
     nik: '',
     status: '',
@@ -75,13 +102,16 @@ export function createDummyKaryawan(): Karyawan {
     grade: '',
     dateOfHiring: '',
     kontrakSebelumnya: '',
-    kontrakSekarang: ''
+    kontrakSekarang: '',
+    getAnak: () => null,
+    getPasangan: () => null,
+    getOrangTua: () => null
   }
   return karyawan
 }
 
-export function createKaryawan(data: Karyawan): Karyawan {
-  const karyawan: Karyawan = {
+export function createKaryawan(data: Karyawan): KaryawanInstance {
+  const karyawan: KaryawanInstance = {
     id: isNumber(data.id),
     nik: isString(data.nik),
     status: isString(data.status),
@@ -140,7 +170,10 @@ export function createKaryawan(data: Karyawan): Karyawan {
     grade: isString(data.grade),
     dateOfHiring: isString(data.dateOfHiring),
     kontrakSebelumnya: isString(data.kontrakSebelumnya),
-    kontrakSekarang: isString(data.kontrakSekarang)
+    kontrakSekarang: isString(data.kontrakSekarang),
+    getAnak: () => getAnak(data.dataKeluarga),
+    getPasangan: () => getPasangan(data.dataKeluarga),
+    getOrangTua: () => getOrangTua(data.dataKeluarga)
   }
   return karyawan
 }

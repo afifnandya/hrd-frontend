@@ -18,185 +18,189 @@
         class="layout-mask p-component-overlay"
       ></div>
     </transition>
+    <Toast />
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import AppTopBar from './AppTopbar.vue'
 import AppMenu from './AppMenu.vue'
 import AppFooter from './AppFooter.vue'
+import { useI18n } from 'vue-i18n'
+import { reactive, ref, computed, onBeforeUpdate } from 'vue'
 
-export default {
-  components: {
-    AppTopBar: AppTopBar,
-    AppMenu: AppMenu,
-    AppFooter: AppFooter
-  },
-  emits: ['change-theme'],
-  data() {
-    return {
-      layoutMode: 'static',
-      staticMenuInactive: false,
-      overlayMenuActive: false,
-      mobileMenuActive: false,
-      menu: [
-        {
-          label: 'Home',
-          items: [
-            {
-              label: 'Dashboard',
-              icon: 'pi pi-fw pi-home',
-              to: '/'
-            }
-          ]
-        },
-        {
-          label: 'Master Data',
-          items: [
-            {
-              label: 'Jabatan',
-              icon: 'pi pi-fw pi-box',
-              to: '/master/jabatan'
-            },
-            {
-              label: 'Divisi',
-              icon: 'pi pi-fw pi-box',
-              to: '/'
-            },
-            {
-              label: 'Departemen',
-              icon: 'pi pi-fw pi-box',
-              to: '/'
-            },
-            {
-              label: 'Kategori',
-              icon: 'pi pi-fw pi-box',
-              to: '/'
-            }
-          ]
-        },
-        {
-          label: 'Data Peserta',
-          icon: 'pi pi-fw pi-sitemap',
-          items: [
-            {
-              label: 'Karyawan',
-              icon: 'pi pi-fw pi-id-card',
-              to: '/karyawan'
-            },
-            {
-              label: 'Harian Lepas',
-              icon: 'pi pi-fw pi-check-square',
-              to: '/karyawan'
-            },
-            {
-              label: 'Data Pelamar',
-              icon: 'pi pi-fw pi-bookmark',
-              to: '/kayawan'
-            }
-          ]
-        }
-      ]
-    }
-  },
-  computed: {
-    containerClass() {
-      return [
-        'layout-wrapper',
-        {
-          'layout-overlay': this.layoutMode === 'overlay',
-          'layout-static': this.layoutMode === 'static',
-          'layout-static-sidebar-inactive':
-            this.staticMenuInactive && this.layoutMode === 'static',
-          'layout-overlay-sidebar-active':
-            this.overlayMenuActive && this.layoutMode === 'overlay',
-          'layout-mobile-sidebar-active': this.mobileMenuActive,
-          'p-input-filled': this.$primevue.config.inputStyle === 'filled',
-          'p-ripple-disabled': this.$primevue.config.ripple === false
-        }
-      ]
-    }
-  },
-  watch: {
-    $route() {
-      this.menuActive = false
-      this.$toast.removeAllGroups()
-    }
-  },
-  beforeUpdate() {
-    if (this.mobileMenuActive)
-      this.addClass(document.body, 'body-overflow-hidden')
-    else this.removeClass(document.body, 'body-overflow-hidden')
-  },
-  methods: {
-    onWrapperClick() {
-      if (!this.menuClick) {
-        this.overlayMenuActive = false
-        this.mobileMenuActive = false
+defineEmits(['change-theme'])
+
+const { t } = useI18n({
+  useScope: 'global'
+})
+
+const layoutMode = ref('static')
+const staticMenuInactive = ref(false)
+const overlayMenuActive = ref(false)
+const mobileMenuActive = ref(false)
+const menuClick = ref(false)
+const menu = reactive([
+  {
+    label: 'Home',
+    items: [
+      {
+        label: 'Dashboard',
+        icon: 'pi pi-fw pi-home',
+        to: '/'
       }
-
-      this.menuClick = false
-    },
-    onMenuToggle() {
-      this.menuClick = true
-
-      if (this.isDesktop()) {
-        if (this.layoutMode === 'overlay') {
-          if (this.mobileMenuActive === true) {
-            this.overlayMenuActive = true
-          }
-
-          this.overlayMenuActive = !this.overlayMenuActive
-          this.mobileMenuActive = false
-        } else if (this.layoutMode === 'static') {
-          this.staticMenuInactive = !this.staticMenuInactive
-        }
-      } else {
-        this.mobileMenuActive = !this.mobileMenuActive
+    ]
+  },
+  {
+    label: 'Master Data',
+    items: [
+      {
+        label: 'jabatan',
+        icon: 'pi pi-fw pi-box',
+        to: '/master/jabatan'
+      },
+      {
+        label: 'divisi',
+        icon: 'pi pi-fw pi-box',
+        to: '/master/divisi'
+      },
+      {
+        label: 'departemen',
+        icon: 'pi pi-fw pi-box',
+        to: '/master/departmen'
+      },
+      {
+        label: 'area',
+        icon: 'pi pi-fw pi-box',
+        to: '/master/area'
+      },
+      {
+        label: 'posisi',
+        icon: 'pi pi-fw pi-box',
+        to: '/master/posisi'
       }
-
-      event.preventDefault()
-    },
-    onSidebarClick() {
-      this.menuClick = true
-    },
-    onMenuItemClick(event) {
-      if (event.item && !event.item.items) {
-        this.overlayMenuActive = false
-        this.mobileMenuActive = false
+      // {
+      //   label: 'kategori',
+      //   icon: 'pi pi-fw pi-box',
+      //   to: '/'
+      // }
+    ]
+  },
+  {
+    label: 'Data Peserta',
+    icon: 'pi pi-fw pi-sitemap',
+    items: [
+      {
+        label: 'Karyawan',
+        icon: 'pi pi-fw pi-id-card',
+        to: '/karyawan'
+      },
+      // {
+      //   label: 'Harian Lepas',
+      //   icon: 'pi pi-fw pi-check-square',
+      //   to: '/karyawan'
+      // },
+      {
+        label: 'Data Pelamar',
+        icon: 'pi pi-fw pi-bookmark',
+        to: '/pelamar'
       }
-    },
-    onLayoutChange(layoutMode) {
-      this.layoutMode = layoutMode
-    },
-    addClass(element, className) {
-      if (element.classList) element.classList.add(className)
-      else element.className += ' ' + className
-    },
-    removeClass(element, className) {
-      if (element.classList) element.classList.remove(className)
-      else
-        element.className = element.className.replace(
-          new RegExp(
-            '(^|\\b)' + className.split(' ').join('|') + '(\\b|$)',
-            'gi'
-          ),
-          ' '
-        )
-    },
-    isDesktop() {
-      return window.innerWidth >= 992
-    },
-    isSidebarVisible() {
-      if (this.isDesktop()) {
-        if (this.layoutMode === 'static') return !this.staticMenuInactive
-        else if (this.layoutMode === 'overlay') return this.overlayMenuActive
-      }
+    ]
+  }
+])
 
-      return true
+const containerClass = computed(() => {
+  return [
+    'layout-wrapper',
+    {
+      'layout-overlay': layoutMode.value === 'overlay',
+      'layout-static': layoutMode.value === 'static',
+      'layout-static-sidebar-inactive':
+        staticMenuInactive.value && layoutMode.value === 'static',
+      'layout-overlay-sidebar-active':
+        overlayMenuActive.value && layoutMode.value === 'overlay',
+      'layout-mobile-sidebar-active': mobileMenuActive.value
     }
+  ]
+})
+
+function onWrapperClick() {
+  if (!menuClick.value) {
+    overlayMenuActive.value = false
+    mobileMenuActive.value = false
+  }
+
+  menuClick.value = false
+}
+
+function addClass(element: HTMLElement, className: string) {
+  if (element.classList) element.classList.add(className)
+  else element.className += ' ' + className
+}
+
+function removeClass(element: HTMLElement, className: string) {
+  if (element.classList) element.classList.remove(className)
+  else
+    element.className = element.className.replace(
+      new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'),
+      ' '
+    )
+}
+
+function onSidebarClick() {
+  menuClick.value = true
+}
+
+function isDesktop() {
+  return window.innerWidth >= 992
+}
+
+function onMenuItemClick(event: any) {
+  if (event.item && !event.item.items) {
+    overlayMenuActive.value = false
+    mobileMenuActive.value = false
   }
 }
+
+function isSidebarVisible() {
+  if (isDesktop()) {
+    if (layoutMode.value === 'static') return !staticMenuInactive.value
+    else if (layoutMode.value === 'overlay') return overlayMenuActive.value
+  }
+
+  return true
+}
+
+function onMenuToggle() {
+  menuClick.value = true
+
+  if (isDesktop()) {
+    if (layoutMode.value === 'overlay') {
+      if (mobileMenuActive.value === true) {
+        overlayMenuActive.value = true
+      }
+
+      overlayMenuActive.value = !overlayMenuActive.value
+      mobileMenuActive.value = false
+    } else if (layoutMode.value === 'static') {
+      staticMenuInactive.value = !staticMenuInactive.value
+    }
+  } else {
+    mobileMenuActive.value = !mobileMenuActive.value
+  }
+
+  // event.preventDefault()
+}
+
+onBeforeUpdate(() => {
+  if (mobileMenuActive.value) {
+    if (mobileMenuActive.value) {
+      addClass(document.body, 'body-overflow-hidden')
+    } else {
+      removeClass(document.body, 'body-overflow-hidden')
+    }
+  }
+})
 </script>
 
 <style lang="scss">

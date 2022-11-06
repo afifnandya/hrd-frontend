@@ -64,6 +64,7 @@
                 v-model="password"
                 placeholder="Password"
                 :toggle-mask="true"
+                :feedback="false"
                 class="w-full mb-3"
                 input-class="w-full"
                 input-style="padding:1rem"

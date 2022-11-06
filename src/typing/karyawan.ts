@@ -27,7 +27,7 @@ interface BPJS {
 interface AnggotaKeluarga {
   id: number
   name: string
-  relationship: string
+  relationship: 'Ibu' | 'Pasangan' | 'Anak' | string
   gender: string | null
   birthPlace: string | null
   birthDate: string | null
@@ -79,7 +79,10 @@ interface Karyawan {
   kategori: string
   telepon: string
   teleponDarurat: string
-  alamat: string
+  desa: ''
+  kecamatan: ''
+  kabupatenKota: ''
+  provinsi: ''
   rekening: Rekening
   keluar: Keluar
   mutasi: Mutasi

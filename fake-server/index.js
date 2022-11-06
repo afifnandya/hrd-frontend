@@ -1,9 +1,18 @@
 module.exports = () => {
   const { faker } = require('@faker-js/faker/locale/id_ID')
 
-  const data = { karyawan: [] }
-  // Create 50 users
-  for (let i = 0; i < 1; i++) {
+  const data = {
+    karyawan: [],
+    pelamar: {
+      data: [],
+      status: '',
+      message: '',
+      links: {}
+    }
+  }
+
+  // Create karyawan
+  for (let i = 0; i < 10; i++) {
     const karyawan = {
       nik: faker.datatype.number(),
       status: faker.helpers.arrayElement(['aktif', 'tidak aktif']),
@@ -90,6 +99,49 @@ module.exports = () => {
       kontrakSekarang: faker.helpers.arrayElement('pkwt1', 'pkwt2', '')
     }
     data.karyawan.push(karyawan)
+  }
+
+  // create freelance
+  for (let i = 0; i < 10; i++) {
+    const pelamar = {
+      ktp: faker.datatype.uuid(),
+      id: faker.datatype.uuid(),
+      tanggalBerkasMasuk: '2022-10-22',
+      noBantex: faker.datatype.uuid(),
+      status: 'pelamar',
+      kategori: faker.helpers.arrayElement(['operator', 'umum']),
+      nik: faker.datatype.uuid(),
+      nama: faker.name.fullName(),
+      tempatLahir: faker.address.cityName(),
+      tanggalLahir: faker.date.birthdate(),
+      jenisKelamin: faker.helpers.arrayElement(['laki-lakir', 'perempuan']),
+      zonaIndustri: faker.helpers.arrayElement([
+        'nasional',
+        'lingkar industri'
+      ]),
+      alamat: {
+        desa: faker.address.cityName(),
+        kecamatan: faker.address.cityName(),
+        kabupaten: faker.address.cityName(),
+        provinsi: faker.address.cityName()
+      },
+      agama: 'islam',
+      statusPernikahan: faker.helpers.arrayElement(['kawin', 'belum kawin']),
+      nomorTelpon: {
+        telpon1: faker.phone.number('+62##########'),
+        telpon2: faker.phone.number('+62##########')
+      },
+      pendidikan: faker.helpers.arrayElement(['SMA', 'SMK', 'MA']),
+      jurusan: 'IPA',
+      sertifikat: '',
+      nomerPencariKerja: faker.datatype.uuid(),
+      rekomendasi: '',
+      sim: '',
+      pengalamanKerja: '',
+      posisiYangDilamar: '',
+      keterangan: ''
+    }
+    data.pelamar.data.push(pelamar)
   }
   return data
 }

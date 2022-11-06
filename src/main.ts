@@ -5,9 +5,11 @@ import 'primevue/resources/themes/lara-light-indigo/theme.css'
 import './assets/styles/layout.scss'
 import './assets/demo/flags/flags.css'
 import './assets/styles/index.css'
-
+import { createPinia } from 'pinia'
 import { createApp, reactive } from 'vue'
 import router from './router'
+import i18n from './i18n'
+
 import AppWrapper from './AppWrapper.vue'
 import PrimeVue from 'primevue/config'
 import AutoComplete from 'primevue/autocomplete'
@@ -198,5 +200,7 @@ app.component('TreeTable', TreeTable)
 app.component('TriStateCheckbox', TriStateCheckbox)
 
 app.component('BlockViewer', BlockViewer)
-
+const pinia = createPinia()
+app.use(pinia)
+app.use(i18n)
 app.mount('#app')

@@ -38,6 +38,9 @@
         </button>
       </li> -->
       <li>
+        <Dropdown v-model="selectedLang" :options="availableLang"></Dropdown>
+      </li>
+      <li>
         <button
           class="p-link layout-topbar-button"
           aria-haspopup="true"
@@ -53,10 +56,29 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import logo from '@/assets/images/logo.jpeg'
 import { logOut } from './service/user'
-export default {
+import { useAppStore } from '@/stores/app'
+import { defineComponent, ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
+import Dropdown from 'primevue/dropdown'
+
+export default defineComponent({
+  setup() {
+    const app = useAppStore()
+    const { availableLang, lang } = storeToRefs(app)
+    const selectedLang = ref(lang.value)
+
+    watch(selectedLang, (newVal) => {
+      app.changLang(newVal as 'en' | 'id' | 'ch')
+    })
+    return {
+      selectedLang,
+      availableLang,
+      lang
+    }
+  },
   data() {
     return {
       items: [
@@ -77,11 +99,6 @@ export default {
       logo
     }
   },
-  computed: {
-    darkTheme() {
-      return this.$appState.darkTheme
-    }
-  },
   methods: {
     toggle(event) {
       this.$refs.menu.toggle(event)
@@ -93,5 +110,5 @@ export default {
       this.$emit('topbar-menu-toggle', event)
     }
   }
-}
+})
 </script>

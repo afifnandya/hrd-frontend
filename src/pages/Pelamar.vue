@@ -1,12 +1,22 @@
 <template>
   <div class="w-full">
     <div class="card">
-      <h5 class="mb-6 text-xl font-bold">Karyawan</h5>
+      <div class="flex items-center justify-between">
+        <h5 class="mb-6 text-xl font-bold">Pelamar</h5>
+        <div>
+          <button
+            class="button button-primary"
+            @click="$router.push({ name: ROUTE_ADD_PELAMAR })"
+          >
+            Tambah Calon Pelamar
+          </button>
+        </div>
+      </div>
 
       <DataTable
         v-model:filters="tableFilters"
-        v-model:contextMenuSelection="selectedKaryawan"
-        :value="karyawans"
+        v-model:contextMenuSelection="selectedPelamar"
+        :value="pelamars"
         :scrollable="true"
         :paginator="true"
         paginator-template="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -76,6 +86,43 @@
           </template>
         </Column>
         <Column
+          field="noBantex"
+          header="Nomor Bantex"
+          class="table-column-medium"
+          :show-filter-menu="false"
+        >
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText
+              v-model="filterModel.value"
+              type="text"
+              class=""
+              placeholder="Search by Bantex"
+              @keydown.enter="filterCallback()"
+            />
+          </template>
+        </Column>
+        <Column
+          field="tanggalBerkasMasuk"
+          header="Tanggal Berkas Masuk"
+          class="table-column-small"
+        ></Column>
+        <Column
+          field="kategori"
+          header="Kategori"
+          class="table-column-medium"
+          :show-filter-menu="false"
+        >
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText
+              v-model="filterModel.value"
+              type="text"
+              class=""
+              placeholder="Search by Kategori"
+              @keydown.enter="filterCallback()"
+            />
+          </template>
+        </Column>
+        <Column
           field="status"
           header="Status"
           class="capitalize table-column-medium"
@@ -133,24 +180,13 @@
           </template>
         </Column>
         <Column
-          field="perusahaan.nama"
-          header="Perusahaan"
+          field="statusPernikahan"
+          header="Status Pernikahan"
           class="capitalize table-column-medium"
         ></Column>
         <Column
-          field="departement"
-          header="Departemen"
-          class="capitalize w-[200px]"
-        ></Column>
-
-        <Column
-          field="jabatan.name"
-          header="Jabatan"
-          class="capitalize table-column-medium"
-        ></Column>
-        <Column
-          field="divisi.name"
-          header="Divisi"
+          field="pendidikan"
+          header="Pendidikan"
           class="capitalize table-column-medium"
         ></Column>
         <Column field="umur" header="Umur" class="table-column-small"></Column>
@@ -159,51 +195,76 @@
           header="Agama"
           class="table-column-small"
         ></Column>
+        <Column field="sim" header="SIM" class="table-column-small"></Column>
         <Column
-          field="asalPOH"
-          header="Asal POH"
-          class="table-column-medium"
+          field="keterangan"
+          header="Keterangan"
+          class="table-column-small"
         ></Column>
         <Column
-          field="kerjaPOH"
-          header="Kerja POH"
+          field="nomorPencariKerja"
+          header="Nomor Pencari Kerja"
+          class="table-column-small"
+        ></Column>
+        <Column
+          field="nomorTelpon.telpon1"
+          header="Telpon 1"
+          class="table-column-small"
+        ></Column>
+        <Column
+          field="nomorTelpon.telpon2"
+          header="Telpon 2"
+          class="table-column-small"
+        ></Column>
+        <Column
+          field="posisiYangDilamar"
+          header="Posisi Yang Dilamar"
+          class="table-column-small"
+        ></Column>
+        <Column
+          field="rekomendasi"
+          header="Rekomendasi"
+          class="table-column-small"
+        ></Column>
+        <Column
+          field="zonaIndustri"
+          header="Zona Industri"
           class="table-column-medium"
         ></Column>
       </DataTable>
 
       <ContextMenu ref="contextMenuRef" :model="contextMenuItem" />
+
       <Dialog
-        v-model:visible="showDeleteKaryawanModal"
-        header="Hapus Karyawan"
+        v-model:visible="showMutasiModal"
+        header="Mutasi Pelamar Jadi Karyawan"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '50vw' }"
         :modal="true"
       >
-        <div class="mb-6">
-          Apakah anda yakin ingin mengahpus karyawan
-          {{ selectedKaryawan?.nama }} ?
-        </div>
-
-        <div class="flex items-center justify-end">
-          <button class="mr-2 button">Cancel</button>
-          <button class="button button-primary">Ok</button>
-        </div>
+        <FormEditPelamar
+          :pelamar="{
+            nama: selectedPelamar?.nama,
+            nomorKtp: `${selectedPelamar?.ktp}`,
+            perusahaan: selectedPelamar?.zonaIndustri
+          }"
+        />
       </Dialog>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { getKaryawan } from '@/service/karyawan'
-import type { Karyawan } from '@/typing/karyawan'
+import { getPelamar } from '@/service/pelamar'
+import type { PelamarInstance } from '@/typing/pelamar'
 import { onMounted, reactive, ref, Ref } from 'vue'
 import { isAuthenticated } from '@/service/user'
+import { useToast } from 'primevue/usetoast'
 import { ROUTE_KARYAWAN_DETAIL } from '@/constants'
 import GenderIcon from '@/components/icons/GenderIcon.vue'
 import ContextMenu from 'primevue/contextmenu'
-import { TOAST_TIMEOUT } from '@/constants'
-import { useToast } from 'primevue/usetoast'
-import Dialog from 'primevue/dialog'
+import { TOAST_TIMEOUT, ROUTE_ADD_PELAMAR } from '@/constants'
+import FormEditPelamar from '@/page_components/pelamar/FormEditPelamar.vue'
 
 type PageChangeEvent = {
   page: number
@@ -211,7 +272,7 @@ type PageChangeEvent = {
   rows: number
 }
 
-const karyawans: Ref<Karyawan[]> = ref([])
+const pelamars: Ref<PelamarInstance[]> = ref([])
 const isLoading = ref(false)
 const totalData = ref(50)
 const page = reactive({
@@ -222,46 +283,39 @@ const tableFilters = ref({
   nik: { value: '', matchMode: 'contains' },
   nama: { value: '', matchMode: 'contains' },
   status: { value: '', matchMode: 'contains' },
-  jenisKelamin: { value: '', matchMode: 'contains' }
+  jenisKelamin: { value: '', matchMode: 'contains' },
+  noBantex: { value: '', matchMode: 'contains' },
+  kategori: { value: '', matchMode: 'contains' }
 })
 const karyawanStatus = ['Akitif', 'Tidak aktif']
 const karyawanJenisKelamin = ['Laki-laki', 'Perempuan']
-const selectedKaryawan = ref<Karyawan>()
+const selectedPelamar = ref<PelamarInstance>()
 
 const toast = useToast()
-const showDeleteKaryawanModal = ref(false)
+const showMutasiModal = ref(false)
 const contextMenuRef = ref()
 const contextMenuItem = [
   {
-    label: 'Edit Karyawan',
-    icon: 'pi pi-fw pi-pencil',
-    command: () => test(selectedKaryawan.value)
-  },
-  {
-    label: 'Non Aktifkan Karyawan',
-    icon: 'pi pi-fw pi-pause',
-    command: () => test(selectedKaryawan.value)
-  },
-  {
-    label: 'Hapus Karyawan',
-    icon: 'pi pi-fw pi-trash',
+    label: 'Mutasi Jadi Karyawan',
+    // icon: 'pi pi-fw pi-search',
     command: () => {
-      showDeleteKaryawanModal.value = true
+      showMutasiModal.value = true
     }
   }
 ]
 
-async function getKaryawanList() {
+async function getPelamarList() {
   try {
     isLoading.value = true
-    const { success, data, links, message, meta } = await getKaryawan({
-      pageNumber: page.number,
-      limit: page.size,
-      name: tableFilters.value.nama.value,
-      nik: tableFilters.value.nik.value,
-      activeStatus: tableFilters.value.status.value,
-      gender: tableFilters.value.jenisKelamin.value
+    const { success, data, links, message, meta } = await getPelamar({
+      // pageNumber: page.number,
+      // limit: page.size,
+      // name: tableFilters.value.nama.value,
+      // nik: tableFilters.value.nik.value,
+      // activeStatus: tableFilters.value.status.value,
+      // gender: tableFilters.value.jenisKelamin.value
     })
+    console.log(success, data)
     if (!success) {
       toast.add({
         severity: 'error',
@@ -271,8 +325,10 @@ async function getKaryawanList() {
       })
       return
     }
-    karyawans.value = data
-    isLoading.value = false
+    if (data) {
+      pelamars.value = data
+      isLoading.value = false
+    }
   } catch (err) {
     console.log('err', err)
   }
@@ -288,32 +344,31 @@ function onPageChange(event: PageChangeEvent) {
     page.number = newPage
   }
   page.size = event.rows
-  getKaryawanList()
-  console.log('aa', event)
+  getPelamarList()
 }
 
 function onFilter(event: any) {
   console.log('onFilter', event)
-  getKaryawanList()
+  getPelamarList()
 }
 
 function onSort(event: any) {
   console.log('sort', event)
-  getKaryawanList()
+  getPelamarList()
 }
 
-function test(karyawan: Karyawan | undefined) {
+function test(karyawan: PelamarInstance | undefined) {
   console.log('kar', karyawan)
 }
 
 onMounted(() => {
-  getKaryawanList()
+  getPelamarList()
   isAuthenticated()
 })
 </script>
 <script lang="ts">
 export default {
-  name: 'Karyawan'
+  name: 'Pelamar'
 }
 </script>
 

@@ -1,4 +1,4 @@
-export function isString(val: string): string {
+export function isString(val: string | undefined | null): string {
   return typeof val === 'string' ? val : ''
 }
 

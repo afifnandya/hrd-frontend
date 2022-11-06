@@ -2,26 +2,18 @@
   <div class="p-10 bg-white">
     <DataTable
       ref="dt"
-      :value="jabatans"
+      :value="pasangan"
       :loading="loading"
       data-key="id"
       :paginator="true"
       :rows="10"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[5, 10, 25]"
-      current-page-report-template="Showing {first} to {last} of {totalRecords} Jabatan"
+      current-page-report-template="Showing {first} to {last} of {totalRecords} Divisi"
       responsive-layout="scroll"
       scroll-height="400px"
       scrollable
     >
-      <template #header>
-        <div
-          class="flex flex-column md:flex-row md:justify-content-between md:items-center"
-        >
-          <h5 class="m-0">Master Jabatan</h5>
-        </div>
-      </template>
-
       <Column
         field="no"
         header="Id"
@@ -34,7 +26,17 @@
       </Column>
       <Column field="Nama" header="Nama" :sortable="true">
         <template #body="{ data }">
-          {{ data.nama }}
+          {{ data.name }}
+        </template>
+      </Column>
+      <Column field="birthDate" header="Tanggal Lahir" :sortable="true">
+        <template #body="{ data }">
+          {{ data.birthDate }}
+        </template>
+      </Column>
+      <Column field="birthPlace" header="Tempat Lahir" :sortable="true">
+        <template #body="{ data }">
+          {{ data.birthPlace }}
         </template>
       </Column>
       <Column header-style="min-width:10rem;">
@@ -56,14 +58,18 @@
     <Dialog
       v-model:visible="showModal.edit"
       :style="{ width: '450px' }"
-      header="Edit Jabatan"
+      header="Edit Divisi"
       :modal="true"
       class="p-fluid"
     >
       <div class="field">
-        <label for="jabatanNama">Nama</label>
+        <label for="divisiNama">Nama</label>
 
-        <InputText id="jabatanNama" type="text" :value="selectedJabatan.nama" />
+        <InputText
+          id="divisiNama"
+          type="text"
+          :value="selectedAnggotaKeluarga?.name"
+        />
       </div>
 
       <template #footer>
@@ -77,7 +83,7 @@
           label="Save"
           icon="pi pi-check"
           class="p-button-text"
-          @click="editData(selectedJabatan)"
+          @click="editData(selectedAnggotaKeluarga)"
         />
       </template>
     </Dialog>
@@ -91,7 +97,8 @@
       <div class="flex items-center justify-center">
         <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
         <span
-          >Are you sure you want to delete <b>{{ selectedJabatan.nama }}</b
+          >Are you sure you want to delete
+          <b>{{ selectedAnggotaKeluarga?.name }}</b
           >?</span
         >
       </div>
@@ -106,7 +113,7 @@
           label="Yes"
           icon="pi pi-check"
           class="p-button-text"
-          @click="deleteData(selectedJabatan)"
+          @click="deleteData(selectedAnggotaKeluarga)"
         />
       </template>
     </Dialog>
@@ -121,51 +128,31 @@ import Button from 'primevue/button'
 
 import { onMounted, reactive, ref } from 'vue'
 
-import { getJabatan } from '@/api/master/getJabatan'
-import { Jabatan } from '@/typing/dataMaster'
+import { AnggotaKeluarga } from '@/typing/karyawan'
+
+defineProps<{ pasangan: AnggotaKeluarga[] }>()
 
 const loading = ref(false)
-const jabatans = ref<Jabatan[]>([])
 
-const selectedJabatan: Jabatan = reactive({
-  id: 0,
-  nama: ''
-})
+const selectedAnggotaKeluarga = ref<AnggotaKeluarga>()
 
 const showModal = reactive({
   delete: false,
   edit: false
 })
 
-onMounted(async () => {
-  loading.value = true
-  const { success, data, message } = await getJabatan()
-  if (success && data) {
-    jabatans.value = data.map((jabatan) => {
-      return {
-        id: jabatan.id,
-        nama: jabatan.name
-      }
-    })
-    loading.value = false
-    return
-  }
-})
-
-function editData(data: Jabatan) {
-  selectedJabatan.id = data.id
-  selectedJabatan.nama = data.nama
+function editData(data?: AnggotaKeluarga) {
+  selectedAnggotaKeluarga.value = data
   showModal.edit = true
 }
 
-function deleteData(data: Jabatan) {
-  selectedJabatan.id = data.id
-  selectedJabatan.nama = data.nama
+function deleteData(data?: AnggotaKeluarga) {
+  selectedAnggotaKeluarga.value = data
   showModal.delete = true
 }
 </script>
 <script lang="ts">
 export default {
-  name: 'MasterJabatanPage'
+  name: 'KaryawanPasangan'
 }
 </script>
