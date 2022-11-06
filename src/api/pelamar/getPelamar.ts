@@ -68,7 +68,7 @@ export interface GetPelamarResponse {
   links: Links
 }
 
-export type GetPelamarPayload = Partial<Pelamar> & {
+export type GetPelamarPayload = Partial<PelamarAttributes> & {
   limit?: number
   pageNumber?: number
 }

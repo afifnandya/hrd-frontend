@@ -308,12 +308,12 @@ async function getPelamarList() {
   try {
     isLoading.value = true
     const { success, data, links, message, meta } = await getPelamar({
-      // pageNumber: page.number,
-      // limit: page.size,
-      // name: tableFilters.value.nama.value,
-      // nik: tableFilters.value.nik.value,
-      // activeStatus: tableFilters.value.status.value,
-      // gender: tableFilters.value.jenisKelamin.value
+      pageNumber: page.number,
+      limit: page.size,
+      name: tableFilters.value.nama.value,
+      nik: tableFilters.value.nik.value,
+      status: tableFilters.value.status.value,
+      gender: tableFilters.value.jenisKelamin.value
     })
     console.log(success, data)
     if (!success) {
