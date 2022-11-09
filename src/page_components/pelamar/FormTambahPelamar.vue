@@ -74,7 +74,14 @@
       </div>
       <div class="input-group">
         <div class="font-bold input-label">Kategori Wilayah</div>
-        <InputText v-model="state.zonaIndustri" type="text" class="w-full" />
+        <Dropdown
+          v-model="state.zonaIndustri"
+          placeholder="Pilih Wilayah"
+          class="w-full"
+          option-label="area"
+          option-value="code"
+          :options="areaList"
+        />
       </div>
       <div class="input-group">
         <div class="font-bold input-label">Alamat/Desa</div>
@@ -203,11 +210,13 @@
 
       <div class="input-group">
         <div class="font-bold input-label">Posisi Yang Dilamar</div>
-        <InputText
+        <Dropdown
           v-model="state.posisiYangDilamar"
-          type="text"
           placeholder="Pilih Posisi Yang Dilamar"
           class="w-full"
+          option-label="nama"
+          :options="posisiList"
+          option-value="id"
         />
       </div>
     </div>
@@ -236,7 +245,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { email, required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import Calendar from 'primevue/calendar'
@@ -252,11 +261,17 @@ import {
   ROUTE_PELAMAR
 } from '@/constants'
 import useToast from '@/composable/useToast'
+import { getPosisi } from '@/api/master/getPosisi'
+import { Posisi } from '@/typing/dataMaster'
+import { getArea } from '@/api/master/getArea'
+import { Area } from '@/typing/dataMaster'
 
 const toast = useToast()
 
 const activeStatusList = ['Aktif', 'Tidak Aktif']
 const statusList = ['Pelamar', 'Training']
+const posisiList = ref<Posisi[]>([])
+const areaList = ref<Area[]>([])
 
 const isLoading = ref(false)
 const state: Pelamar = reactive({
@@ -326,6 +341,40 @@ async function create() {
   }
   isLoading.value = false
 }
+
+async function getPosisiList() {
+  const { success, data, message } = await getPosisi()
+  if (!success || !data) {
+    if (message) {
+      toast.error(message)
+    }
+    return
+  }
+  posisiList.value = data.map((posisi) => {
+    return { id: posisi.id, nama: posisi.name }
+  })
+}
+
+async function getAreaList() {
+  const { success, data, message } = await getArea()
+  if (!success || !data) {
+    if (message) {
+      toast.error(message)
+    }
+    return
+  }
+  areaList.value = data.map((area) => {
+    return {
+      code: area.code.toString(),
+      area: area.area
+    }
+  })
+}
+
+onMounted(() => {
+  getPosisiList()
+  getAreaList()
+})
 </script>
 <script lang="ts">
 export default {
