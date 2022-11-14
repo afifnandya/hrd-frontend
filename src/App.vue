@@ -27,8 +27,9 @@ import AppTopBar from './AppTopbar.vue'
 import AppMenu from './AppMenu.vue'
 import AppFooter from './AppFooter.vue'
 import { useI18n } from 'vue-i18n'
-import { reactive, ref, computed, onBeforeUpdate } from 'vue'
-
+import { reactive, ref, computed, onBeforeUpdate, onMounted } from 'vue'
+import { useAppStore } from '@/stores/app'
+const appStore = useAppStore()
 defineEmits(['change-theme'])
 
 const { t } = useI18n({
@@ -75,9 +76,9 @@ const menu = reactive([
         to: '/master/area'
       },
       {
-        label: 'posisi',
+        label: 'perusahaan',
         icon: 'pi pi-fw pi-box',
-        to: '/master/posisi'
+        to: '/master/perusahaan'
       }
       // {
       //   label: 'kategori',
@@ -191,6 +192,14 @@ function onMenuToggle() {
 
   // event.preventDefault()
 }
+
+onMounted(() => {
+  appStore.getArea()
+  appStore.getDepartment()
+  appStore.getDivisi()
+  appStore.getJabatan()
+  appStore.getPerusahaan()
+})
 
 onBeforeUpdate(() => {
   if (mobileMenuActive.value) {

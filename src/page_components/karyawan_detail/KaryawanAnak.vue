@@ -2,7 +2,7 @@
   <div class="p-10 bg-white">
     <DataTable
       ref="dt"
-      :value="pasangan"
+      :value="anak"
       :loading="loading"
       data-key="id"
       responsive-layout="scroll"
@@ -128,7 +128,7 @@ import { onMounted, reactive, ref } from 'vue'
 
 import { AnggotaKeluarga } from '@/typing/karyawan'
 
-defineProps<{ pasangan: AnggotaKeluarga[] }>()
+defineProps<{ anak: AnggotaKeluarga[] }>()
 
 const loading = ref(false)
 
@@ -151,6 +151,6 @@ function deleteData(data?: AnggotaKeluarga) {
 </script>
 <script lang="ts">
 export default {
-  name: 'KaryawanPasangan'
+  name: 'KaryawanAnak'
 }
 </script>

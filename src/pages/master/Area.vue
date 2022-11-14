@@ -42,12 +42,12 @@
           <Button
             icon="pi pi-pencil"
             class="mr-2 p-button-rounded p-button-success"
-            @click="editData(slotProps.data)"
+            @click="showEditModal(slotProps.data)"
           />
           <Button
             icon="pi pi-trash"
             class="mt-2 p-button-rounded p-button-warning"
-            @click="deleteData(slotProps.data)"
+            @click="showDeleteModal(slotProps.data)"
           />
         </template>
       </Column>
@@ -63,7 +63,7 @@
       <div class="field">
         <label for="divisiNama">Nama</label>
 
-        <InputText id="divisiNama" type="text" :value="selectedArea.area" />
+        <InputText id="divisiNama" v-model="selectedArea.area" type="text" />
       </div>
 
       <template #footer>
@@ -77,7 +77,7 @@
           label="Save"
           icon="pi pi-check"
           class="p-button-text"
-          @click="editData(selectedArea)"
+          @click="editData"
         />
       </template>
     </Dialog>
@@ -106,7 +106,7 @@
           label="Yes"
           icon="pi pi-check"
           class="p-button-text"
-          @click="deleteData(selectedArea)"
+          @click="deleteData"
         />
       </template>
     </Dialog>
@@ -120,12 +120,15 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 
 import { onMounted, reactive, ref } from 'vue'
-
+import useToast from '@/composable/useToast'
 import { getArea } from '@/api/master/getArea'
+import { editArea } from '@/api/master/editArea'
 import { Area } from '@/typing/dataMaster'
+import { deleteArea } from '@/api/master/deleteArea'
 
 const loading = ref(false)
 const areas = ref<any[]>([])
+const toast = useToast()
 
 const selectedArea: Area = reactive({
   code: '',
@@ -137,7 +140,7 @@ const showModal = reactive({
   edit: false
 })
 
-onMounted(async () => {
+async function getData() {
   loading.value = true
   const { success, data, message } = await getArea()
   if (success && data) {
@@ -145,18 +148,51 @@ onMounted(async () => {
     loading.value = false
     return
   }
+}
+
+onMounted(() => {
+  getData()
 })
 
-function editData(data: Area) {
+function showEditModal(data: Area) {
   selectedArea.code = data.code
   selectedArea.area = data.area
   showModal.edit = true
 }
 
-function deleteData(data: Area) {
+async function editData() {
+  const { success, message } = await editArea({
+    code: selectedArea.code,
+    area: selectedArea.area
+  })
+  if (message) {
+    if (success) {
+      toast.success(message)
+    } else {
+      toast.error(message)
+    }
+  }
+  showModal.edit = false
+  getData()
+}
+
+function showDeleteModal(data: Area) {
   selectedArea.code = data.code
   selectedArea.area = data.area
   showModal.delete = true
+}
+
+async function deleteData() {
+  const { success, message } = await deleteArea({ code: selectedArea.code })
+  if (message) {
+    if (success) {
+      toast.success(message)
+    } else {
+      toast.error(message)
+    }
+  }
+  showModal.delete = false
+  getData()
 }
 </script>
 <script lang="ts">

@@ -1,27 +1,27 @@
 <template>
   <div class="p-10 bg-white">
+    <div class="flex items-center justify-between mb-6">
+      <h5 class="text-xl font-bold">Master Perusahaan</h5>
+      <div>
+        <button class="button button-primary" @click="showAddModal">
+          Tambah Perusahaan
+        </button>
+      </div>
+    </div>
     <DataTable
       ref="dt"
-      :value="departments"
+      :value="perusahaans"
       :loading="loading"
       data-key="id"
       :paginator="true"
       :rows="10"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[5, 10, 25]"
-      current-page-report-template="Showing {first} to {last} of {totalRecords} Divisi"
+      current-page-report-template="Showing {first} to {last} of {totalRecords} Perusahaan"
       responsive-layout="scroll"
       scroll-height="400px"
       scrollable
     >
-      <template #header>
-        <div
-          class="flex flex-column md:flex-row md:justify-content-between md:items-center"
-        >
-          <h5 class="m-0">Master Departemen</h5>
-        </div>
-      </template>
-
       <Column
         field="no"
         header="Id"
@@ -32,9 +32,14 @@
           {{ data.id }}
         </template>
       </Column>
-      <Column field="Nama" header="Nama" :sortable="true">
+      <Column field="code" header="Code" :sortable="true">
         <template #body="{ data }">
-          {{ data.nama }}
+          {{ data.code }}
+        </template>
+      </Column>
+      <Column field="nama" header="Nama" :sortable="true">
+        <template #body="{ data }">
+          {{ data.name }}
         </template>
       </Column>
       <Column header-style="min-width:10rem;">
@@ -56,16 +61,16 @@
     <Dialog
       v-model:visible="showModal.edit"
       :style="{ width: '450px' }"
-      header="Edit Divisi"
+      header="Edit Perusahaan"
       :modal="true"
       class="p-fluid"
     >
       <div class="field">
-        <label for="divisiNama">Nama</label>
+        <label for="perusahaanNama">Nama</label>
 
         <InputText
-          id="divisiNama"
-          v-model="selectedDepartmen.nama"
+          id="perusahaanNama"
+          v-model="selectedPerusahaan.name"
           type="text"
         />
       </div>
@@ -81,7 +86,51 @@
           label="Save"
           icon="pi pi-check"
           class="p-button-text"
-          @click="editData()"
+          :disabled="!selectedPerusahaan.id || !selectedPerusahaan.name"
+          @click="editData"
+        />
+      </template>
+    </Dialog>
+
+    <Dialog
+      v-model:visible="showModal.add"
+      :style="{ width: '450px' }"
+      header="Add Perusahaan"
+      :modal="true"
+      class="p-fluid"
+    >
+      <div class="field">
+        <label for="perusahaanCode">Code</label>
+
+        <InputText
+          id="perusahaanCode"
+          v-model="createPerusahaan.code"
+          type="text"
+        />
+      </div>
+      <div class="field">
+        <label for="perusahaanNama">Nama</label>
+
+        <InputText
+          id="perusahaanNama"
+          v-model="createPerusahaan.name"
+          type="text"
+        />
+      </div>
+
+      <template #footer>
+        <Button
+          label="Cancel"
+          icon="pi pi-times"
+          class="p-button-text"
+          @click="showModal.add = false"
+        />
+        <Button
+          label="Save"
+          icon="pi pi-check"
+          class="p-button-text"
+          :disabled="!createPerusahaan.name"
+          @click="tambahPerusahaan"
         />
       </template>
     </Dialog>
@@ -95,7 +144,7 @@
       <div class="flex items-center justify-center">
         <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
         <span
-          >Are you sure you want to delete <b>{{ selectedDepartmen.nama }}</b
+          >Are you sure you want to delete <b>{{ selectedPerusahaan.name }}</b
           >?</span
         >
       </div>
@@ -125,22 +174,31 @@ import Button from 'primevue/button'
 
 import { onMounted, reactive, ref } from 'vue'
 import useToast from '@/composable/useToast'
-import { getDepartment } from '@/api/master/getDepartmen'
-import { editDepartment } from '@/api/master/editDepartment'
-import { deleteDepartment } from '@/api/master/deleteDepartment'
-import { Divisi as Department } from '@/typing/dataMaster'
+import { getCompany } from '@/api/master/getCompany'
+import { editCompany } from '@/api/master/editCompany'
+import { createCompany } from '@/api/master/createCompany'
+import { deleteCompany } from '@/api/master/deleteCompany'
+import { Peruahaan } from '@/typing/dataMaster'
 
 const loading = ref(false)
-const departments = ref<any[]>([])
+const perusahaans = ref<Peruahaan[]>([])
 const toast = useToast()
-const selectedDepartmen: Department = reactive({
+
+const selectedPerusahaan: Peruahaan = reactive({
   id: 0,
-  nama: ''
+  name: '',
+  code: ''
+})
+
+const createPerusahaan = reactive({
+  name: '',
+  code: ''
 })
 
 const showModal = reactive({
   delete: false,
-  edit: false
+  edit: false,
+  add: false
 })
 
 onMounted(async () => {
@@ -149,12 +207,13 @@ onMounted(async () => {
 
 async function getData() {
   loading.value = true
-  const { success, data, message } = await getDepartment()
+  const { success, data, message } = await getCompany()
   if (success && data) {
-    departments.value = data.map((divisi) => {
+    perusahaans.value = data.map((perusahaan) => {
       return {
-        id: divisi.id,
-        nama: divisi.name
+        id: perusahaan.id,
+        code: perusahaan.code,
+        name: perusahaan.name
       }
     })
     loading.value = false
@@ -162,16 +221,37 @@ async function getData() {
   }
 }
 
-function showEditModal(data: Department) {
-  selectedDepartmen.id = data.id
-  selectedDepartmen.nama = data.nama
+function showEditModal(data: Peruahaan) {
+  selectedPerusahaan.id = data.id
+  selectedPerusahaan.code = data.code
+  selectedPerusahaan.name = data.name
   showModal.edit = true
 }
 
+function showAddModal() {
+  showModal.add = true
+}
+
+async function tambahPerusahaan() {
+  const { success, message } = await createCompany({
+    name: createPerusahaan.name,
+    code: createPerusahaan.code
+  })
+  if (message) {
+    if (success) {
+      toast.success(message)
+    } else {
+      toast.error(message)
+    }
+  }
+  showModal.add = false
+  getCompany()
+}
+
 async function editData() {
-  const { success, message } = await editDepartment({
-    id: selectedDepartmen.id,
-    name: selectedDepartmen.nama
+  const { success, message } = await editCompany({
+    id: selectedPerusahaan.id,
+    name: selectedPerusahaan.name
   })
   if (message) {
     if (success) {
@@ -184,15 +264,15 @@ async function editData() {
   getData()
 }
 
-function showDeleteModal(data: Department) {
-  selectedDepartmen.id = data.id
-  selectedDepartmen.nama = data.nama
+function showDeleteModal(data: Peruahaan) {
+  selectedPerusahaan.id = data.id
+  selectedPerusahaan.name = data.name
   showModal.delete = true
 }
 
 async function deleteData() {
-  const { success, message } = await deleteDepartment({
-    id: selectedDepartmen.id
+  const { success, message } = await deleteCompany({
+    id: selectedPerusahaan.id
   })
   if (message) {
     if (success) {
@@ -207,6 +287,6 @@ async function deleteData() {
 </script>
 <script lang="ts">
 export default {
-  name: 'MasterDepartmentPage'
+  name: 'MasterPerusahaanPage'
 }
 </script>

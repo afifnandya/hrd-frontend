@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html{
+  font-size: 16px;
+}
+
 .button{
-  @apply px-3 py-1 text-lg leading-5 rounded-lg hover:bg-opacity-50 min-w-[50px] min-h-[30px] hover:bg-gray-200;
+  @apply px-3 py-1 text-lg leading-7 rounded-lg hover:bg-opacity-50 min-w-[50px] min-h-[30px] hover:bg-gray-200 border border-gray-100;
 }
 
 .button-large{
@@ -12,6 +16,10 @@
 
 .button-primary{
   @apply text-white bg-blue-500 hover:bg-blue-700;
+}
+
+.button-success{
+  @apply text-white bg-green-500 hover:bg-green-700;
 }
 
 .input-group{
@@ -27,4 +35,23 @@
 }
 .table-column-medium{
     width: 200px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }

@@ -1,4 +1,4 @@
-import useHttp from '@/composable/useHttp'
+import useAxios from '@/composable/useAxios'
 import { camelizeKeys, decamelizeKeys } from 'humps'
 import qs from 'qs'
 import { isEmpty } from 'lodash-es'
@@ -25,6 +25,7 @@ export interface KaryawanAttribute {
   nik: string
   name: string
   activeStatus: string
+  status: string
   departmentId: number
   grade: string
   positionLevel: string
@@ -32,12 +33,13 @@ export interface KaryawanAttribute {
   taxDependentStatus: string
   maritalStatus: null | string
   kk: string
-  kkUpdatedAt: null
+  kkUpdatedAt: string
   gender: string
   birthPlace: string
   birthDate: string
   religion: string
   city: string
+  province: string
   district: string
   address: string
   pohOrigin: string
@@ -51,6 +53,11 @@ export interface KaryawanAttribute {
   npwp: string
   bpjsKesehatan: string
   bpjsKetenagakerjaan: string
+  jobCategory: {
+    id: string | number
+    code: string
+    name: string
+  }
   company: {
     id: number
     code: string
@@ -130,8 +137,10 @@ export async function getKaryawan(payload: GetKaryawanPayload) {
   const url = payload.id
     ? `/employees/${payload.id}?${filter}`
     : `/employees?${filter}`
-  const { data: responseData } = await useHttp(url)
-  const response = camelizeKeys(responseData.value) as GetKaryawan
+  const { data: responseData } = await useAxios(url)
+  console.log('responseData', responseData)
+
+  const response = camelizeKeys(responseData) as GetKaryawan
   if (isEmpty(response)) {
     success = false
   } else {

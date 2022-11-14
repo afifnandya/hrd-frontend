@@ -2,52 +2,55 @@ import axios, { isAxiosError } from '@/composable/useAxios'
 import { camelizeKeys, decamelizeKeys } from 'humps'
 import { PelamarInstance } from '@/typing/pelamar'
 import dayjs from 'dayjs'
-import { isEmpty } from 'lodash-es'
+import { isEmpty, omitBy } from 'lodash-es'
 import isErrorWithMessage from '@/helper/isErrorWithMessage'
 import { DEFAULT_ERROR_MESSAGE } from '@/constants'
 
-export interface CreatePelamarAPIResponse {
-  status: number
-  message: string
-  data?: {
-    bantexCode: string
-    ktp: string
-    nik: null
-    name: string
-    status: string
-    birthPlace: string
-    birthDate: string
-    religion: string
-    maritalStatus: string
-    phone: string
-    phoneEmergency: string
-    sim: null
-    province: string
-    city: string
-    district: string
-    address: string
-    gender: string
-    experiences: null
-    certificationType: null
-    certification: null
-    educationStage: string
-    educationMajor: string
-    recommendation: null
-    updatedAt: string
-    createdAt: string
-    id: number
-  }
-  errors?: Record<string, any>
+export interface UpdatePelamarPayload {
+  bantexCode: string
+  ktp: string
+  nik: number | string
+  name: string
+  status: string
+  activeStatus: string
+  birthPlace: string
+  birthDate: string
+  religion: string
+  maritalStatus: string
+  phone: string
+  phoneEmergency: string
+  sim: string
+  province: string
+  city: string
+  district: string
+  address: string
+  gender: string
+  experiences: string
+  certificationType: string
+  certification: string
+  educationStage: string
+  educationMajor: string
+  recommendation: string
+  areaCode: string | number
+  positionId: number | string
+  jobCategoryId: number | string
 }
 
-export function buildPayload(data: PelamarInstance) {
-  const payload = {
+export interface UpdatePelamarResponse {
+  data: any
+  message: string
+  status: number
+  errors: Record<string, any>
+}
+
+export function buildPayload(
+  data: PelamarInstance
+): Partial<UpdatePelamarPayload> {
+  const payload: UpdatePelamarPayload = {
     status: data.status,
     ktp: `${data.ktp}`,
-    // id: 0,
     jobCategoryId: data.kategori.id,
     bantexCode: data.noBantex,
-    nik: data.nik,
     name: data.nama,
     birthPlace: data.tempatLahir,
     birthDate: dayjs(data.tanggalLahir).format('YYYY-MM-DD'),
@@ -67,30 +70,35 @@ export function buildPayload(data: PelamarInstance) {
     educationStage: data.pendidikan,
     educationMajor: data.jurusan,
     recommendation: data.rekomendasi,
-    note: data.keterangan,
-    createdAt: dayjs(data.tanggalBerkasMasuk).format('YYYY-MM-DD'),
-    updatedAt: '',
     positionId: data.posisiYangDilamar.id,
-    areaCode: data.zonaIndustri
+    areaCode: data.zonaIndustri.code,
+    nik: data.nik,
+    activeStatus: data.statusAktif
   }
-  const parsedPayload = decamelizeKeys(payload)
+  const parsedPayload = omitBy(
+    decamelizeKeys(payload),
+    (value, key) => value === undefined
+  )
   console.log('b', parsedPayload)
   return parsedPayload
 }
 
-async function createPelamar(param: PelamarInstance) {
+export async function updatePelamar(
+  id: string | number,
+  param: PelamarInstance
+) {
   let isSuccess = false
   let message = null
   let data = null
   try {
     const payload = buildPayload(param)
     const response = await axios({
-      method: 'POST',
-      url: '/applicants',
+      method: 'PUT',
+      url: `/applicants/${id}`,
       data: payload
     })
 
-    const parsedData = response.data as CreatePelamarAPIResponse
+    const parsedData = response.data as UpdatePelamarResponse
     if (isEmpty(parsedData)) {
       return {
         data,
@@ -109,7 +117,7 @@ async function createPelamar(param: PelamarInstance) {
         message: message
       }
     }
-    if (parsedData.status === 201) {
+    if (parsedData.status === 200) {
       data = parsedData
       isSuccess = true
       message = parsedData.message
@@ -141,5 +149,3 @@ async function createPelamar(param: PelamarInstance) {
     }
   }
 }
-
-export default createPelamar

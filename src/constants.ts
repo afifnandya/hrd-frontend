@@ -1,10 +1,12 @@
 export const ROUTE_DASHBOARD = 'dashboard'
 export const ROUTE_KARYAWAN = 'karyawan'
+export const ROUTE_HARIAN_LEPAS = 'harianLepas'
 export const ROUTE_KARYAWAN_DETAIL = 'karyawanDetail'
 export const ROUTE_MASTER_JABATAN = 'masterJabatan'
 export const ROUTE_MASTER_DIVISI = 'masterDivisi'
 export const ROUTE_MASTER_DEPARTMEN = 'masterDepartmen'
 export const ROUTE_MASTER_AREA = 'masterArea'
+export const ROUTE_PELAMAR_DETAIL = 'pelamarDetail'
 export const ROUTE_PELAMAR = 'pelamar'
 export const ROUTE_ADD_PELAMAR = 'addPelamar'
 export const TOAST_TIMEOUT = 2000
@@ -71,3 +73,6 @@ export const PENDIDIKAN = [
   'S2',
   'S3'
 ]
+export const DEFAULT_ERROR_MESSAGE = 'Ops,Someting went wrong'
+export const KARYAWAN_NON_AKTIF = 'Tidak Aktif'
+export const KARYAWAN_AKTIF = 'Aktif'

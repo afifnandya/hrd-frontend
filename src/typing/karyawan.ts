@@ -1,3 +1,4 @@
+import { Area, KategoriPekerjaan } from '@/typing/dataMaster'
 interface Kontrak {
   id: number
   companyId: number
@@ -53,6 +54,7 @@ interface Karyawan {
   id: number
   nik: string
   status: string
+  statusAktif: string
   nama: string
   departement: number
   pendidikan: {
@@ -75,14 +77,15 @@ interface Karyawan {
   kabupatenKtp: string
   kecamatanKtp: string
   asalPOH: string
+  asalPOHKTP: string
   kerjaPOH: string
-  kategori: string
+  kategoriPOH: string
   telepon: string
   teleponDarurat: string
-  desa: ''
-  kecamatan: ''
-  kabupatenKota: ''
-  provinsi: ''
+  jalan: string
+  kecamatan: string
+  kabupatenKota: string
+  provinsi: string
   rekening: Rekening
   keluar: Keluar
   mutasi: Mutasi
@@ -95,20 +98,38 @@ interface Karyawan {
   bpjs: BPJS
   sim: string
   kartuKeluarga: string
+  tanggalUpdateKartuKeluarga: string
   umur: number
   agama: string
   divisi: {
     id: string | number
-    name: string
+    nama: string
   }
   jabatan: {
     id: string | number
-    name: string
+    nama: string
   }
+  wilayah: Area
   grade: string
   dateOfHiring: string
   kontrakSebelumnya: string
   kontrakSekarang: string
+  kategoriPekerjaan: KategoriPekerjaan
 }
 
-export { Karyawan, Keluar, AnggotaKeluarga, Rekening, Kontrak, BPJS }
+interface KaryawanInstance extends Karyawan {
+  departmenName: string
+  getPasangan: () => AnggotaKeluarga[] | null
+  getAnak: () => AnggotaKeluarga[] | null
+  getOrangTua: () => AnggotaKeluarga[] | null
+}
+
+export {
+  Karyawan,
+  Keluar,
+  AnggotaKeluarga,
+  Rekening,
+  Kontrak,
+  BPJS,
+  KaryawanInstance
+}

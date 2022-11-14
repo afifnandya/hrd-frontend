@@ -5,3 +5,8 @@ Page Karyawan
 
 Page Karyawan  
  - tombol non aktifkan karyawan
+
+ samaan ui dengan yg sekarnag
+ganti umur -> 
+harian lepas -> 3 status, aktif, tidak aktif, mutasi
+dashboard -> status nikah ganti kategori wilayah karyawan

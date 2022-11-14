@@ -1,5 +1,11 @@
 <template>
   <div class="p-10 bg-white">
+    <div class="flex items-center justify-between mb-6">
+      <h5 class="text-xl font-bold">Master Jabatan</h5>
+      <div>
+        <button class="button button-primary" @click="">Tambah Jabatan</button>
+      </div>
+    </div>
     <DataTable
       ref="dt"
       :value="jabatans"
@@ -14,14 +20,6 @@
       scroll-height="400px"
       scrollable
     >
-      <template #header>
-        <div
-          class="flex flex-column md:flex-row md:justify-content-between md:items-center"
-        >
-          <h5 class="m-0">Master Jabatan</h5>
-        </div>
-      </template>
-
       <Column
         field="no"
         header="Id"
@@ -42,12 +40,12 @@
           <Button
             icon="pi pi-pencil"
             class="mr-2 p-button-rounded p-button-success"
-            @click="editData(slotProps.data)"
+            @click="showEditModal(slotProps.data)"
           />
           <Button
             icon="pi pi-trash"
             class="mt-2 p-button-rounded p-button-warning"
-            @click="deleteData(slotProps.data)"
+            @click="showDeleteModal(slotProps.data)"
           />
         </template>
       </Column>
@@ -63,7 +61,11 @@
       <div class="field">
         <label for="jabatanNama">Nama</label>
 
-        <InputText id="jabatanNama" type="text" :value="selectedJabatan.nama" />
+        <InputText
+          id="jabatanNama"
+          v-model="selectedJabatan.nama"
+          type="text"
+        />
       </div>
 
       <template #footer>
@@ -77,7 +79,8 @@
           label="Save"
           icon="pi pi-check"
           class="p-button-text"
-          @click="editData(selectedJabatan)"
+          :disabled="!selectedJabatan.id || !selectedJabatan.nama"
+          @click="editData"
         />
       </template>
     </Dialog>
@@ -106,7 +109,7 @@
           label="Yes"
           icon="pi pi-check"
           class="p-button-text"
-          @click="deleteData(selectedJabatan)"
+          @click="deleteData"
         />
       </template>
     </Dialog>
@@ -120,12 +123,15 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 
 import { onMounted, reactive, ref } from 'vue'
-
+import useToast from '@/composable/useToast'
 import { getJabatan } from '@/api/master/getJabatan'
+import { editJabatan } from '@/api/master/editJabatan'
+import { deleteJabatan } from '@/api/master/deleteJabatan'
 import { Jabatan } from '@/typing/dataMaster'
 
 const loading = ref(false)
 const jabatans = ref<Jabatan[]>([])
+const toast = useToast()
 
 const selectedJabatan: Jabatan = reactive({
   id: 0,
@@ -152,16 +158,35 @@ onMounted(async () => {
   }
 })
 
-function editData(data: Jabatan) {
+function showEditModal(data: Jabatan) {
   selectedJabatan.id = data.id
   selectedJabatan.nama = data.nama
   showModal.edit = true
 }
 
-function deleteData(data: Jabatan) {
+async function editData() {
+  const { success, message } = await editJabatan({
+    id: selectedJabatan.id,
+    name: selectedJabatan.nama
+  })
+  if (!success) {
+    toast.error(message)
+  }
+  showModal.edit = false
+}
+
+function showDeleteModal(data: Jabatan) {
   selectedJabatan.id = data.id
   selectedJabatan.nama = data.nama
   showModal.delete = true
+}
+
+async function deleteData() {
+  const { success, message } = await deleteJabatan({ id: selectedJabatan.id })
+  if (!success) {
+    toast.error(message)
+  }
+  showModal.delete = false
 }
 </script>
 <script lang="ts">

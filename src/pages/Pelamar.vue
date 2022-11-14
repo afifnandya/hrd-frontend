@@ -64,14 +64,14 @@
           <template #body="{ data }">
             <router-link
               class="text-blue-500 hover:underline hover:to-blue-400"
-              :to="{ name: ROUTE_KARYAWAN_DETAIL, params: { id: data.id } }"
+              :to="{ name: ROUTE_PELAMAR_DETAIL, params: { id: data.id } }"
               >{{ data.nama }}</router-link
             >
           </template>
         </Column>
         <Column
-          field="nik"
-          header="NIK"
+          field="ktp"
+          header="KTP"
           class="table-column-medium"
           :show-filter-menu="false"
         >
@@ -80,7 +80,7 @@
               v-model="filterModel.value"
               type="text"
               class=""
-              placeholder="Search by NIK"
+              placeholder="Search by KTP"
               @keydown.enter="filterCallback()"
             />
           </template>
@@ -112,6 +112,9 @@
           class="table-column-medium"
           :show-filter-menu="false"
         >
+          <template #body="{ data }">
+            {{ data.kategori?.name }}
+          </template>
           <template #filter="{ filterModel, filterCallback }">
             <InputText
               v-model="filterModel.value"
@@ -139,17 +142,12 @@
             >
             </Dropdown>
           </template>
-          <template #body="{ data }">
-            <span
-              v-if="data.status === 'Aktif'"
-              class="p-1 text-green-500 bg-green-100 rounded-lg"
-              >Aktif</span
-            >
-            <span v-else class="p-1 text-red-500 bg-red-100 rounded-lg">{{
-              data.status
-            }}</span>
-          </template>
         </Column>
+        <Column
+          field="statusAktif"
+          header="Status Aktif"
+          class="table-column-small"
+        ></Column>
         <Column
           field="jenisKelamin"
           header="Jenis Kelamin"
@@ -180,57 +178,47 @@
           </template>
         </Column>
         <Column
-          field="statusPernikahan"
-          header="Status Pernikahan"
-          class="capitalize table-column-medium"
-        ></Column>
-        <Column
           field="pendidikan"
           header="Pendidikan"
           class="capitalize table-column-medium"
         ></Column>
         <Column field="umur" header="Umur" class="table-column-small"></Column>
         <Column
-          field="agama"
-          header="Agama"
-          class="table-column-small"
-        ></Column>
-        <Column field="sim" header="SIM" class="table-column-small"></Column>
-        <Column
-          field="keterangan"
-          header="Keterangan"
-          class="table-column-small"
-        ></Column>
-        <Column
-          field="nomorPencariKerja"
-          header="Nomor Pencari Kerja"
-          class="table-column-small"
-        ></Column>
-        <Column
-          field="nomorTelpon.telpon1"
-          header="Telpon 1"
-          class="table-column-small"
-        ></Column>
-        <Column
-          field="nomorTelpon.telpon2"
-          header="Telpon 2"
-          class="table-column-small"
-        ></Column>
-        <Column
-          field="posisiYangDilamar"
+          field="posisiYangDilamar.nama"
           header="Posisi Yang Dilamar"
           class="table-column-small"
         ></Column>
+
         <Column
-          field="rekomendasi"
-          header="Rekomendasi"
-          class="table-column-small"
-        ></Column>
-        <Column
-          field="zonaIndustri"
+          field="zonaIndustri.area"
           header="Zona Industri"
           class="table-column-medium"
         ></Column>
+        <Column header="Action" class="table-column-medium">
+          <template #body="{ data }">
+            <div class="dropdown">
+              <button class="button button-primary">Action</button>
+              <div class="dropdown-content">
+                <router-link
+                  class="block button !text-sm whitespace-nowrap text-black"
+                  :to="{ name: ROUTE_PELAMAR_DETAIL, params: { id: data.id } }"
+                  >Detail Pelamar</router-link
+                >
+                <router-link
+                  class="block button !text-sm whitespace-nowrap text-black"
+                  :to="{ name: ROUTE_PELAMAR_DETAIL, params: { id: data.id } }"
+                  >Edit Pelamar</router-link
+                >
+                <button
+                  class="block button !text-sm whitespace-nowrap text-black"
+                  @click="mutasiPelamar(data)"
+                >
+                  Mutasi Jadi Karyawan
+                </button>
+              </div>
+            </div>
+          </template>
+        </Column>
       </DataTable>
 
       <ContextMenu ref="contextMenuRef" :model="contextMenuItem" />
@@ -260,11 +248,12 @@ import type { PelamarInstance } from '@/typing/pelamar'
 import { onMounted, reactive, ref, Ref } from 'vue'
 import { isAuthenticated } from '@/service/user'
 import { useToast } from 'primevue/usetoast'
-import { ROUTE_KARYAWAN_DETAIL } from '@/constants'
+import { GENDER, ROUTE_PELAMAR_DETAIL } from '@/constants'
 import GenderIcon from '@/components/icons/GenderIcon.vue'
 import ContextMenu from 'primevue/contextmenu'
 import { TOAST_TIMEOUT, ROUTE_ADD_PELAMAR } from '@/constants'
 import FormEditPelamar from '@/page_components/pelamar/FormEditPelamar.vue'
+import { pickBy } from 'lodash'
 
 type PageChangeEvent = {
   page: number
@@ -274,13 +263,13 @@ type PageChangeEvent = {
 
 const pelamars: Ref<PelamarInstance[]> = ref([])
 const isLoading = ref(false)
-const totalData = ref(50)
+const totalData = ref(0)
 const page = reactive({
   number: 1,
   size: 10
 })
 const tableFilters = ref({
-  nik: { value: '', matchMode: 'contains' },
+  ktp: { value: '', matchMode: 'contains' },
   nama: { value: '', matchMode: 'contains' },
   status: { value: '', matchMode: 'contains' },
   jenisKelamin: { value: '', matchMode: 'contains' },
@@ -288,7 +277,7 @@ const tableFilters = ref({
   kategori: { value: '', matchMode: 'contains' }
 })
 const karyawanStatus = ['Akitif', 'Tidak aktif']
-const karyawanJenisKelamin = ['Laki-laki', 'Perempuan']
+const karyawanJenisKelamin = GENDER
 const selectedPelamar = ref<PelamarInstance>()
 
 const toast = useToast()
@@ -307,14 +296,18 @@ const contextMenuItem = [
 async function getPelamarList() {
   try {
     isLoading.value = true
-    const { success, data, links, message, meta } = await getPelamar({
-      pageNumber: page.number,
-      limit: page.size,
-      name: tableFilters.value.nama.value,
-      nik: tableFilters.value.nik.value,
-      status: tableFilters.value.status.value,
-      gender: tableFilters.value.jenisKelamin.value
-    })
+    const payload = pickBy(
+      {
+        page: page.number,
+        limit: page.size,
+        name: tableFilters.value.nama.value,
+        ktp: tableFilters.value.ktp.value,
+        status: tableFilters.value.status.value,
+        gender: tableFilters.value.jenisKelamin.value
+      },
+      (val) => (typeof val == 'string' ? val.length > 0 : val > 0)
+    )
+    const { success, data, links, message, meta } = await getPelamar(payload)
     console.log(success, data)
     if (!success) {
       toast.add({
@@ -328,6 +321,9 @@ async function getPelamarList() {
     if (data) {
       pelamars.value = data
       isLoading.value = false
+    }
+    if (meta) {
+      totalData.value = meta.total || 0
     }
   } catch (err) {
     console.log('err', err)
@@ -360,6 +356,8 @@ function onSort(event: any) {
 function test(karyawan: PelamarInstance | undefined) {
   console.log('kar', karyawan)
 }
+
+function mutasiPelamar(pelamar: PelamarInstance) {}
 
 onMounted(() => {
   getPelamarList()

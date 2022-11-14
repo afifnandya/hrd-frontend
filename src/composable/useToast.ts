@@ -1,24 +1,35 @@
 import { TOAST_TIMEOUT } from '@/constants'
-import { useToast } from 'primevue/usetoast'
+import Toastify from 'toastify-js'
 
 function createToast() {
-  const toastInstance = useToast()
   const toast = {
     error: (title: string, message?: string) => {
-      toastInstance.add({
-        severity: 'error',
-        detail: title,
-        summary: message,
-        life: TOAST_TIMEOUT
-      })
+      Toastify({
+        text: `${title} ${message || ''}`,
+        duration: TOAST_TIMEOUT,
+        newWindow: true,
+        close: true,
+        gravity: 'top', // `top` or `bottom`
+        position: 'right', // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: '#dc2626'
+        }
+      }).showToast()
     },
     success: (title: string, message?: string) => {
-      toastInstance.add({
-        severity: 'success',
-        detail: title,
-        summary: message,
-        life: TOAST_TIMEOUT
-      })
+      Toastify({
+        text: `${title} ${message || ''}`,
+        duration: TOAST_TIMEOUT,
+        newWindow: true,
+        close: true,
+        gravity: 'top', // `top` or `bottom`
+        position: 'right', // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: '#22c55e'
+        }
+      }).showToast()
     }
   }
   return toast

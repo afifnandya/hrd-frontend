@@ -2,7 +2,7 @@
   <div class="p-10 bg-white">
     <DataTable
       ref="dt"
-      :value="pasangan"
+      :value="kontrak"
       :loading="loading"
       data-key="id"
       responsive-layout="scroll"
@@ -19,24 +19,13 @@
           {{ data.id }}
         </template>
       </Column>
-      <Column field="Nama" header="Nama" :sortable="true">
-        <template #body="{ data }">
-          {{ data.name }}
-        </template>
-      </Column>
-      <Column field="ktp" header="KTP"> </Column>
-      <Column field="relationship" header="Hubungan"> </Column>
-      <Column field="job" header="Pekerjaan"> </Column>
-      <Column field="birthDate" header="Tanggal Lahir">
-        <template #body="{ data }">
-          {{ data.birthDate }}
-        </template>
-      </Column>
-      <Column field="birthPlace" header="Tempat Lahir">
-        <template #body="{ data }">
-          {{ data.birthPlace }}
-        </template>
-      </Column>
+      <Column field="contractType" header="Tipe"> </Column>
+      <Column field="grade" header="Grade"> </Column>
+      <Column field="durasi" header="Duration"> </Column>
+      <Column field="startDate" header="Tanggal Mulai"> </Column>
+      <Column field="endDate" header="Tanggal Selesai"></Column>
+      <Column field="level" header="Level"></Column>
+      <Column field="positionLevel" header="Position Level"></Column>
       <Column header="Action" header-style="min-width:10rem;">
         <template #body="slotProps">
           <Button
@@ -63,11 +52,7 @@
       <div class="field">
         <label for="divisiNama">Nama</label>
 
-        <InputText
-          id="divisiNama"
-          type="text"
-          :value="selectedAnggotaKeluarga?.name"
-        />
+        <InputText id="divisiNama" type="text" :value="selectedKontrak?.name" />
       </div>
 
       <template #footer>
@@ -81,7 +66,7 @@
           label="Save"
           icon="pi pi-check"
           class="p-button-text"
-          @click="editData(selectedAnggotaKeluarga)"
+          @click="editData(selectedKontrak)"
         />
       </template>
     </Dialog>
@@ -96,7 +81,7 @@
         <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
         <span
           >Are you sure you want to delete
-          <b>{{ selectedAnggotaKeluarga?.name }}</b
+          <b>{{ selectedKontrak?.contractType }}</b
           >?</span
         >
       </div>
@@ -111,7 +96,7 @@
           label="Yes"
           icon="pi pi-check"
           class="p-button-text"
-          @click="deleteData(selectedAnggotaKeluarga)"
+          @click="deleteData(selectedKontrak)"
         />
       </template>
     </Dialog>
@@ -126,31 +111,31 @@ import Button from 'primevue/button'
 
 import { onMounted, reactive, ref } from 'vue'
 
-import { AnggotaKeluarga } from '@/typing/karyawan'
+import { Kontrak } from '@/typing/karyawan'
 
-defineProps<{ pasangan: AnggotaKeluarga[] }>()
+defineProps<{ kontrak: Kontrak[] }>()
 
 const loading = ref(false)
 
-const selectedAnggotaKeluarga = ref<AnggotaKeluarga>()
+const selectedKontrak = ref<Kontrak>()
 
 const showModal = reactive({
   delete: false,
   edit: false
 })
 
-function editData(data?: AnggotaKeluarga) {
-  selectedAnggotaKeluarga.value = data
+function editData(data?: Kontrak) {
+  selectedKontrak.value = data
   showModal.edit = true
 }
 
-function deleteData(data?: AnggotaKeluarga) {
-  selectedAnggotaKeluarga.value = data
+function deleteData(data?: Kontrak) {
+  selectedKontrak.value = data
   showModal.delete = true
 }
 </script>
 <script lang="ts">
 export default {
-  name: 'KaryawanPasangan'
+  name: 'KaryawanKontrak'
 }
 </script>

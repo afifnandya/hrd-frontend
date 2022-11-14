@@ -1,11 +1,9 @@
-import { isNumber, isObject, isString } from '@/helper/dataType'
-import type { AnggotaKeluarga, Karyawan } from '@/typing/karyawan'
-
-type KaryawanInstance = Karyawan & {
-  getPasangan: () => AnggotaKeluarga[] | null
-  getAnak: () => AnggotaKeluarga[] | null
-  getOrangTua: () => AnggotaKeluarga[] | null
-}
+import { isArray, isNumber, isObject, isString } from '@/helper/dataType'
+import type {
+  AnggotaKeluarga,
+  Karyawan,
+  KaryawanInstance
+} from '@/typing/karyawan'
 
 function getPasangan(dataKeluarga: AnggotaKeluarga[]) {
   const filter = dataKeluarga.filter(
@@ -23,7 +21,8 @@ function getAnak(dataKeluarga: AnggotaKeluarga[]) {
 
 function getOrangTua(dataKeluarga: AnggotaKeluarga[]) {
   const filter = dataKeluarga.filter(
-    (keluarga) => keluarga.relationship === 'Pasangan'
+    (keluarga) =>
+      keluarga.relationship === 'Ibu' || keluarga.relationship === 'Ayah'
   )
   return filter.length ? filter : null
 }
@@ -33,8 +32,10 @@ export function createDummyKaryawan(): KaryawanInstance {
     id: 0,
     nik: '',
     status: '',
+    statusAktif: '',
     nama: '',
     departement: 0,
+    departmenName: '',
     pendidikan: {
       id: 0,
       stage: '',
@@ -55,11 +56,15 @@ export function createDummyKaryawan(): KaryawanInstance {
     kabupatenKtp: '',
     kecamatanKtp: '',
     asalPOH: '',
+    asalPOHKTP: '',
     kerjaPOH: '',
-    kategori: '',
+    kategoriPOH: '',
     telepon: '',
     teleponDarurat: '',
-    alamat: '',
+    jalan: '',
+    kecamatan: '',
+    kabupatenKota: '',
+    provinsi: '',
     rekening: {
       name: 'todo',
       bank: 'todo',
@@ -89,20 +94,30 @@ export function createDummyKaryawan(): KaryawanInstance {
     },
     sim: '',
     kartuKeluarga: '',
+    tanggalUpdateKartuKeluarga: '',
     umur: 0,
     agama: '',
     divisi: {
       id: '',
-      name: ''
+      nama: ''
     },
     jabatan: {
       id: '',
-      name: ''
+      nama: ''
     },
     grade: '',
     dateOfHiring: '',
     kontrakSebelumnya: '',
     kontrakSekarang: '',
+    kategoriPekerjaan: {
+      id: '',
+      code: '',
+      name: ''
+    },
+    wilayah: {
+      code: '',
+      area: ''
+    },
     getAnak: () => null,
     getPasangan: () => null,
     getOrangTua: () => null
@@ -114,8 +129,10 @@ export function createKaryawan(data: Karyawan): KaryawanInstance {
   const karyawan: KaryawanInstance = {
     id: isNumber(data.id),
     nik: isString(data.nik),
+    statusAktif: isString(data.statusAktif),
     status: isString(data.status),
     nama: isString(data.nama),
+    departmenName: '',
     departement: isNumber(data.departement),
     pendidikan: isObject(data.pendidikan),
     perusahaan: isObject(data.perusahaan),
@@ -129,11 +146,15 @@ export function createKaryawan(data: Karyawan): KaryawanInstance {
     kabupatenKtp: isString(data.kabupatenKtp),
     kecamatanKtp: isString(data.kecamatanKtp),
     asalPOH: isString(data.asalPOH),
+    asalPOHKTP: isString(data.asalPOHKTP),
     kerjaPOH: isString(data.kerjaPOH),
-    kategori: isString(data.kategori),
+    kategoriPOH: isString(data.kategoriPOH),
     telepon: isString(data.telepon),
     teleponDarurat: isString(data.teleponDarurat),
-    alamat: isString(data.alamat),
+    jalan: isString(data.jalan),
+    kecamatan: isString(data.kecamatan),
+    kabupatenKota: isString(data.kabupatenKota),
+    provinsi: isString(data.provinsi),
     rekening: {
       name: isString(data.rekening.name),
       bank: isString(data.rekening.bank),
@@ -151,8 +172,8 @@ export function createKaryawan(data: Karyawan): KaryawanInstance {
       tanggal: 'todo',
       deskripsi: 'todo'
     },
-    dataKeluarga: [],
-    kontrak: [],
+    dataKeluarga: isArray(data.dataKeluarga),
+    kontrak: isArray(data.kontrak),
     npwp: isString(data.npwp),
     jenisKelamin: isString(data.jenisKelamin),
     tempatLahir: isString(data.tempatLahir),
@@ -163,6 +184,7 @@ export function createKaryawan(data: Karyawan): KaryawanInstance {
     },
     sim: isString(data.sim),
     kartuKeluarga: isString(data.kartuKeluarga),
+    tanggalUpdateKartuKeluarga: isString(data.tanggalUpdateKartuKeluarga),
     umur: isNumber(data.umur),
     agama: isString(data.agama),
     divisi: isObject(data.divisi),
@@ -171,6 +193,8 @@ export function createKaryawan(data: Karyawan): KaryawanInstance {
     dateOfHiring: isString(data.dateOfHiring),
     kontrakSebelumnya: isString(data.kontrakSebelumnya),
     kontrakSekarang: isString(data.kontrakSekarang),
+    wilayah: isObject(data.wilayah),
+    kategoriPekerjaan: isObject(data.kategoriPekerjaan),
     getAnak: () => getAnak(data.dataKeluarga),
     getPasangan: () => getPasangan(data.dataKeluarga),
     getOrangTua: () => getOrangTua(data.dataKeluarga)

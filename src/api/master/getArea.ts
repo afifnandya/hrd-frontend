@@ -5,7 +5,7 @@ export interface GetAreaResponse {
   status: number
   message: string
   data: {
-    code: number
+    code: number | string
     area: string
   }[]
 }

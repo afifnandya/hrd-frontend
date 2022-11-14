@@ -1,4 +1,4 @@
-import useHttp from '@/composable/useHttp'
+import useAxios from '@/composable/useAxios'
 
 export interface GetJabatan {
   status: number
@@ -19,15 +19,16 @@ export async function getJabatan(payload?: GetJabatanPayload) {
   let message = null
   let jabatans = null
   const url = id ? `/positions/${id}` : `/positions`
-  const { data } = await useHttp(url)
-  const response = data.value as GetJabatan
-  if (response.status === 200) {
+  const response = await useAxios(url)
+  const data = response.data as GetJabatan
+  // const response = data.value as GetJabatan
+  if (data.status === 200) {
     success = true
   }
-  if (Array.isArray(response.data)) {
-    jabatans = response.data
+  if (Array.isArray(data.data)) {
+    jabatans = data.data
   }
-  message = response.message
+  message = data.message
 
   return {
     success,

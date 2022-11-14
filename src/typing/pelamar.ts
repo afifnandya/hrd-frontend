@@ -1,17 +1,20 @@
+import { Area, KategoriPekerjaan } from './dataMaster'
+
 export interface Pelamar {
-  ktp: string
+  ktp: string | number
   id: number | string
   tanggalBerkasMasuk: string | undefined
   noBantex: string
   status: string
-  kategori: string
+  statusAktif: string
+  kategori: KategoriPekerjaan
   nik: number | string
   nama: string
   tempatLahir: string
   tanggalLahir: string | undefined
   umur: number
   jenisKelamin: string
-  zonaIndustri: string
+  zonaIndustri: Area
   alamat: {
     desa: string
     kecamatan: string
@@ -34,7 +37,10 @@ export interface Pelamar {
   rekomendasi: string
   sim: string
   pengalamanKerja: string
-  posisiYangDilamar: string
+  posisiYangDilamar: {
+    id: number
+    nama: string
+  }
   keterangan: string
 }
 

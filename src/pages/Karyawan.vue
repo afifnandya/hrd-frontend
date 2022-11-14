@@ -1,7 +1,10 @@
 <template>
   <div class="w-full">
     <div class="card">
-      <h5 class="mb-6 text-xl font-bold">Karyawan</h5>
+      <div class="flex items-center justify-between mb-6">
+        <h5 class="mb-0 text-xl font-bold">Karyawan</h5>
+        <button class="button button-primary">Tambah Karyawan</button>
+      </div>
 
       <DataTable
         v-model:filters="tableFilters"
@@ -24,7 +27,6 @@
         class="mt-3"
         data-key="id"
         context-menu
-        @rowContextmenu="onRowContextMenu"
         @page="onPageChange"
         @filter="onFilter"
         @sort="onSort"
@@ -76,8 +78,24 @@
           </template>
         </Column>
         <Column
+          field="ktp"
+          header="KTP"
+          class="table-column-medium"
+          :show-filter-menu="false"
+        >
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText
+              v-model="filterModel.value"
+              type="text"
+              class=""
+              placeholder="Search by KTP"
+              @keydown.enter="filterCallback()"
+            />
+          </template>
+        </Column>
+        <Column
           field="status"
-          header="Status"
+          header="Status Karyawan"
           class="capitalize table-column-medium"
           :show-filter-menu="false"
           :filter-header-class="'w-full'"
@@ -93,13 +111,34 @@
             </Dropdown>
           </template>
           <template #body="{ data }">
+            {{ data.status }}
+          </template>
+        </Column>
+        <Column
+          field="statusAktif"
+          header="Status Aktif"
+          class="capitalize table-column-medium"
+          :show-filter-menu="false"
+          :filter-header-class="'w-full'"
+        >
+          <template #filter="{ filterModel, filterCallback }">
+            <Dropdown
+              v-model="filterModel.value"
+              class="w-full"
+              :options="karyawanStatusAktif"
+              placeholder="Status Aktif"
+              @change="filterCallback()"
+            >
+            </Dropdown>
+          </template>
+          <template #body="{ data }">
             <span
-              v-if="data.status === 'Aktif'"
-              class="p-1 text-green-500 bg-green-100 rounded-lg"
+              v-if="data.statusAktif === 'Aktif'"
+              class="px-2 py-1 text-green-500 bg-green-100 rounded-lg"
               >Aktif</span
             >
-            <span v-else class="p-1 text-red-500 bg-red-100 rounded-lg">{{
-              data.status
+            <span v-else class="px-2 py-1 text-red-500 bg-red-100 rounded-lg">{{
+              data.statusAktif
             }}</span>
           </template>
         </Column>
@@ -133,23 +172,24 @@
           </template>
         </Column>
         <Column
-          field="perusahaan.nama"
+          field="perusahaan.name"
           header="Perusahaan"
           class="capitalize table-column-medium"
         ></Column>
         <Column
-          field="departement"
+          field="departmenName"
           header="Departemen"
           class="capitalize w-[200px]"
-        ></Column>
+        >
+        </Column>
 
         <Column
-          field="jabatan.name"
+          field="jabatan.nama"
           header="Jabatan"
           class="capitalize table-column-medium"
         ></Column>
         <Column
-          field="divisi.name"
+          field="divisi.nama"
           header="Divisi"
           class="capitalize table-column-medium"
         ></Column>
@@ -169,41 +209,63 @@
           header="Kerja POH"
           class="table-column-medium"
         ></Column>
+        <Column header="Action" class="table-column-medium">
+          <template #body="{ data }">
+            <div class="dropdown">
+              <button class="button button-primary">Action</button>
+              <div class="dropdown-content">
+                <router-link
+                  class="block button !text-sm whitespace-nowrap text-black"
+                  :to="{ name: ROUTE_KARYAWAN_DETAIL, params: { id: data.id } }"
+                  >Detail Karyawan</router-link
+                >
+                <router-link
+                  class="block button !text-sm whitespace-nowrap text-black"
+                  :to="{ name: ROUTE_KARYAWAN_DETAIL, params: { id: data.id } }"
+                  >Edit Karyawan</router-link
+                >
+                <button
+                  class="block button !text-sm whitespace-nowrap text-black"
+                  @click="confirmToggleAktifKaraywan(data)"
+                >
+                  {{
+                    data.statusAktif === KARYAWAN_NON_AKTIF
+                      ? 'Aktfikan Karyawan'
+                      : '                  Non Aktifkan Karyawan'
+                  }}
+                </button>
+                <button
+                  class="block button !text-sm whitespace-nowrap text-black"
+                  @click="confirmDeleteKaryawan(data)"
+                >
+                  Delete Karyawan
+                </button>
+              </div>
+            </div>
+          </template>
+        </Column>
       </DataTable>
 
-      <ContextMenu ref="contextMenuRef" :model="contextMenuItem" />
-      <Dialog
-        v-model:visible="showDeleteKaryawanModal"
-        header="Hapus Karyawan"
-        :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '50vw' }"
-        :modal="true"
-      >
-        <div class="mb-6">
-          Apakah anda yakin ingin mengahpus karyawan
-          {{ selectedKaryawan?.nama }} ?
-        </div>
-
-        <div class="flex items-center justify-end">
-          <button class="mr-2 button">Cancel</button>
-          <button class="button button-primary">Ok</button>
-        </div>
-      </Dialog>
+      <ConfirmDialog></ConfirmDialog>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { getKaryawan } from '@/service/karyawan'
-import type { Karyawan } from '@/typing/karyawan'
+import { getKaryawan, deleteKaryawan, updateKaryawan } from '@/service/karyawan'
+import type { Karyawan, KaryawanInstance } from '@/typing/karyawan'
 import { onMounted, reactive, ref, Ref } from 'vue'
 import { isAuthenticated } from '@/service/user'
-import { ROUTE_KARYAWAN_DETAIL } from '@/constants'
+import {
+  KARYAWAN_AKTIF,
+  KARYAWAN_NON_AKTIF,
+  ROUTE_KARYAWAN_DETAIL
+} from '@/constants'
 import GenderIcon from '@/components/icons/GenderIcon.vue'
-import ContextMenu from 'primevue/contextmenu'
-import { TOAST_TIMEOUT } from '@/constants'
-import { useToast } from 'primevue/usetoast'
-import Dialog from 'primevue/dialog'
+import useToast from '@/composable/useToast'
+import ConfirmDialog from 'primevue/confirmdialog'
+import { useConfirm } from 'primevue/useconfirm'
+import { useAppStore } from '@/stores/app'
 
 type PageChangeEvent = {
   page: number
@@ -211,7 +273,8 @@ type PageChangeEvent = {
   rows: number
 }
 
-const karyawans: Ref<Karyawan[]> = ref([])
+const appStore = useAppStore()
+const karyawans: Ref<KaryawanInstance[]> = ref([])
 const isLoading = ref(false)
 const totalData = ref(50)
 const page = reactive({
@@ -220,36 +283,19 @@ const page = reactive({
 })
 const tableFilters = ref({
   nik: { value: '', matchMode: 'contains' },
+  ktp: { value: '', matchMode: 'contains' },
   nama: { value: '', matchMode: 'contains' },
   status: { value: '', matchMode: 'contains' },
+  statusAktif: { value: '', matchMode: 'contains' },
   jenisKelamin: { value: '', matchMode: 'contains' }
 })
-const karyawanStatus = ['Akitif', 'Tidak aktif']
+const karyawanStatus = ['Karyawan', 'Karyawan Harian Lepas']
+const karyawanStatusAktif = ['Akitif', 'Tidak aktif']
 const karyawanJenisKelamin = ['Laki-laki', 'Perempuan']
 const selectedKaryawan = ref<Karyawan>()
+const confirm = useConfirm()
 
 const toast = useToast()
-const showDeleteKaryawanModal = ref(false)
-const contextMenuRef = ref()
-const contextMenuItem = [
-  {
-    label: 'Edit Karyawan',
-    icon: 'pi pi-fw pi-pencil',
-    command: () => test(selectedKaryawan.value)
-  },
-  {
-    label: 'Non Aktifkan Karyawan',
-    icon: 'pi pi-fw pi-pause',
-    command: () => test(selectedKaryawan.value)
-  },
-  {
-    label: 'Hapus Karyawan',
-    icon: 'pi pi-fw pi-trash',
-    command: () => {
-      showDeleteKaryawanModal.value = true
-    }
-  }
-]
 
 async function getKaryawanList() {
   try {
@@ -263,23 +309,26 @@ async function getKaryawanList() {
       gender: tableFilters.value.jenisKelamin.value
     })
     if (!success) {
-      toast.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Gagal menampilkan data karyawan',
-        life: TOAST_TIMEOUT
-      })
+      toast.error('Error', 'Gagal menampilkan data karyawan')
       return
     }
-    karyawans.value = data
+    if (appStore.departmen.length) {
+      karyawans.value = data.map((karyawan) => {
+        const departmentName = appStore.departmen.filter(
+          (dep) => dep.id === karyawan.departement
+        )
+        return {
+          ...karyawan,
+          departmenName: departmentName.length ? departmentName[0].nama : ''
+        }
+      })
+    } else {
+      karyawans.value = data
+    }
     isLoading.value = false
   } catch (err) {
     console.log('err', err)
   }
-}
-
-function onRowContextMenu(event: any) {
-  contextMenuRef.value.show(event.originalEvent)
 }
 
 function onPageChange(event: PageChangeEvent) {
@@ -302,8 +351,71 @@ function onSort(event: any) {
   getKaryawanList()
 }
 
-function test(karyawan: Karyawan | undefined) {
-  console.log('kar', karyawan)
+function confirmDeleteKaryawan(karyawan: Karyawan) {
+  selectedKaryawan.value = karyawan
+  confirm.require({
+    message: `Apakah anda yakin ingin mengahpus karyawan
+          ${selectedKaryawan.value?.nama} ?`,
+    header: 'Konfirmasi',
+    icon: 'pi pi-exclamation-triangle',
+    accept: async () => {
+      //callback to execute when user confirms the action
+      const id = selectedKaryawan.value?.id
+      if (id) {
+        const { success, message } = await deleteKaryawan(id)
+        console.log('su', success, message)
+        if (message) {
+          if (!success) {
+            toast.error('Error', message)
+          } else {
+            toast.success(message)
+          }
+        }
+      }
+    },
+    reject: () => {
+      //callback to execute when user rejects the action
+    },
+    onHide: () => {
+      //Callback to execute when dialog is hidden
+    }
+  })
+}
+
+async function doToggleAktifKaryawan(status: string) {
+  const id = selectedKaryawan.value?.id
+  if (id) {
+    const { success, message } = await updateKaryawan(id, {
+      statusAktif: status
+    })
+    console.log('mess', success, message)
+    if (message) {
+      if (success) {
+        toast.success(message)
+        getKaryawanList()
+      } else {
+        toast.error(message)
+      }
+    }
+  }
+}
+
+async function confirmToggleAktifKaraywan(karyawan: Karyawan) {
+  selectedKaryawan.value = karyawan
+  const isNonAktif = selectedKaryawan.value.statusAktif === KARYAWAN_NON_AKTIF
+  const message = isNonAktif
+    ? `Apakah anda yakin ingin aktfikan karyawan
+          ${selectedKaryawan.value?.nama} ?`
+    : `Apakah anda yakin ingin non aktfikan karyawan
+          ${selectedKaryawan.value?.nama} ?`
+  confirm.require({
+    message: message,
+    header: 'Konfirmasi',
+    icon: 'pi pi-exclamation-triangle',
+    accept: async () => {
+      doToggleAktifKaryawan(isNonAktif ? KARYAWAN_AKTIF : KARYAWAN_NON_AKTIF)
+    }
+  })
 }
 
 onMounted(() => {

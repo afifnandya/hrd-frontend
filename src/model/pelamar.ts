@@ -5,6 +5,9 @@ import dayjs from 'dayjs'
 import humps from 'humps'
 
 function getUmur(birthDate: string) {
+  if (!birthDate) {
+    return 0
+  }
   const today = dayjs()
   const birthDateInstance = dayjs(birthDate, 'YYYY-MM-DD')
   if (!birthDateInstance.isValid()) {
@@ -15,19 +18,20 @@ function getUmur(birthDate: string) {
 
 export function mapper(data: PelamarAttributes): Pelamar {
   const pelamarInstance: PelamarInstance = {
-    ktp: data.id,
+    ktp: data.ktp,
     id: data.id,
     tanggalBerkasMasuk: data.createdAt,
     noBantex: data.bantexCode,
-    status: '',
-    kategori: data.area.area,
+    status: data.status,
+    statusAktif: data.activeStatus,
+    kategori: data.jobCategory,
     nik: data.nik,
     nama: data.name,
     tempatLahir: data.birthPlace,
     tanggalLahir: dayjs(data.birthDate, 'YYYY-MM-DD').format('DD-MMM-YYYY'),
-    umur: getUmur(data.birthDate),
+    umur: getUmur(data.birthDate || ''),
     jenisKelamin: data.gender,
-    zonaIndustri: data.area.area,
+    zonaIndustri: data.area,
     alamat: {
       desa: data.address,
       kecamatan: data.district,
@@ -50,7 +54,10 @@ export function mapper(data: PelamarAttributes): Pelamar {
     rekomendasi: isString(data.recommendation),
     sim: isString(data.sim),
     pengalamanKerja: isString(data.experiences),
-    posisiYangDilamar: isString(data.position.name),
+    posisiYangDilamar: {
+      id: data.position.id,
+      nama: data.position.name
+    },
     keterangan: isString(data.note)
   }
   return pelamarInstance
@@ -98,6 +105,60 @@ export function mapper(data: PelamarAttributes): Pelamar {
 //   console.log('b', parsedPayload)
 //   return parsedPayload
 // }
+
+export function createDummyPelamarInstance(): PelamarInstance {
+  const pelamar: PelamarInstance = {
+    ktp: '',
+    id: '',
+    tanggalBerkasMasuk: undefined,
+    noBantex: '',
+    status: '',
+    statusAktif: '',
+    kategori: {
+      id: '',
+      code: '',
+      name: ''
+    },
+    nik: '',
+    nama: '',
+    tempatLahir: '',
+    tanggalLahir: undefined,
+    umur: 0,
+    jenisKelamin: '',
+    zonaIndustri: {
+      code: '',
+      area: ''
+    },
+    alamat: {
+      desa: '',
+      kecamatan: '',
+      kabupaten: '',
+      provinsi: ''
+    },
+    agama: '',
+    statusPernikahan: '',
+    nomorTelpon: {
+      telpon1: '',
+      telpon2: ''
+    },
+    pendidikan: '',
+    jurusan: '',
+    sertifikat: {
+      nama: '',
+      jenis: ''
+    },
+    nomerPencariKerja: '',
+    rekomendasi: '',
+    sim: '',
+    pengalamanKerja: '',
+    posisiYangDilamar: {
+      id: 0,
+      nama: ''
+    },
+    keterangan: ''
+  }
+  return pelamar
+}
 
 export function createPelamarInstance(
   data: PelamarAttributes

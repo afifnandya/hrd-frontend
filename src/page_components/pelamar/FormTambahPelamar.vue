@@ -16,17 +16,23 @@
         </div>
         <div class="input-group">
           <div class="font-bold input-label">Tanggal Input</div>
-          <Calendar
+          <InputText
             v-model="state.tanggalBerkasMasuk"
-            date-format="yy-mm-dd"
+            type="text"
             class="w-full"
+            disabled
           />
         </div>
       </div>
       <div class="flex items-center">
         <div class="mr-6 input-group">
           <div class="font-bold input-label">Kategori</div>
-          <InputText v-model="state.kategori" type="text" class="w-full" />
+          <Dropdown
+            v-model="state.kategori"
+            :options="kategoriPekerjaan"
+            option-label="name"
+            class="w-full"
+          />
         </div>
         <div class="input-group">
           <Dropdown
@@ -42,7 +48,12 @@
           No. KTP
           <FormRequired />
         </div>
-        <InputText v-model="state.ktp" type="text" class="w-full" />
+        <InputNumber
+          v-model="state.ktp"
+          class="w-full"
+          mode="decimal"
+          :use-grouping="false"
+        />
       </div>
       <div class="input-group">
         <div class="font-bold input-label">Nama</div>
@@ -51,11 +62,9 @@
       <div class="input-group">
         <div class="font-bold input-label">Tempat, Tanggal Lahir</div>
         <div class="flex w-full">
-          <InputText
-            v-model="state.tempatLahir"
-            type="text"
-            class="w-full mr-4"
-          />
+          <div class="w-full mr-4">
+            <InputText v-model="state.tempatLahir" type="text" class="w-full" />
+          </div>
           <Calendar
             v-model="state.tanggalLahir"
             date-format="yy-mm-dd"
@@ -128,12 +137,14 @@
       <div class="input-group">
         <div class="font-bold input-label">No Hp/Telpon</div>
         <div class="flex w-full">
-          <InputText
-            v-model="state.nomorTelpon.telpon1"
-            type="text"
-            class="w-full mr-4"
-            placeholder="Nomor Handphone"
-          />
+          <div class="w-full mr-4">
+            <InputText
+              v-model="state.nomorTelpon.telpon1"
+              type="text"
+              class="w-full"
+              placeholder="Nomor Handphone"
+            />
+          </div>
           <InputText
             v-model="state.nomorTelpon.telpon2"
             type="text"
@@ -163,12 +174,14 @@
       <div class="input-group">
         <div class="font-bold input-label">Sertifikat</div>
         <div class="flex w-full">
-          <InputText
-            v-model="state.sertifikat.nama"
-            type="text"
-            class="w-full mr-4"
-            placeholder="Sertifikat"
-          />
+          <div class="w-full mr-4">
+            <InputText
+              v-model="state.sertifikat.nama"
+              type="text"
+              class="w-full"
+              placeholder="Sertifikat"
+            />
+          </div>
           <InputText
             v-model="state.sertifikat.jenis"
             type="text"
@@ -215,8 +228,7 @@
           placeholder="Pilih Posisi Yang Dilamar"
           class="w-full"
           option-label="nama"
-          :options="posisiList"
-          option-value="id"
+          :options="jabatanList"
         />
       </div>
     </div>
@@ -245,7 +257,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, watch } from 'vue'
 import { email, required } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import Calendar from 'primevue/calendar'
@@ -261,29 +273,40 @@ import {
   ROUTE_PELAMAR
 } from '@/constants'
 import useToast from '@/composable/useToast'
-import { getPosisi } from '@/api/master/getPosisi'
-import { Posisi } from '@/typing/dataMaster'
+import { getJabatan } from '@/api/master/getJabatan'
+import { Jabatan } from '@/typing/dataMaster'
 import { getArea } from '@/api/master/getArea'
 import { Area } from '@/typing/dataMaster'
+import { useAppStore } from '@/stores/app'
+import { storeToRefs } from 'pinia'
+import dayjs from 'dayjs'
+import { getBantex } from '@/api/pelamar/getBantext'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const toast = useToast()
+const store = useAppStore()
+const { kategoriPekerjaan } = storeToRefs(store)
 
-const activeStatusList = ['Aktif', 'Tidak Aktif']
 const statusList = ['Pelamar', 'Training']
-const posisiList = ref<Posisi[]>([])
+const jabatanList = ref<Jabatan[]>([])
 const areaList = ref<Area[]>([])
 
 const isLoading = ref(false)
 const state: Pelamar = reactive({
+  noBantex: '',
   id: '',
   nama: '',
   ktp: '',
   nik: '',
   nomerPencariKerja: '',
-  tanggalBerkasMasuk: undefined,
-  kategori: '',
+  tanggalBerkasMasuk: dayjs().format('YYYY-MM-DD'),
+  kategori: {
+    id: '',
+    code: '',
+    name: ''
+  },
   status: '1',
-  noBantex: '',
   umur: 0,
   tempatLahir: '',
   tanggalLahir: undefined,
@@ -310,12 +333,18 @@ const state: Pelamar = reactive({
   rekomendasi: '',
   sim: '',
   pengalamanKerja: '',
-  posisiYangDilamar: '',
+  posisiYangDilamar: {
+    id: 0,
+    nama: ''
+  },
   statusKepesertaan: '',
   statusAktif: '',
   keteranganBpjs: '',
   keterangan: '',
-  zonaIndustri: ''
+  zonaIndustri: {
+    code: '',
+    area: ''
+  }
 })
 
 const rules = {
@@ -335,23 +364,25 @@ async function create() {
       toast.error(message || '')
     } else {
       toast.success(message)
+      router.push({ name: ROUTE_PELAMAR })
     }
   } catch (err) {
+    console.log(err)
     toast.error('Terjadi Kesalahan')
   }
   isLoading.value = false
 }
 
-async function getPosisiList() {
-  const { success, data, message } = await getPosisi()
+async function getJabatanList() {
+  const { success, data, message } = await getJabatan()
   if (!success || !data) {
     if (message) {
       toast.error(message)
     }
     return
   }
-  posisiList.value = data.map((posisi) => {
-    return { id: posisi.id, nama: posisi.name }
+  jabatanList.value = data.map((jabatan) => {
+    return { id: jabatan.id, nama: jabatan.name }
   })
 }
 
@@ -371,9 +402,30 @@ async function getAreaList() {
   })
 }
 
+async function fetchBantex() {
+  const jobCategoryId = state.kategori.id
+  const { success, data, message } = await getBantex(jobCategoryId)
+  console.log('sc', success, data, message)
+  if (!success && message) {
+    toast.error(message)
+    return
+  }
+  if (data) {
+    state.noBantex = data.availableBantexCode
+  }
+}
+
+watch(
+  () => state.kategori.id,
+  () => {
+    fetchBantex()
+  }
+)
+
 onMounted(() => {
-  getPosisiList()
+  getJabatanList()
   getAreaList()
+  store.getJobCategory()
 })
 </script>
 <script lang="ts">

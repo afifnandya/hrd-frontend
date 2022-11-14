@@ -26,7 +26,23 @@ type ECOption = echarts.ComposeOption<
   | LineSeriesOption
   | VisualMapComponentOption
 >
-const data = [50, 20, 100, 140, 210, 330, 110, 440, 610]
+// const data = [
+//   ['2020-01-02', 'Jan', 20],
+//   ['2020-02-02', 'Feb', 10],
+//   ['2020-03-02', 'Marc', 30],
+//   ['2020-04-02', 'Apr', 22],
+//   ['2021-01-02', 'Jan', 40],
+//   ['2021-02-02', 'Feb', 23],
+//   ['2021-03-02', 'Marc', 50]
+// ]
+const data = [
+  ['Mar', 20],
+  ['Apr', 10],
+  ['May', 30],
+  ['Jun', 22],
+  ['Jul', 40],
+  ['Aug', 23]
+]
 
 echarts.use([
   LineChart,
@@ -47,6 +63,15 @@ function initChart() {
   }
 
   const myChart = echarts.init(chartEl.value)
+  const dataSet = [
+    ['year', '2020', '2021', '2022'],
+    ['month', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    [''],
+    ['score', 'amount', 'product'],
+    [89.3, 58212, 'Matcha Latte'],
+    [57.1, 78254, 'Milk Tea'],
+    [74.4, 41032, 'Cheese Cocoa']
+  ]
   const option: ECOption = {
     backgroundColor: '#3a86ff',
     color: 'white',
@@ -81,7 +106,23 @@ function initChart() {
         data: data,
         lineStyle: {
           color: 'white'
+        },
+        symbol: 'circle',
+        symbolSize: 10,
+        itemStyle: {
+          color: 'white'
         }
+        // markPoint: {
+        //   symbol: 'triangle',
+        //   // silent: true,
+        //   symbolSize: 200,
+        //   label: {
+        //     color: 'red'
+        //   },
+        //   itemStyle: {
+        //     color: 'red'
+        //   }
+        // }
       }
     ]
   }

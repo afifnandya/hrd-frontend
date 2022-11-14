@@ -42,12 +42,12 @@
           <Button
             icon="pi pi-pencil"
             class="mr-2 p-button-rounded p-button-success"
-            @click="editData(slotProps.data)"
+            @click="showEditModal(slotProps.data)"
           />
           <Button
             icon="pi pi-trash"
             class="mt-2 p-button-rounded p-button-warning"
-            @click="deleteData(slotProps.data)"
+            @click="showDeleteModal(slotProps.data)"
           />
         </template>
       </Column>
@@ -63,7 +63,7 @@
       <div class="field">
         <label for="divisiNama">Nama</label>
 
-        <InputText id="divisiNama" type="text" :value="selectedDivisi.nama" />
+        <InputText id="divisiNama" v-model="selectedDivisi.nama" type="text" />
       </div>
 
       <template #footer>
@@ -77,7 +77,7 @@
           label="Save"
           icon="pi pi-check"
           class="p-button-text"
-          @click="editData(selectedDivisi)"
+          @click="editData"
         />
       </template>
     </Dialog>
@@ -106,7 +106,7 @@
           label="Yes"
           icon="pi pi-check"
           class="p-button-text"
-          @click="deleteData(selectedDivisi)"
+          @click="deleteData"
         />
       </template>
     </Dialog>
@@ -120,12 +120,16 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 
 import { onMounted, reactive, ref } from 'vue'
+import useToast from '@/composable/useToast'
 
 import { getDivisi } from '@/api/master/getDivisi'
+import { editDivisi } from '@/api/master/editDivisi'
+import { deleteDivisi } from '@/api/master/deleteDivisi'
 import { Divisi } from '@/typing/dataMaster'
 
 const loading = ref(false)
 const divisis = ref<any[]>([])
+const toast = useToast()
 
 const selectedDivisi: Divisi = reactive({
   id: 0,
@@ -137,7 +141,11 @@ const showModal = reactive({
   edit: false
 })
 
-onMounted(async () => {
+onMounted(() => {
+  getData()
+})
+
+async function getData() {
   loading.value = true
   const { success, data, message } = await getDivisi()
   if (success && data) {
@@ -150,18 +158,47 @@ onMounted(async () => {
     loading.value = false
     return
   }
-})
+}
 
-function editData(data: Divisi) {
+function showEditModal(data: Divisi) {
   selectedDivisi.id = data.id
   selectedDivisi.nama = data.nama
   showModal.edit = true
 }
 
-function deleteData(data: Divisi) {
+function showDeleteModal(data: Divisi) {
   selectedDivisi.id = data.id
   selectedDivisi.nama = data.nama
   showModal.delete = true
+}
+
+async function editData() {
+  const { success, message } = await editDivisi({
+    id: selectedDivisi.id,
+    name: selectedDivisi.nama
+  })
+  if (message) {
+    if (!success) {
+      toast.error(message)
+    } else {
+      toast.success(message)
+    }
+  }
+  showModal.edit = false
+  getData()
+}
+
+async function deleteData() {
+  const { success, message } = await deleteDivisi({ id: selectedDivisi.id })
+  if (message) {
+    if (success) {
+      toast.success(message)
+    } else {
+      toast.error(message)
+    }
+  }
+  showModal.delete = false
+  getData()
 }
 </script>
 <script lang="ts">

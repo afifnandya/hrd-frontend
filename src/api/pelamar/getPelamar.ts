@@ -3,6 +3,7 @@ import { camelizeKeys, decamelizeKeys } from 'humps'
 import qs from 'qs'
 import { Pelamar } from '@/typing/pelamar'
 import { isEmpty } from 'lodash-es'
+import { KategoriPekerjaan } from '@/typing/dataMaster'
 
 export type Links = {
   path: string | null
@@ -31,7 +32,8 @@ export type PelamarAttributes = {
   birthDate: string | undefined
   religion: string
   status: string
-
+  activeStatus: string
+  jobCategory: KategoriPekerjaan
   maritalStatus: null | string
   phone: string
   phoneEmergency: null | string
@@ -70,7 +72,7 @@ export interface GetPelamarResponse {
 
 export type GetPelamarPayload = Partial<PelamarAttributes> & {
   limit?: number
-  pageNumber?: number
+  page?: number
 }
 
 export async function getPelamar(payload: GetPelamarPayload) {
