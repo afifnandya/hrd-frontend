@@ -10,6 +10,10 @@ html{
   @apply px-3 py-1 text-lg leading-7 rounded-lg hover:bg-opacity-50 min-w-[50px] min-h-[30px] hover:bg-gray-200 border border-gray-100;
 }
 
+.button:disabled{
+  @apply bg-opacity-30
+}
+
 .button-large{
   @apply px-6 py-2 text-xl;
 }

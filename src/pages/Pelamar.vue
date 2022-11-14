@@ -230,13 +230,7 @@
         :style="{ width: '50vw' }"
         :modal="true"
       >
-        <FormEditPelamar
-          :pelamar="{
-            nama: selectedPelamar?.nama,
-            nomorKtp: `${selectedPelamar?.ktp}`,
-            perusahaan: selectedPelamar?.zonaIndustri
-          }"
-        />
+        <FormPelamarToPegawai :id="selectedPelamar?.id || 0" />
       </Dialog>
     </div>
   </div>
@@ -254,6 +248,7 @@ import ContextMenu from 'primevue/contextmenu'
 import { TOAST_TIMEOUT, ROUTE_ADD_PELAMAR } from '@/constants'
 import FormEditPelamar from '@/page_components/pelamar/FormEditPelamar.vue'
 import { pickBy } from 'lodash'
+import FormPelamarToPegawai from '@/page_components/pelamar/FormPelamarToPegawai.vue'
 
 type PageChangeEvent = {
   page: number
@@ -357,7 +352,10 @@ function test(karyawan: PelamarInstance | undefined) {
   console.log('kar', karyawan)
 }
 
-function mutasiPelamar(pelamar: PelamarInstance) {}
+function mutasiPelamar(pelamar: PelamarInstance) {
+  showMutasiModal.value = true
+  selectedPelamar.value = pelamar
+}
 
 onMounted(() => {
   getPelamarList()

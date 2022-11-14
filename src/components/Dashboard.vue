@@ -19,56 +19,53 @@
     </div>
     <div class="w-full lg:w-6/12 xl:w-3/12">
       <div class="mb-0 card">
-        <div class="flex mb-3 justify-content-between">
+        <div class="flex justify-between mb-3">
           <div>
-            <span class="block mb-3 font-medium text-gray-500">Revenue</span>
-            <div class="text-xl font-medium text-gray-900">$2.100</div>
-          </div>
-          <div
-            class="flex items-center justify-center bg-orange-100 border-round"
-            style="width: 2.5rem; height: 2.5rem"
-          >
-            <i class="text-xl text-orange-500 pi pi-map-marker"></i>
+            <span class="block mb-3 font-medium text-gray-500"
+              >Total Harian Lepas</span
+            >
+            <div class="text-xl font-medium text-gray-900">500</div>
           </div>
         </div>
-        <span class="font-medium text-green-500">%52+ </span>
-        <span class="text-gray-500">since last week</span>
+        <div class="flex items-center">
+          <span class="font-medium text-green-500">400 Aktif </span>
+          <span class="mx-2">|</span>
+          <span class="text-gray-600">100 Non Aktif </span>
+        </div>
+      </div>
+    </div>
+    <div class="w-full lg:w-6/12 xl:w-3/12">
+      <div class="!mb-0 card">
+        <div class="flex justify-between mb-3">
+          <div>
+            <span class="block mb-3 font-medium text-gray-500"
+              >Total Pelamar</span
+            >
+            <div class="text-xl font-medium text-gray-900">1000</div>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <span class="font-medium text-green-500">600 Diproses </span>
+          <span class="mx-2">|</span>
+          <span class="text-gray-600">400 Belum Diproses </span>
+        </div>
       </div>
     </div>
     <div class="w-full lg:w-6/12 xl:w-3/12">
       <div class="mb-0 card">
-        <div class="flex mb-3 justify-content-between">
+        <div class="flex justify-between mb-3">
           <div>
-            <span class="block mb-3 font-medium text-gray-500">Customers</span>
-            <div class="text-xl font-medium text-gray-900">28441</div>
-          </div>
-          <div
-            class="flex items-center justify-center bg-cyan-100 border-round"
-            style="width: 2.5rem; height: 2.5rem"
-          >
-            <i class="text-xl pi pi-inbox text-cyan-500"></i>
+            <span class="block mb-3 font-medium text-gray-500"
+              >Total Karyawan</span
+            >
+            <div class="text-xl font-medium text-gray-900">152</div>
           </div>
         </div>
-        <span class="font-medium text-green-500">520 </span>
-        <span class="text-gray-500">newly registered</span>
-      </div>
-    </div>
-    <div class="w-full lg:w-6/12 xl:w-3/12">
-      <div class="mb-0 card">
-        <div class="flex mb-3 justify-content-between">
-          <div>
-            <span class="block mb-3 font-medium text-gray-500">Comments</span>
-            <div class="text-xl font-medium text-gray-900">152 Unread</div>
-          </div>
-          <div
-            class="flex items-center justify-center bg-purple-100 border-round"
-            style="width: 2.5rem; height: 2.5rem"
-          >
-            <i class="text-xl text-purple-500 pi pi-comment"></i>
-          </div>
+        <div class="flex items-center">
+          <span class="font-medium text-green-500">100 Aktif </span>
+          <span class="mx-2">|</span>
+          <span class="text-gray-600">52 Non Aktif </span>
         </div>
-        <span class="font-medium text-green-500">85 </span>
-        <span class="text-gray-500">responded</span>
       </div>
     </div>
   </div>

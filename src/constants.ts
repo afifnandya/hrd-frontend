@@ -29,6 +29,7 @@ export const RELIGION = [
   'Konghucu'
 ]
 export const GENDER = ['Laki-laki', 'Perempuan']
+export const TIPE_KARYAWAN = ['Karyawan', 'Harian Lepas']
 export const MARTIAL_STATUS = [
   'Tidak Kawin',
   'Kawin Belum Tercatat',
@@ -76,3 +77,5 @@ export const PENDIDIKAN = [
 export const DEFAULT_ERROR_MESSAGE = 'Ops,Someting went wrong'
 export const KARYAWAN_NON_AKTIF = 'Tidak Aktif'
 export const KARYAWAN_AKTIF = 'Aktif'
+export const BUTTON_LOADING = 'Loading'
+export const BUTTON_SAVE = 'Simpan'
