@@ -21,7 +21,7 @@ export interface MutasiKaryawanPayload {
   positionId: number
   status: string
   activeStatus: string
-  startContractDate: string
+  doh: string
 }
 
 export async function mutasiKaryawan(params: MutasiKaryawanPayload) {

@@ -146,7 +146,7 @@ async function mutasi() {
     positionId: jabatanId.value,
     status: status.value,
     activeStatus: statusAktif.value,
-    startContractDate: tanggalKontrak
+    doh: tanggalKontrak
   })
   loading.value = false
 
