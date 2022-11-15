@@ -340,6 +340,7 @@ function onPageChange(event: PageChangeEvent) {
 
 function onFilter(event: any) {
   console.log('onFilter', event)
+  resetPagination()
   getPelamarList()
 }
 
@@ -355,6 +356,11 @@ function test(karyawan: PelamarInstance | undefined) {
 function mutasiPelamar(pelamar: PelamarInstance) {
   showMutasiModal.value = true
   selectedPelamar.value = pelamar
+}
+
+function resetPagination() {
+  page.number = 1
+  page.size = 10
 }
 
 onMounted(() => {

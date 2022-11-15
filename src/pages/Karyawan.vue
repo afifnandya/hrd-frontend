@@ -301,7 +301,7 @@ async function getKaryawanList() {
   try {
     isLoading.value = true
     const { success, data, links, message, meta } = await getKaryawan({
-      pageNumber: page.number,
+      page: page.number,
       limit: page.size,
       name: tableFilters.value.nama.value,
       nik: tableFilters.value.nik.value,
@@ -343,6 +343,7 @@ function onPageChange(event: PageChangeEvent) {
 
 function onFilter(event: any) {
   console.log('onFilter', event)
+  resetPagination()
   getKaryawanList()
 }
 
@@ -416,6 +417,11 @@ async function confirmToggleAktifKaraywan(karyawan: Karyawan) {
       doToggleAktifKaryawan(isNonAktif ? KARYAWAN_AKTIF : KARYAWAN_NON_AKTIF)
     }
   })
+}
+
+function resetPagination() {
+  page.number = 1
+  page.size = 10
 }
 
 onMounted(() => {

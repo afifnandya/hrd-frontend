@@ -19,7 +19,10 @@ function dummyKaryawan() {
 
 async function getKaryawan(payload: GetKaryawanPayload) {
   const dataKaryawan = []
-  const { success, data, message, meta, links } = await fetchKaryawan(payload)
+  const parsedPayload = omitBy(payload, (value, key) => !value)
+  const { success, data, message, meta, links } = await fetchKaryawan(
+    parsedPayload
+  )
 
   if (success && data) {
     if (Array.isArray(data)) {

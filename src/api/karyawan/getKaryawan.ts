@@ -1,7 +1,9 @@
-import useAxios from '@/composable/useAxios'
+import useAxios, { isAxiosError } from '@/composable/useAxios'
 import { camelizeKeys, decamelizeKeys } from 'humps'
 import qs from 'qs'
 import { isEmpty } from 'lodash-es'
+import isErrorWithMessage from '@/helper/isErrorWithMessage'
+import { DEFAULT_ERROR_MESSAGE } from '@/constants'
 
 export type Links = {
   path: string | null
@@ -124,41 +126,60 @@ export interface GetKaryawan {
 
 export type GetKaryawanPayload = Partial<KaryawanAttribute> & {
   limit?: number
-  pageNumber?: number
+  page?: number
 }
 
 export async function getKaryawan(payload: GetKaryawanPayload) {
-  const filter = qs.stringify(decamelizeKeys(payload), { skipNulls: true })
-  let success = false
-  let message = null
-  let links = null
-  let meta = null
-  let data = null
-  const url = payload.id
-    ? `/employees/${payload.id}?${filter}`
-    : `/employees?${filter}`
-  const { data: responseData } = await useAxios(url)
-  console.log('responseData', responseData)
+  try {
+    const filter = qs.stringify(decamelizeKeys(payload), { skipNulls: true })
+    let success = false
+    let message = null
+    let links = null
+    let meta = null
+    let data = null
+    const url = payload.id
+      ? `/employees/${payload.id}?${filter}`
+      : `/employees?${filter}`
+    const { data: responseData } = await useAxios(url)
+    console.log('responseData', responseData)
 
-  const response = camelizeKeys(responseData) as GetKaryawan
-  if (isEmpty(response)) {
-    success = false
-  } else {
-    if (response.status === 200) {
-      success = true
-      data = success ? response.data : null
+    const response = camelizeKeys(responseData) as GetKaryawan
+    if (isEmpty(response)) {
+      success = false
+    } else {
+      if (response.status === 200) {
+        success = true
+        data = success ? response.data : null
+      }
+      console.log('aaa', response)
+      links = response.links
+      message = response.message
+      meta = response.meta
     }
-    console.log('aaa', response)
-    links = response.links
-    message = response.message
-    meta = response.meta
-  }
 
-  return {
-    success,
-    message,
-    meta,
-    data,
-    links
+    return {
+      success,
+      message,
+      meta,
+      data,
+      links
+    }
+  } catch (err) {
+    if (isAxiosError(err) || isErrorWithMessage(err)) {
+      return {
+        success: false,
+        message: err.message,
+        meta: null,
+        data: null,
+        links: null
+      }
+    }
+    return {
+      success: false,
+      message: DEFAULT_ERROR_MESSAGE,
+      meta: null,
+      data: null,
+      links: null
+    }
   }
 }
