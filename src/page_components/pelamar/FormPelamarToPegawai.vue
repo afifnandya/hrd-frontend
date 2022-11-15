@@ -54,6 +54,17 @@
       />
     </div>
     <div class="input-group">
+      <div class="font-bold input-label">Area</div>
+      <Dropdown
+        v-model="areaCode"
+        placeholder="Pilih Area"
+        :options="area"
+        option-value="code"
+        option-label="area"
+        class="w-full"
+      />
+    </div>
+    <div class="input-group">
       <div class="font-bold input-label">Tanggal Mutasi</div>
       <InputText
         v-model="tanggalMutasi"
@@ -94,6 +105,7 @@ import useToast from '@/composable/useToast'
 import dayjs from 'dayjs'
 import { mutasiKaryawan } from '@/api/karyawan/mutasiJadiKaryawan'
 import { getAvailableNIK } from '@/api/karyawan/getAvailableNIK'
+const emit = defineEmits(['on-success'])
 const props = defineProps({
   id: {
     type: [Number, String],
@@ -103,13 +115,14 @@ const props = defineProps({
 const store = useAppStore()
 const toast = useToast()
 const loading = ref(false)
-const { departmen, divisi, jabatan, perusahaan } = storeToRefs(store)
+const { departmen, divisi, jabatan, perusahaan, area } = storeToRefs(store)
 const nik = ref('')
 const perusahaanId = ref(0)
 const departemenId = ref(0)
 const divisiId = ref(0)
 const jabatanId = ref(0)
 const status = ref('')
+const areaCode = ref('')
 const tanggalMutasi = ref(dayjs().format('YYYY-MM-DD'))
 const statusAktif = ref(KARYAWAN_AKTIF)
 const tanggalKontrak = dayjs().format('YYYY-MM-DD')
@@ -146,7 +159,8 @@ async function mutasi() {
     positionId: jabatanId.value,
     status: status.value,
     activeStatus: statusAktif.value,
-    doh: tanggalKontrak
+    doh: tanggalKontrak,
+    areaCode: areaCode.value
   })
   loading.value = false
 
@@ -156,6 +170,7 @@ async function mutasi() {
       return
     }
     toast.success(message)
+    emit('on-success')
   }
 }
 

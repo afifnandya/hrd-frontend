@@ -29,7 +29,7 @@ export const RELIGION = [
   'Konghucu'
 ]
 export const GENDER = ['Laki-laki', 'Perempuan']
-export const TIPE_KARYAWAN = ['Karyawan', 'Harian Lepas']
+export const TIPE_KARYAWAN = ['Karyawan', 'Pekerja Harian Lepas']
 export const MARTIAL_STATUS = [
   'Tidak Kawin',
   'Kawin Belum Tercatat',

@@ -22,6 +22,7 @@ export interface MutasiKaryawanPayload {
   status: string
   activeStatus: string
   doh: string
+  areaCode: string | number
 }
 
 export async function mutasiKaryawan(params: MutasiKaryawanPayload) {

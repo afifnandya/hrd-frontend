@@ -230,7 +230,10 @@
         :style="{ width: '50vw' }"
         :modal="true"
       >
-        <FormPelamarToPegawai :id="selectedPelamar?.id || 0" />
+        <FormPelamarToPegawai
+          :id="selectedPelamar?.id || 0"
+          @on-success="onMutasiSuccess"
+        />
       </Dialog>
     </div>
   </div>
@@ -361,6 +364,11 @@ function mutasiPelamar(pelamar: PelamarInstance) {
 function resetPagination() {
   page.number = 1
   page.size = 10
+}
+
+function onMutasiSuccess() {
+  showMutasiModal.value = false
+  getPelamarList()
 }
 
 onMounted(() => {
