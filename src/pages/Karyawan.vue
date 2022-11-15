@@ -276,7 +276,7 @@ type PageChangeEvent = {
 const appStore = useAppStore()
 const karyawans: Ref<KaryawanInstance[]> = ref([])
 const isLoading = ref(false)
-const totalData = ref(50)
+const totalData = ref(0)
 const page = reactive({
   number: 1,
   size: 10
@@ -311,6 +311,9 @@ async function getKaryawanList() {
     if (!success) {
       toast.error('Error', 'Gagal menampilkan data karyawan')
       return
+    }
+    if (meta?.total) {
+      totalData.value = meta.total
     }
     if (appStore.departmen.length) {
       karyawans.value = data.map((karyawan) => {
