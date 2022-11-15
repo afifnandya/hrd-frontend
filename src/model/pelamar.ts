@@ -55,8 +55,8 @@ export function mapper(data: PelamarAttributes): Pelamar {
     sim: isString(data.sim),
     pengalamanKerja: isString(data.experiences),
     posisiYangDilamar: {
-      id: data.position.id,
-      nama: data.position.name
+      id: data.position?.id || 0,
+      nama: data.position?.name || ''
     },
     keterangan: isString(data.note)
   }
