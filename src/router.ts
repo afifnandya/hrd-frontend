@@ -12,7 +12,8 @@ import {
   ROUTE_MASTER_DIVISI,
   ROUTE_MASTER_JABATAN,
   ROUTE_PELAMAR,
-  ROUTE_PELAMAR_DETAIL
+  ROUTE_PELAMAR_DETAIL,
+  ROUTE_WORK_ORDER
 } from '@/constants'
 
 const routes = [
@@ -45,6 +46,11 @@ const routes = [
         path: '/pelamar/add',
         name: ROUTE_ADD_PELAMAR,
         component: () => import('@/pages/AddPelamar.vue')
+      },
+      {
+        path: '/work-order',
+        name: ROUTE_WORK_ORDER,
+        component: () => import('@/pages/WorkOrder.vue')
       },
       {
         path: '/karyawan/detail/:id',

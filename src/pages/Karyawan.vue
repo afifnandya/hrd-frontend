@@ -55,10 +55,20 @@
           </template>
           <template #body="{ data }">
             <router-link
-              class="text-blue-500 hover:underline hover:to-blue-400"
+              class="flex items-center text-blue-500 hover:underline hover:to-blue-400"
               :to="{ name: ROUTE_KARYAWAN_DETAIL, params: { id: data.id } }"
-              >{{ data.nama }}</router-link
             >
+              <span> {{ data.nama }} </span>
+              <span
+                v-if="data.jenisKelamin == 'Laki-laki'"
+                class="flex items-center"
+              >
+                <GenderIcon tipe="male" class="text-indigo-900" />
+              </span>
+              <span v-else class="flex items-center">
+                <GenderIcon tipe="female" class="text-pink-500" />
+              </span>
+            </router-link>
           </template>
         </Column>
         <Column
@@ -143,35 +153,6 @@
           </template>
         </Column>
         <Column
-          field="jenisKelamin"
-          header="Jenis Kelamin"
-          class="capitalize table-column-medium"
-          :show-filter-menu="false"
-        >
-          <template #filter="{ filterModel, filterCallback }">
-            <Dropdown
-              v-model="filterModel.value"
-              :options="karyawanJenisKelamin"
-              placeholder="Jenis Kelamin"
-              @change="filterCallback()"
-            >
-            </Dropdown>
-          </template>
-          <template #body="{ data }">
-            <div
-              v-if="data.jenisKelamin == 'Laki-laki'"
-              class="flex items-center"
-            >
-              <GenderIcon tipe="male" class="text-blue-500" />
-              <span>Laki-Laki</span>
-            </div>
-            <div v-else class="flex items-center">
-              <GenderIcon tipe="female" class="text-pink-500" />
-              <span>Perempuan</span>
-            </div>
-          </template>
-        </Column>
-        <Column
           field="perusahaan.name"
           header="Perusahaan"
           class="capitalize table-column-medium"
@@ -194,21 +175,6 @@
           class="capitalize table-column-medium"
         ></Column>
         <Column field="umur" header="Umur" class="table-column-small"></Column>
-        <Column
-          field="agama"
-          header="Agama"
-          class="table-column-small"
-        ></Column>
-        <Column
-          field="asalPOH"
-          header="Asal POH"
-          class="table-column-medium"
-        ></Column>
-        <Column
-          field="kerjaPOH"
-          header="Kerja POH"
-          class="table-column-medium"
-        ></Column>
         <Column header="Action" class="table-column-medium">
           <template #body="{ data }">
             <div class="dropdown">

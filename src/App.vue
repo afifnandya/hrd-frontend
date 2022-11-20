@@ -102,9 +102,20 @@ const menu = reactive([
       //   to: '/karyawan'
       // },
       {
-        label: 'Data Pelamar',
+        label: 'HR Requirement',
         icon: 'pi pi-fw pi-bookmark',
-        to: '/pelamar'
+        items: [
+          {
+            label: 'Data Pelamar',
+            icon: 'pi pi-fw pi-bookmark',
+            to: '/pelamar'
+          },
+          {
+            label: 'Work Order',
+            icon: 'pi pi-fw pi-bookmark',
+            to: '/pelamar'
+          }
+        ]
       }
     ]
   }

@@ -26,7 +26,7 @@ export type PelamarAttributes = {
   ktp: string
   id: number
   bantexCode: string
-  nik: string | number
+  nik: string
   name: string
   birthPlace: string
   birthDate: string | undefined

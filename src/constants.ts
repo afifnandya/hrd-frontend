@@ -9,6 +9,7 @@ export const ROUTE_MASTER_AREA = 'masterArea'
 export const ROUTE_PELAMAR_DETAIL = 'pelamarDetail'
 export const ROUTE_PELAMAR = 'pelamar'
 export const ROUTE_ADD_PELAMAR = 'addPelamar'
+export const ROUTE_WORK_ORDER = 'workOrder'
 export const TOAST_TIMEOUT = 2000
 export const POH_CATEGORY = [
   'Nasional',

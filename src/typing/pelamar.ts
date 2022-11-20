@@ -1,7 +1,7 @@
 import { Area, KategoriPekerjaan } from './dataMaster'
 
 export interface Pelamar {
-  ktp: string | number
+  ktp: string
   id: number | string
   tanggalBerkasMasuk: string | undefined
   noBantex: string

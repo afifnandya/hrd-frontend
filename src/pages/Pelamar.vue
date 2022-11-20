@@ -34,7 +34,6 @@
         class="mt-3"
         data-key="id"
         context-menu
-        @rowContextmenu="onRowContextMenu"
         @page="onPageChange"
         @filter="onFilter"
         @sort="onSort"
@@ -148,40 +147,6 @@
           header="Status Aktif"
           class="table-column-small"
         ></Column>
-        <Column
-          field="jenisKelamin"
-          header="Jenis Kelamin"
-          class="capitalize table-column-medium"
-          :show-filter-menu="false"
-        >
-          <template #filter="{ filterModel, filterCallback }">
-            <Dropdown
-              v-model="filterModel.value"
-              :options="karyawanJenisKelamin"
-              placeholder="Jenis Kelamin"
-              @change="filterCallback()"
-            >
-            </Dropdown>
-          </template>
-          <template #body="{ data }">
-            <div
-              v-if="data.jenisKelamin == 'Laki-laki'"
-              class="flex items-center"
-            >
-              <GenderIcon tipe="male" class="text-blue-500" />
-              <span>Laki-Laki</span>
-            </div>
-            <div v-else class="flex items-center">
-              <GenderIcon tipe="female" class="text-pink-500" />
-              <span>Perempuan</span>
-            </div>
-          </template>
-        </Column>
-        <Column
-          field="pendidikan"
-          header="Pendidikan"
-          class="capitalize table-column-medium"
-        ></Column>
         <Column field="umur" header="Umur" class="table-column-small"></Column>
         <Column
           field="posisiYangDilamar.nama"
@@ -221,8 +186,6 @@
         </Column>
       </DataTable>
 
-      <ContextMenu ref="contextMenuRef" :model="contextMenuItem" />
-
       <Dialog
         v-model:visible="showMutasiModal"
         header="Mutasi Pelamar Jadi Karyawan"
@@ -245,11 +208,14 @@ import type { PelamarInstance } from '@/typing/pelamar'
 import { onMounted, reactive, ref, Ref } from 'vue'
 import { isAuthenticated } from '@/service/user'
 import { useToast } from 'primevue/usetoast'
-import { GENDER, ROUTE_PELAMAR_DETAIL } from '@/constants'
+import {
+  GENDER,
+  KARYAWAN_AKTIF,
+  KARYAWAN_NON_AKTIF,
+  ROUTE_PELAMAR_DETAIL
+} from '@/constants'
 import GenderIcon from '@/components/icons/GenderIcon.vue'
-import ContextMenu from 'primevue/contextmenu'
 import { TOAST_TIMEOUT, ROUTE_ADD_PELAMAR } from '@/constants'
-import FormEditPelamar from '@/page_components/pelamar/FormEditPelamar.vue'
 import { pickBy } from 'lodash'
 import FormPelamarToPegawai from '@/page_components/pelamar/FormPelamarToPegawai.vue'
 
@@ -270,26 +236,14 @@ const tableFilters = ref({
   ktp: { value: '', matchMode: 'contains' },
   nama: { value: '', matchMode: 'contains' },
   status: { value: '', matchMode: 'contains' },
-  jenisKelamin: { value: '', matchMode: 'contains' },
   noBantex: { value: '', matchMode: 'contains' },
   kategori: { value: '', matchMode: 'contains' }
 })
-const karyawanStatus = ['Akitif', 'Tidak aktif']
-const karyawanJenisKelamin = GENDER
+const karyawanStatus = [KARYAWAN_AKTIF, KARYAWAN_NON_AKTIF]
 const selectedPelamar = ref<PelamarInstance>()
 
 const toast = useToast()
 const showMutasiModal = ref(false)
-const contextMenuRef = ref()
-const contextMenuItem = [
-  {
-    label: 'Mutasi Jadi Karyawan',
-    // icon: 'pi pi-fw pi-search',
-    command: () => {
-      showMutasiModal.value = true
-    }
-  }
-]
 
 async function getPelamarList() {
   try {
@@ -300,8 +254,7 @@ async function getPelamarList() {
         limit: page.size,
         name: tableFilters.value.nama.value,
         ktp: tableFilters.value.ktp.value,
-        status: tableFilters.value.status.value,
-        gender: tableFilters.value.jenisKelamin.value
+        status: tableFilters.value.status.value
       },
       (val) => (typeof val == 'string' ? val.length > 0 : val > 0)
     )
@@ -326,10 +279,6 @@ async function getPelamarList() {
   } catch (err) {
     console.log('err', err)
   }
-}
-
-function onRowContextMenu(event: any) {
-  contextMenuRef.value.show(event.originalEvent)
 }
 
 function onPageChange(event: PageChangeEvent) {

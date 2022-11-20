@@ -18,20 +18,20 @@ function getUmur(birthDate: string) {
 
 export function mapper(data: PelamarAttributes): Pelamar {
   const pelamarInstance: PelamarInstance = {
-    ktp: data.ktp,
-    id: data.id,
-    tanggalBerkasMasuk: data.createdAt,
-    noBantex: data.bantexCode,
-    status: data.status,
-    statusAktif: data.activeStatus,
-    kategori: data.jobCategory,
-    nik: data.nik,
-    nama: data.name,
+    ktp: isString(data.ktp),
+    id: isNumber(data.id),
+    tanggalBerkasMasuk: isString(data.createdAt),
+    noBantex: isString(data.bantexCode),
+    status: isString(data.status),
+    statusAktif: isString(data.activeStatus),
+    kategori: isObject(data.jobCategory),
+    nik: isString(data.nik),
+    nama: isString(data.name),
     tempatLahir: data.birthPlace,
     tanggalLahir: dayjs(data.birthDate, 'YYYY-MM-DD').format('DD-MMM-YYYY'),
     umur: getUmur(data.birthDate || ''),
     jenisKelamin: data.gender,
-    zonaIndustri: data.area,
+    zonaIndustri: isObject(data.area),
     alamat: {
       desa: data.address,
       kecamatan: data.district,
@@ -41,7 +41,7 @@ export function mapper(data: PelamarAttributes): Pelamar {
     agama: data.religion,
     statusPernikahan: isString(data.maritalStatus),
     nomorTelpon: {
-      telpon1: data.phone,
+      telpon1: isString(data.phone),
       telpon2: isString(data.phoneEmergency)
     },
     pendidikan: isString(data.educationStage),
