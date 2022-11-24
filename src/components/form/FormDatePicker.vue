@@ -16,7 +16,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, ref, watch } from 'vue'
+import { defineProps, nextTick, onMounted, ref, watch } from 'vue'
 import Calendar from 'primevue/calendar'
 import FormLabel from './FormLabel.vue'
 
@@ -29,7 +29,19 @@ const props = defineProps([
   'disabled'
 ])
 const emit = defineEmits(['update:modelValue'])
-const model = ref(props.modelValue)
+const model = ref()
+
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    model.value = newVal
+  }
+)
+
+onMounted(() => {
+  model.value = props.modelValue
+})
+
 watch(model, (newVal) => {
   emit('update:modelValue', newVal)
 })

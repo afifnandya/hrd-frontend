@@ -3,7 +3,7 @@ import { DEFAULT_ERROR_MESSAGE } from '@/constants'
 import isErrorWithMessage from '@/helper/isErrorWithMessage'
 import { firstObjectPropValue } from '@/helper/objetHelper'
 import { decamelizeKeys } from 'humps'
-import { isEmpty } from 'lodash-es'
+import { isEmpty, omitBy } from 'lodash-es'
 
 type MutasiKaryawanResponse = {
   status: number
@@ -23,14 +23,19 @@ export interface MutasiKaryawanPayload {
   activeStatus: string
   doh: string
   areaCode: string | number
+  workOrderId?: string | number
 }
 
 export async function mutasiKaryawan(params: MutasiKaryawanPayload) {
   try {
+    const parsedPayload = omitBy(
+      decamelizeKeys(params),
+      (value, key) => value === undefined || value === null
+    )
     const axiosResponse = await useAxios({
       url: '/employees/hire',
       method: 'POST',
-      data: decamelizeKeys(params)
+      data: parsedPayload
     })
     const responseData = axiosResponse.data as MutasiKaryawanResponse
     if (isEmpty(responseData)) {

@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash-es'
 import humps from 'humps'
 import qs from 'qs'
 import { WorkOrder } from '@/typing/workOrder'
+import { formatDate } from '@/helper/date'
 
 export interface GetWorkOrderResponse {
   status: number
@@ -26,11 +27,13 @@ export interface GetWorkOrderResponse {
   }
 }
 
-export async function getWorkOrder(payload: {
+type Payload = {
   id?: string | number
   pageNumber?: number
   pageSize?: number
-}): Promise<{
+}
+
+export async function getWorkOrder(payload?: Payload): Promise<{
   success: boolean
   message: string
   data: null | GetWorkOrderResponse['data']
@@ -61,6 +64,22 @@ export async function getWorkOrder(payload: {
     }
   }
   const responseData = humps.camelizeKeys(data) as GetWorkOrderResponse
+  if (Array.isArray(responseData.data)) {
+    responseData.data.forEach((workOrder) => {
+      workOrder.expireDate = formatDate(workOrder.expireDate)
+      workOrder.receiveDate = formatDate(workOrder.receiveDate)
+      workOrder.requestDate = formatDate(workOrder.requestDate)
+      workOrder.estimateWorkingDate = formatDate(workOrder.estimateWorkingDate)
+    })
+  } else if (responseData.data.code) {
+    responseData.data.expireDate = formatDate(responseData.data.expireDate)
+    responseData.data.receiveDate = formatDate(responseData.data.receiveDate)
+    responseData.data.requestDate = formatDate(responseData.data.requestDate)
+    responseData.data.estimateWorkingDate = formatDate(
+      responseData.data.estimateWorkingDate
+    )
+  }
+
   return {
     success: true,
     message: responseData.message || '',

@@ -15,7 +15,8 @@ import {
   ROUTE_PELAMAR,
   ROUTE_PELAMAR_DETAIL,
   ROUTE_WORK_ORDER,
-  ROUTE_WORK_ORDER_DETAIL
+  ROUTE_WORK_ORDER_DETAIL,
+  ROUTE_WORK_ORDER_EDIT
 } from '@/constants'
 
 const routes = [
@@ -59,6 +60,12 @@ const routes = [
         name: ROUTE_WORK_ORDER_DETAIL,
         props: true,
         component: () => import('@/pages/DetailWorkOrder.vue')
+      },
+      {
+        path: '/work-order/edit/:id',
+        name: ROUTE_WORK_ORDER_EDIT,
+        props: true,
+        component: () => import('@/pages/EditWorkOrder.vue')
       },
       {
         path: '/work-order/add',

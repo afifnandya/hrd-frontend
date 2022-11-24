@@ -80,6 +80,10 @@ const props = defineProps({
   submitBtn: {
     type: Object as PropType<{ label: string; disabled: boolean }>,
     required: true
+  },
+  showSubmit: {
+    type: Boolean,
+    required: true
   }
 })
 

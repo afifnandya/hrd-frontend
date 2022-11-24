@@ -1,9 +1,13 @@
 <template>
   <div>
     <FormAddData
-      title="Form Tambah Work Order"
+      :title="formTitle"
       :fields="fields"
-      :submit-btn="submitButton"
+      :submit-btn="{
+        label: submitButtonLabel,
+        disabled: isLoading
+      }"
+      :show-submit="!read"
       @on-submit="onSubmit"
     />
   </div>
@@ -20,12 +24,12 @@ import {
   ROUTE_WORK_ORDER
 } from '@/constants'
 import { useAppStore } from '@/stores/app'
-import { WorkOrder } from '@/typing/workOrder'
 import { storeToRefs } from 'pinia'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { getWorkOrderCode } from '@/api/work_oder/getWorkOrderCode'
 import { getWorkOrder } from '@/api/work_oder/getWorkOrder'
 import { useRouter } from 'vue-router'
+import { editWorkOrder } from '@/api/work_oder/editWorkOrder'
 
 let workOrderState = {
   id: ref(0),
@@ -87,10 +91,20 @@ const { departmen, divisi, jabatan } = storeToRefs(store)
 const state = workOrderState
 const toast = useToast()
 const router = useRouter()
-const submitButton = reactive({
-  label: 'Create Work Order',
-  disabled: isLoading
+const formTitle = computed(() => {
+  if (props.add) {
+    return 'Form Tambah Work Order'
+  }
+  if (props.edit) {
+    return 'Form Edit Work Order'
+  }
+  return 'Detail Work Order'
 })
+const submitButtonLabel = props.add
+  ? 'Create Work Order'
+  : props.edit
+  ? 'Edit Work Order'
+  : ''
 
 const HIRING_TYPE_OPTIONS = [
   'Keahlian',
@@ -387,7 +401,9 @@ const fields: Field[] = reactive([
 async function onSubmit() {
   isLoading.value = true
   const payload = reactive(state)
-  const { success, data, message } = await createWorkOrder(payload)
+  const { success, data, message } = props.add
+    ? await createWorkOrder(payload)
+    : await editWorkOrder(state.id.value, payload)
   isLoading.value = false
   console.log('response', success, data, message)
   if (message) {
