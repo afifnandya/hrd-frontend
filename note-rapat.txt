@@ -1,3 +1,26 @@
+Date: 16/11/2022
+
+- data pelamar -> hr requirement
+- tombol delete pelamar
+- form tambah pelamar & edit pelamar harusnya beda, ada yg lebih lengkap di edit pelamar
+- work order
+  permintaan karyawan tiap departement
+  bikin form work order
+  ui menunggu (dari mas ricky)
+  estimasi waktu kerja,
+  action
+   -> edit,
+   -> detail
+   -> delete
+  status wo
+    - pending
+    - done
+    - on process
+- upload foto
+- export data (apakah bisa langsung)
+- kode wo, ada dropdown saat mutasi karyawan
+
+
 Date: 17-10-2022
 
 Page Karyawan

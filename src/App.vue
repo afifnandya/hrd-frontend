@@ -113,7 +113,7 @@ const menu = reactive([
           {
             label: 'Work Order',
             icon: 'pi pi-fw pi-bookmark',
-            to: '/pelamar'
+            to: '/work-order'
           }
         ]
       }

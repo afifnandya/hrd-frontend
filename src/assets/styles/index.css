@@ -7,11 +7,15 @@ html{
 }
 
 .button{
-  @apply px-3 py-1 text-lg leading-7 rounded-lg hover:bg-opacity-50 min-w-[50px] min-h-[30px] hover:bg-gray-200 border border-gray-100;
+  @apply px-3 py-1 text-lg leading-7 rounded-lg hover:bg-opacity-50 min-w-[50px] min-h-[30px]  border border-gray-100;
+}
+
+.button:not(:disabled){
+  @apply hover:bg-gray-200
 }
 
 .button:disabled{
-  @apply bg-opacity-30
+  @apply cursor-not-allowed bg-opacity-30;
 }
 
 .button-large{
@@ -19,7 +23,11 @@ html{
 }
 
 .button-primary{
-  @apply text-white bg-blue-500 hover:bg-blue-700;
+  @apply text-white bg-blue-500 ;
+}
+
+.button-primary:not(:disabled){
+    @apply hover:bg-blue-700;
 }
 
 .button-success{
@@ -28,6 +36,10 @@ html{
 
 .input-group{
   @apply flex items-center w-full mb-6;
+}
+
+.input-error{
+  @apply w-full text-red-500;
 }
 
 .input-label{

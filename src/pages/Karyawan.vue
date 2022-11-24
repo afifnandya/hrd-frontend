@@ -26,7 +26,6 @@
         show-gridlines
         class="mt-3"
         data-key="id"
-        context-menu
         @page="onPageChange"
         @filter="onFilter"
         @sort="onSort"

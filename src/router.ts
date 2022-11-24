@@ -3,6 +3,7 @@ import App from './App.vue'
 import { isAuthenticated } from './service/user'
 import {
   ROUTE_ADD_PELAMAR,
+  ROUTE_ADD_WORK_ORDER,
   ROUTE_DASHBOARD,
   ROUTE_HARIAN_LEPAS,
   ROUTE_KARYAWAN,
@@ -13,7 +14,8 @@ import {
   ROUTE_MASTER_JABATAN,
   ROUTE_PELAMAR,
   ROUTE_PELAMAR_DETAIL,
-  ROUTE_WORK_ORDER
+  ROUTE_WORK_ORDER,
+  ROUTE_WORK_ORDER_DETAIL
 } from '@/constants'
 
 const routes = [
@@ -51,6 +53,17 @@ const routes = [
         path: '/work-order',
         name: ROUTE_WORK_ORDER,
         component: () => import('@/pages/WorkOrder.vue')
+      },
+      {
+        path: '/work-order/detail/:id',
+        name: ROUTE_WORK_ORDER_DETAIL,
+        props: true,
+        component: () => import('@/pages/DetailWorkOrder.vue')
+      },
+      {
+        path: '/work-order/add',
+        name: ROUTE_ADD_WORK_ORDER,
+        component: () => import('@/pages/TambahWorkOrder.vue')
       },
       {
         path: '/karyawan/detail/:id',
