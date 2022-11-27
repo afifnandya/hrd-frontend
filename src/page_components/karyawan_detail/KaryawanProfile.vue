@@ -2,10 +2,35 @@
   <div class="flex flex-col">
     <div class="flex flex-col items-center justify-center">
       <div
-        class="flex items-center justify-center text-6xl text-white bg-blue-500 rounded-lg"
+        class="relative object-contain text-6xl text-white"
         style="width: 150px; height: 150px"
       >
-        {{ nickName }}
+        <img
+          v-if="previewFoto || karyawan.foto"
+          class="object-cover"
+          :src="previewFoto || karyawan.foto || ''"
+          style="width: 150px; height: 150px"
+          alt=""
+        />
+        <div
+          v-else
+          class="flex items-center justify-center w-full h-full bg-blue-500 rounded-lg"
+        >
+          {{ nickName }}
+        </div>
+        <button
+          v-if="enableEdit"
+          class="absolute bottom-0 right-0 bg-white rounded-full"
+          @click="onInputFileClick"
+        >
+          <IcBaselineCameraAlt class="w-[30px] h-[30px] text-gray-500 m-2" />
+          <input
+            id="fotoKaryawan"
+            class="hidden w-full h-full"
+            type="file"
+            @change="uploadFoto"
+          />
+        </button>
       </div>
 
       <div class="flex items-center justify-center my-4">
@@ -16,14 +41,14 @@
             class="button button-primary"
             @click="enableEdit = !enableEdit"
           >
-            Edit
+            {{ $t('edit') }}
           </button>
           <button
             v-else-if="enableEdit"
             class="button"
             @click="enableEdit = !enableEdit"
           >
-            Cancel
+            {{ $t('cancel') }}
           </button>
         </div>
 
@@ -32,7 +57,7 @@
           class="button button-success"
           @click="submitUpdate"
         >
-          Save
+          {{ $t('save') }}
         </button>
       </div>
     </div>
@@ -40,7 +65,7 @@
     <div class="flex mx-10 mt-10">
       <div class="w-1/2 mr-[100px]">
         <div class="flex items-center justify-center mb-8">
-          <label for="nama" class="input-label">Nama</label>
+          <label for="nama" class="input-label">{{ $t('nama') }}</label>
           <div class="w-full">
             <InputText
               id="nama"
@@ -53,7 +78,9 @@
           </div>
         </div>
         <div class="flex items-center justify-center mb-8">
-          <label for="tempatLahir" class="input-label">Tempat Lahir</label>
+          <label for="tempatLahir" class="input-label">{{
+            $t('tempatLahir')
+          }}</label>
           <div class="w-full">
             <InputText
               id="nama"
@@ -66,7 +93,9 @@
           </div>
         </div>
         <div class="flex items-center justify-center mb-8">
-          <label for="tanggalLahir" class="input-label">Tangal Lahir</label>
+          <label for="tanggalLahir" class="input-label">{{
+            $t('tanggalLahir')
+          }}</label>
           <div class="w-full">
             <InputText
               v-if="!enableEdit"
@@ -109,7 +138,7 @@
           </div>
         </div> -->
         <div class="flex items-center justify-center mb-8">
-          <label for="telp" class="input-label">No Telp</label>
+          <label for="telp" class="input-label">{{ $t('noTelpon') }}</label>
           <div class="w-full">
             <InputText
               id="telp"
@@ -122,7 +151,9 @@
           </div>
         </div>
         <div class="flex items-center justify-center mb-8">
-          <label for="telpDarurat" class="input-label">No Telp Darurat</label>
+          <label for="telpDarurat" class="input-label">{{
+            $t('noTelponDarurat')
+          }}</label>
           <div class="w-full">
             <InputText
               id="telpDarurat"
@@ -135,7 +166,7 @@
           </div>
         </div>
         <div class="flex items-center justify-center mb-8">
-          <label for="agama" class="input-label">Agama</label>
+          <label for="agama" class="input-label">{{ $t('agama') }}</label>
           <div class="w-full">
             <Dropdown
               v-if="enableEdit"
@@ -154,9 +185,11 @@
           </div>
         </div>
 
-        <div class="pb-2 my-4 font-bold text-black border-b">Alamat</div>
+        <div class="pb-2 my-4 font-bold text-black border-b">
+          {{ $t('alamat') }}
+        </div>
         <div class="flex items-center justify-center mb-8">
-          <label for="alamat" class="input-label">Alamat</label>
+          <label for="alamat" class="input-label">{{ $t('alamat') }}</label>
           <div class="w-full">
             <InputText
               id="alamat"
@@ -169,7 +202,9 @@
           </div>
         </div>
         <div class="flex items-center justify-center mb-8">
-          <label for="kecamatan" class="input-label">Kecamatan</label>
+          <label for="kecamatan" class="input-label">{{
+            $t('kecamatan')
+          }}</label>
           <div class="w-full">
             <InputText
               id="kecamatan"
@@ -182,7 +217,9 @@
           </div>
         </div>
         <div class="flex items-center justify-center mb-8">
-          <label for="kabupatenKota" class="input-label">Kabupaten/Kota</label>
+          <label for="kabupatenKota" class="input-label">{{
+            $t('kabupatenKota')
+          }}</label>
           <div class="w-full">
             <InputText
               id="kabupatenKota"
@@ -195,7 +232,7 @@
           </div>
         </div>
         <div class="flex items-center justify-center mb-8">
-          <label for="provinsi" class="input-label">Provinsi</label>
+          <label for="provinsi" class="input-label">{{ $t('provinsi') }}</label>
           <div class="w-full">
             <InputText
               id="provinsi"
@@ -211,7 +248,7 @@
 
       <div class="w-1/2">
         <div class="flex mb-8">
-          <label for="ktp" class="input-label">No KTP</label>
+          <label for="ktp" class="input-label">{{ $t('noKtp') }}</label>
           <div class="w-full">
             <InputText
               id="ktp"
@@ -224,7 +261,7 @@
           </div>
         </div>
         <div class="flex mb-8">
-          <label for="divisi" class="input-label">Divisi</label>
+          <label for="divisi" class="input-label">{{ $t('divisi') }}</label>
           <div class="w-full">
             <Dropdown
               v-if="enableEdit"
@@ -244,7 +281,7 @@
           </div>
         </div>
         <div class="flex mb-8">
-          <label for="jabatan" class="input-label">Jabatan</label>
+          <label for="jabatan" class="input-label">{{ $t('jabatan') }}</label>
           <div class="w-full">
             <Dropdown
               v-if="enableEdit"
@@ -264,7 +301,9 @@
           </div>
         </div>
         <div class="flex mb-8">
-          <label for="perusahaan" class="input-label">Perusahaan</label>
+          <label for="perusahaan" class="input-label">{{
+            $t('perusahaan')
+          }}</label>
           <div class="w-full">
             <Dropdown
               v-if="enableEdit"
@@ -285,7 +324,9 @@
         </div>
 
         <div class="flex mb-8">
-          <label for="tanggungan" class="input-label">Tanggungan</label>
+          <label for="tanggungan" class="input-label">{{
+            $t('tanggungan')
+          }}</label>
           <div class="w-full">
             <InputText
               id="tanggungan"
@@ -299,7 +340,7 @@
         </div>
 
         <div class="flex mb-8">
-          <label for="sim" class="input-label">SIM</label>
+          <label for="sim" class="input-label">{{ $t('sim') }}</label>
           <div class="w-full">
             <InputText
               id="sim"
@@ -312,10 +353,14 @@
           </div>
         </div>
 
-        <div class="pb-2 my-4 font-bold text-black border-b">Pendidikan</div>
+        <div class="pb-2 my-4 font-bold text-black border-b">
+          {{ $t('pendidikan') }}
+        </div>
 
         <div class="flex mb-8">
-          <label for="pendidikan" class="input-label">Pendidikan</label>
+          <label for="pendidikan" class="input-label">{{
+            $t('pendidikan')
+          }}</label>
           <div class="flex">
             <div class="w-full md:w-3/12">
               <Dropdown
@@ -345,10 +390,14 @@
           </div>
         </div>
 
-        <div class="pb-2 my-4 font-bold text-black border-b">Rekening</div>
+        <div class="pb-2 my-4 font-bold text-black border-b">
+          {{ $t('rekening') }}
+        </div>
 
         <div class="flex mb-8">
-          <label for="pendidikan" class="input-label">Nama</label>
+          <label for="pendidikan" class="input-label">{{
+            $t('namaRekening')
+          }}</label>
           <div class="w-full">
             <InputText
               type="text"
@@ -361,7 +410,9 @@
         </div>
 
         <div class="flex mb-8">
-          <label for="rekeningBank" class="input-label">Bank</label>
+          <label for="rekeningBank" class="input-label">{{
+            $t('namaBank')
+          }}</label>
           <div class="w-full">
             <InputText
               id="rekeningBank"
@@ -375,7 +426,9 @@
         </div>
 
         <div class="flex mb-8">
-          <label for="rekeningNomer" class="input-label">Nomer</label>
+          <label for="rekeningNomer" class="input-label">{{
+            $t('nomerRekening')
+          }}</label>
           <div class="w-full">
             <InputText
               id="rekeningNomer"
@@ -402,11 +455,14 @@ import { RELIGION, PENDIDIKAN } from '@/constants'
 import { updateKaryawan } from '@/service/karyawan'
 import Calendar from 'primevue/calendar'
 import useToast from '@/composable/useToast'
+import IcBaselineCameraAlt from '~icons/ic/baseline-camera-alt'
+import { uploadFotoKaryawan } from '@/service/karyawan'
 
 const store = useAppStore()
 const toast = useToast()
 const { perusahaan, jabatan, divisi } = storeToRefs(store)
 const enableEdit = ref(false)
+const previewFoto = ref('')
 const props = defineProps({
   karyawan: {
     type: Object as PropType<Karyawan>,
@@ -415,12 +471,14 @@ const props = defineProps({
 })
 
 const editKaryawan = ref()
+const fotoKaryawan = ref<File>()
 
 watch(
   () => props.karyawan,
   (newVal) => {
     editKaryawan.value = { ...newVal }
-  }
+  },
+  { immediate: true }
 )
 
 const nickName = computed(() => {
@@ -435,7 +493,30 @@ const nickName = computed(() => {
   return ''
 })
 
+function uploadFoto() {
+  const inputFoto = document.getElementById('fotoKaryawan') as HTMLInputElement
+  console.log(inputFoto?.files)
+  if (inputFoto) {
+    const file = inputFoto.files?.length ? inputFoto.files[0] : null
+    if (file) {
+      fotoKaryawan.value = file
+      const reader = new FileReader()
+      reader.onload = (e: any) => {
+        previewFoto.value = e.target.result
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+}
+
+function onInputFileClick() {
+  document.getElementById('fotoKaryawan')?.click()
+}
+
 async function submitUpdate() {
+  if (fotoKaryawan.value) {
+    uploadFotoKaryawan(editKaryawan.value.id, fotoKaryawan.value)
+  }
   const { success, message } = await updateKaryawan(
     editKaryawan.value.id,
     editKaryawan.value
@@ -447,6 +528,7 @@ async function submitUpdate() {
     }
     toast.error(message)
   }
+
   console.log('s', success, message)
 }
 </script>

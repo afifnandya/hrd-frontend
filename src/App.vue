@@ -46,7 +46,7 @@ const menu = reactive([
     label: 'Home',
     items: [
       {
-        label: 'Dashboard',
+        label: 'dashboard',
         icon: 'pi pi-fw pi-home',
         to: '/'
       }
@@ -92,7 +92,7 @@ const menu = reactive([
     icon: 'pi pi-fw pi-sitemap',
     items: [
       {
-        label: 'Karyawan',
+        label: t('karyawan'),
         icon: 'pi pi-fw pi-id-card',
         to: '/karyawan'
       },

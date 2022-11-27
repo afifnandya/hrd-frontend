@@ -115,6 +115,7 @@ interface Karyawan {
   kontrakSebelumnya: string
   kontrakSekarang: string
   kategoriPekerjaan: KategoriPekerjaan
+  foto: string | null
 }
 
 interface KaryawanInstance extends Karyawan {

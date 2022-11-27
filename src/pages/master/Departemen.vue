@@ -18,7 +18,7 @@
         <div
           class="flex flex-column md:flex-row md:justify-content-between md:items-center"
         >
-          <h5 class="m-0">Master Departemen</h5>
+          <h5 class="m-0">{{ $t('masterDepartemen') }}</h5>
         </div>
       </template>
 

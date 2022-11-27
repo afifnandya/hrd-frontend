@@ -3,21 +3,21 @@
     <BlockUI :blocked="isLoading">
       <div class="col-12">
         <div class="card">
-          <h5 class="mb-4 text-xl font-bold">Detail Karyawan</h5>
+          <h5 class="mb-4 text-xl font-bold">{{ $t('detailKaryawan') }}</h5>
           <TabView>
-            <TabPanel header="Profile">
+            <TabPanel :header="$t('profile')">
               <KaryawanProfile :karyawan="karyawan" />
             </TabPanel>
-            <TabPanel header="Pasangan">
+            <TabPanel :header="$t('pasangan')">
               <KaryawanPasangan :pasangan="karyawanPasangan" />
             </TabPanel>
-            <TabPanel header="Anak">
+            <TabPanel :header="$t('anak')">
               <KaryawanAnak :anak="karyawanAnak" />
             </TabPanel>
-            <TabPanel header="Orang Tua">
+            <TabPanel :header="$t('orangTua')">
               <KaryawanOrangTua :orang-tua="karyawanOrangTua" />
             </TabPanel>
-            <TabPanel header="Kontrak">
+            <TabPanel :header="$t('kontrak')">
               <KaryawanKontrak :kontrak="karyawanKontrak" />
             </TabPanel>
           </TabView>

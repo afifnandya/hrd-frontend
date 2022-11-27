@@ -1,7 +1,7 @@
 <template>
   <div class="p-10 bg-white">
     <div class="flex items-center justify-between mb-6">
-      <h5 class="text-xl font-bold">Master Jabatan</h5>
+      <h5 class="text-xl font-bold">{{ $t('masterJabatan') }}</h5>
       <div>
         <button class="button button-primary" @click="">Tambah Jabatan</button>
       </div>

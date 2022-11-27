@@ -77,6 +77,7 @@ export interface KaryawanAttribute {
     id: number
     name: string
   }
+  photoUrl: string | null
   families: {
     id: number
     name: string

@@ -10,6 +10,7 @@ import {
   updateKaryawan as doUpdateKaryawan,
   UpdateKaryawanPayload
 } from '@/api/karyawan/updateKaryawan'
+import { uploadFotoKaryawan as doUplodFotoKaryawan } from '@/api/karyawan/uploadFotoKaryawan'
 import { deleteKaryawan } from '@/api/karyawan/deleteKaryawan'
 import { omitBy, pickBy } from 'lodash-es'
 
@@ -102,9 +103,14 @@ async function updateKaryawan(
   }
 }
 
+async function uploadFotoKaryawan(id: string | number, foto: File) {
+  return doUplodFotoKaryawan(id, foto)
+}
+
 function mapper(karyawan: KaryawanAttribute) {
   const umur = dayjs().diff(dayjs(karyawan.birthDate, 'YYYY-MM-DD'), 'year')
   const karyawanObj = createKaryawan({
+    foto: karyawan.photoUrl,
     id: karyawan.id,
     nama: karyawan.name,
     nik: karyawan.nik,
@@ -187,5 +193,6 @@ export {
   getKaryawan,
   dummyKaryawan as createDummyKaryawan,
   updateKaryawan,
-  deleteKaryawan
+  deleteKaryawan,
+  uploadFotoKaryawan
 }

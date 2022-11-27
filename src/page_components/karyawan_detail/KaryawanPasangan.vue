@@ -19,20 +19,20 @@
           {{ data.id }}
         </template>
       </Column>
-      <Column field="Nama" header="Nama" :sortable="true">
+      <Column field="Nama" :header="$t('nama')" :sortable="true">
         <template #body="{ data }">
           {{ data.name }}
         </template>
       </Column>
-      <Column field="ktp" header="KTP"> </Column>
-      <Column field="relationship" header="Hubungan"> </Column>
-      <Column field="job" header="Pekerjaan"> </Column>
-      <Column field="birthDate" header="Tanggal Lahir">
+      <Column field="ktp" :header="$t('noKtp')"> </Column>
+      <Column field="relationship" :header="$t('hubungan')"> </Column>
+      <Column field="job" :header="$t('pekerjaan')"> </Column>
+      <Column field="birthDate" :header="$t('tanggalLahir')">
         <template #body="{ data }">
           {{ data.birthDate }}
         </template>
       </Column>
-      <Column field="birthPlace" header="Tempat Lahir">
+      <Column field="birthPlace" :header="$t('tempatLahir')">
         <template #body="{ data }">
           {{ data.birthPlace }}
         </template>
@@ -56,18 +56,44 @@
     <Dialog
       v-model:visible="showModal.edit"
       :style="{ width: '450px' }"
-      header="Edit Divisi"
+      :header="$t('edit')"
       :modal="true"
       class="p-fluid"
     >
       <div class="field">
-        <label for="divisiNama">Nama</label>
+        <label>{{ $t('nama') }}</label>
 
-        <InputText
-          id="divisiNama"
-          type="text"
-          :value="selectedAnggotaKeluarga?.name"
-        />
+        <InputText type="text" :value="selectedAnggotaKeluarga?.name" />
+      </div>
+
+      <div class="field">
+        <label>{{ $t('noKtp') }}</label>
+
+        <InputText type="text" :value="selectedAnggotaKeluarga?.ktp" />
+      </div>
+
+      <div class="field">
+        <label>{{ $t('relationship') }}</label>
+
+        <InputText type="text" :value="selectedAnggotaKeluarga?.relationship" />
+      </div>
+
+      <div class="field">
+        <label>{{ $t('tanggalLahir') }}</label>
+
+        <InputText type="text" :value="selectedAnggotaKeluarga?.birthDate" />
+      </div>
+
+      <div class="field">
+        <label>{{ $t('tempatLahir') }}</label>
+
+        <InputText type="text" :value="selectedAnggotaKeluarga?.birthPlace" />
+      </div>
+
+      <div class="field">
+        <label>{{ $t('pekerjaan') }}</label>
+
+        <InputText type="text" :value="selectedAnggotaKeluarga?.job" />
       </div>
 
       <template #footer>

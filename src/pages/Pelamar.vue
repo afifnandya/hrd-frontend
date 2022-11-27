@@ -8,7 +8,7 @@
             class="button button-primary"
             @click="$router.push({ name: ROUTE_ADD_PELAMAR })"
           >
-            Tambah Calon Pelamar
+            {{ $t('tambahCalonPelamar') }}
           </button>
         </div>
       </div>
@@ -44,8 +44,8 @@
           </template>
         </Column>
         <Column
+          :header="$t('nama')"
           field="nama"
-          header="Nama"
           :style="{ width: '250px' }"
           frozen
           :sortable="true"
@@ -70,7 +70,7 @@
         </Column>
         <Column
           field="ktp"
-          header="KTP"
+          :header="$t('noKtp')"
           class="table-column-medium"
           :show-filter-menu="false"
         >
@@ -86,7 +86,7 @@
         </Column>
         <Column
           field="noBantex"
-          header="Nomor Bantex"
+          :header="$t('noBantex')"
           class="table-column-medium"
           :show-filter-menu="false"
         >
@@ -102,12 +102,12 @@
         </Column>
         <Column
           field="tanggalBerkasMasuk"
-          header="Tanggal Berkas Masuk"
+          :header="$t('tanggalBerkasMasuk')"
           class="table-column-small"
         ></Column>
         <Column
           field="kategori"
-          header="Kategori"
+          :header="$t('kategori')"
           class="table-column-medium"
           :show-filter-menu="false"
         >
@@ -126,7 +126,7 @@
         </Column>
         <Column
           field="status"
-          header="Status"
+          :header="$t('status')"
           class="capitalize table-column-medium"
           :show-filter-menu="false"
           :filter-header-class="'w-full'"
@@ -144,19 +144,23 @@
         </Column>
         <Column
           field="statusAktif"
-          header="Status Aktif"
+          :header="$t('statusAktif')"
           class="table-column-small"
         ></Column>
-        <Column field="umur" header="Umur" class="table-column-small"></Column>
+        <Column
+          field="umur"
+          :header="$t('umur')"
+          class="table-column-small"
+        ></Column>
         <Column
           field="posisiYangDilamar.nama"
-          header="Posisi Yang Dilamar"
+          :header="$t('posisiYangDilamar')"
           class="table-column-small"
         ></Column>
 
         <Column
           field="zonaIndustri.area"
-          header="Zona Industri"
+          :header="$t('zonaIndustri')"
           class="table-column-medium"
         ></Column>
         <Column header="Action" class="table-column-medium">
@@ -167,18 +171,18 @@
                 <router-link
                   class="block button !text-sm whitespace-nowrap text-black"
                   :to="{ name: ROUTE_PELAMAR_DETAIL, params: { id: data.id } }"
-                  >Detail Pelamar</router-link
+                  >{{ $t('detailPelamar') }}</router-link
                 >
                 <router-link
                   class="block button !text-sm whitespace-nowrap text-black"
                   :to="{ name: ROUTE_PELAMAR_DETAIL, params: { id: data.id } }"
-                  >Edit Pelamar</router-link
+                  >{{ $t('editPelamar') }}</router-link
                 >
                 <button
                   class="block button !text-sm whitespace-nowrap text-black"
                   @click="mutasiPelamar(data)"
                 >
-                  Mutasi Jadi Karyawan
+                  {{ $t('mutasiJadiKaryawan') }}
                 </button>
               </div>
             </div>

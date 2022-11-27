@@ -62,6 +62,7 @@ export function createDummyKaryawan(): KaryawanInstance {
     telepon: '',
     teleponDarurat: '',
     jalan: '',
+    foto: '',
     kecamatan: '',
     kabupatenKota: '',
     provinsi: '',
@@ -105,6 +106,7 @@ export function createDummyKaryawan(): KaryawanInstance {
       id: '',
       nama: ''
     },
+    foto: '',
     grade: '',
     dateOfHiring: '',
     kontrakSebelumnya: '',
@@ -195,6 +197,7 @@ export function createKaryawan(data: Karyawan): KaryawanInstance {
     kontrakSekarang: isString(data.kontrakSekarang),
     wilayah: isObject(data.wilayah),
     kategoriPekerjaan: isObject(data.kategoriPekerjaan),
+    foto: isString(data.foto),
     getAnak: () => getAnak(data.dataKeluarga),
     getPasangan: () => getPasangan(data.dataKeluarga),
     getOrangTua: () => getOrangTua(data.dataKeluarga)

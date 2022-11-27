@@ -2,8 +2,10 @@
   <div class="w-full">
     <div class="card">
       <div class="flex items-center justify-between mb-6">
-        <h5 class="mb-0 text-xl font-bold">Karyawan</h5>
-        <button class="button button-primary">Tambah Karyawan</button>
+        <h5 class="mb-0 text-xl font-bold">{{ $t('karyawan') }}</h5>
+        <button class="button button-primary">
+          {{ $t('tambahKaryawan') }}
+        </button>
       </div>
 
       <DataTable
@@ -37,7 +39,7 @@
         </Column>
         <Column
           field="nama"
-          header="Nama"
+          :header="$t('nama')"
           :style="{ width: '250px' }"
           frozen
           :sortable="true"
@@ -48,7 +50,7 @@
               v-model="filterModel.value"
               type="text"
               class=""
-              placeholder="Search by name"
+              :placeholder="$t('searchByName')"
               @keydown.enter="filterCallback()"
             />
           </template>
@@ -81,7 +83,7 @@
               v-model="filterModel.value"
               type="text"
               class=""
-              placeholder="Search by NIK"
+              :placeholder="$t('searchByNIK')"
               @keydown.enter="filterCallback()"
             />
           </template>
@@ -97,14 +99,14 @@
               v-model="filterModel.value"
               type="text"
               class=""
-              placeholder="Search by KTP"
+              :placeholder="$t('searchByKtp')"
               @keydown.enter="filterCallback()"
             />
           </template>
         </Column>
         <Column
           field="status"
-          header="Status Karyawan"
+          :header="$t('statusKaryawan')"
           class="capitalize table-column-medium"
           :show-filter-menu="false"
           :filter-header-class="'w-full'"
@@ -125,7 +127,7 @@
         </Column>
         <Column
           field="statusAktif"
-          header="Status Aktif"
+          :header="$t('statusAktif')"
           class="capitalize table-column-medium"
           :show-filter-menu="false"
           :filter-header-class="'w-full'"
@@ -153,27 +155,31 @@
         </Column>
         <Column
           field="perusahaan.name"
-          header="Perusahaan"
+          :header="$t('perusahaan')"
           class="capitalize table-column-medium"
         ></Column>
         <Column
           field="departmenName"
-          header="Departemen"
+          :header="$t('departemen')"
           class="capitalize w-[200px]"
         >
         </Column>
 
         <Column
           field="jabatan.nama"
-          header="Jabatan"
+          :header="$t('jabatan')"
           class="capitalize table-column-medium"
         ></Column>
         <Column
           field="divisi.nama"
-          header="Divisi"
+          :header="$t('divisi')"
           class="capitalize table-column-medium"
         ></Column>
-        <Column field="umur" header="Umur" class="table-column-small"></Column>
+        <Column
+          field="umur"
+          :header="$t('umur')"
+          class="table-column-small"
+        ></Column>
         <Column header="Action" class="table-column-medium">
           <template #body="{ data }">
             <div class="dropdown">
@@ -182,12 +188,12 @@
                 <router-link
                   class="block button !text-sm whitespace-nowrap text-black"
                   :to="{ name: ROUTE_KARYAWAN_DETAIL, params: { id: data.id } }"
-                  >Detail Karyawan</router-link
+                  >{{ $t('detailKaryawan') }}</router-link
                 >
                 <router-link
                   class="block button !text-sm whitespace-nowrap text-black"
                   :to="{ name: ROUTE_KARYAWAN_DETAIL, params: { id: data.id } }"
-                  >Edit Karyawan</router-link
+                  >{{ $t('editDataKaryawan') }}</router-link
                 >
                 <button
                   class="block button !text-sm whitespace-nowrap text-black"
@@ -196,14 +202,14 @@
                   {{
                     data.statusAktif === KARYAWAN_NON_AKTIF
                       ? 'Aktfikan Karyawan'
-                      : '                  Non Aktifkan Karyawan'
+                      : $t('nonAktifkanKaryawan')
                   }}
                 </button>
                 <button
                   class="block button !text-sm whitespace-nowrap text-black"
                   @click="confirmDeleteKaryawan(data)"
                 >
-                  Delete Karyawan
+                  {{ $t('hapusKaryawan') }}
                 </button>
               </div>
             </div>
@@ -231,6 +237,7 @@ import useToast from '@/composable/useToast'
 import ConfirmDialog from 'primevue/confirmdialog'
 import { useConfirm } from 'primevue/useconfirm'
 import { useAppStore } from '@/stores/app'
+import { useI18n } from 'vue-i18n'
 
 type PageChangeEvent = {
   page: number
@@ -259,7 +266,9 @@ const karyawanStatusAktif = ['Akitif', 'Tidak aktif']
 const karyawanJenisKelamin = ['Laki-laki', 'Perempuan']
 const selectedKaryawan = ref<Karyawan>()
 const confirm = useConfirm()
-
+const { t } = useI18n({
+  useScope: 'global'
+})
 const toast = useToast()
 
 async function getKaryawanList() {
@@ -323,8 +332,9 @@ function onSort(event: any) {
 function confirmDeleteKaryawan(karyawan: Karyawan) {
   selectedKaryawan.value = karyawan
   confirm.require({
-    message: `Apakah anda yakin ingin mengahpus karyawan
-          ${selectedKaryawan.value?.nama} ?`,
+    message: `${t('apakahAndaYakinInginMenghapus', {
+      nama: selectedKaryawan.value?.nama
+    })}?`,
     header: 'Konfirmasi',
     icon: 'pi pi-exclamation-triangle',
     accept: async () => {
