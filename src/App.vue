@@ -102,7 +102,7 @@ const menu = reactive([
       //   to: '/karyawan'
       // },
       {
-        label: 'HR Requirement',
+        label: 'HR Recruitment',
         icon: 'pi pi-fw pi-bookmark',
         items: [
           {

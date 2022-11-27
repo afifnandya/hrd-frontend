@@ -166,7 +166,16 @@ export async function getKaryawan(payload: GetKaryawanPayload) {
       links
     }
   } catch (err) {
-    if (isAxiosError(err) || isErrorWithMessage(err)) {
+    if (isAxiosError(err)) {
+      return {
+        success: false,
+        message: err.response?.data || err.message,
+        meta: null,
+        data: null,
+        links: null
+      }
+    }
+    if (isErrorWithMessage(err)) {
       return {
         success: false,
         message: err.message,

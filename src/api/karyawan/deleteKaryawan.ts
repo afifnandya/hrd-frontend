@@ -39,7 +39,7 @@ export async function deleteKaryawan(id: string | number) {
     if (isAxiosError(err)) {
       return {
         success: false,
-        message: err.message,
+        message: err.response?.data.message || err.message,
         data: null
       }
     }

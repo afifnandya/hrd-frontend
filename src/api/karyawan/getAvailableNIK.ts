@@ -48,7 +48,14 @@ export async function getAvailableNIK(
       data: camelizeKeys(responseData.data) as Response['data']
     }
   } catch (err) {
-    if (isAxiosError(err) || isErrorWithMessage(err)) {
+    if (isAxiosError(err)) {
+      return {
+        success: false,
+        message: err.response?.data.message || err.message,
+        data: null
+      }
+    }
+    if (isErrorWithMessage(err)) {
       return {
         success: false,
         message: err.message,

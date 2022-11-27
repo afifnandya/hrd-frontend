@@ -58,7 +58,14 @@ export async function mutasiKaryawan(params: MutasiKaryawanPayload) {
       message: responseData.message
     }
   } catch (err) {
-    if (isAxiosError(err) || isErrorWithMessage(err)) {
+    if (isAxiosError(err)) {
+      return {
+        success: false,
+        message: err.response?.data.message || err.message,
+        data: null
+      }
+    }
+    if (isErrorWithMessage(err)) {
       return {
         success: false,
         message: err.message,

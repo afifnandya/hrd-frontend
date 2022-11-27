@@ -38,7 +38,7 @@ export async function uploadFotoKaryawan(
     if (isAxiosError(err)) {
       return {
         isSuccess: false,
-        message: err.message
+        message: err.response?.data.message || err.message
       }
     }
     return {

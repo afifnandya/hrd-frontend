@@ -5,6 +5,7 @@ import dayjs from 'dayjs'
 import { isEmpty } from 'lodash-es'
 import isErrorWithMessage from '@/helper/isErrorWithMessage'
 import { DEFAULT_ERROR_MESSAGE } from '@/constants'
+import { firstObjectPropValue } from '@/helper/objetHelper'
 
 export interface CreatePelamarAPIResponse {
   status: number
@@ -71,7 +72,7 @@ export function buildPayload(data: PelamarInstance) {
     createdAt: dayjs(data.tanggalBerkasMasuk).format('YYYY-MM-DD'),
     updatedAt: '',
     positionId: data.posisiYangDilamar.id,
-    areaCode: data.zonaIndustri
+    areaCode: data.zonaIndustri.code
   }
   const parsedPayload = decamelizeKeys(payload)
   console.log('b', parsedPayload)
@@ -99,14 +100,10 @@ async function createPelamar(param: PelamarInstance) {
       }
     }
     if (parsedData.errors) {
-      for (const property in parsedData.errors) {
-        message = `${message} ${parsedData.errors[property]}`
-      }
-
       return {
         data,
         isSuccess,
-        message: message
+        message: firstObjectPropValue(parsedData.errors)
       }
     }
     if (parsedData.status === 201) {
@@ -126,7 +123,16 @@ async function createPelamar(param: PelamarInstance) {
       message
     }
   } catch (err) {
-    if (isAxiosError(err) || isErrorWithMessage(err)) {
+    console.log('masuk err', err)
+    if (isAxiosError(err)) {
+      message = err.response?.data.message || err.message
+      return {
+        data,
+        isSuccess,
+        message
+      }
+    }
+    if (isErrorWithMessage(err)) {
       message = err.message
       return {
         data,

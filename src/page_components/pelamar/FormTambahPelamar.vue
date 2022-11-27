@@ -7,13 +7,14 @@
       <div class="mx-12">
         <div class="flex items-center">
           <FormLabel label="Nomer bantex" :required="true" />
-          <FormInputText
-            v-model="state.noBantex"
-            placeholder="Masukkan Nomer bantext"
-            :errors="vuelidate.state.noBantex.$errors"
-            :disabled="true"
-            class="w-full mr-6"
-          />
+          <div class="mr-4 input-group">
+            <InputText
+              v-model="state.noBantex"
+              type="text"
+              class="w-full"
+              :disabled="true"
+            />
+          </div>
           <FormInputText
             v-model="state.tanggalBerkasMasuk"
             placeholder="Masukkan Tanggal Input"
@@ -79,14 +80,14 @@
         />
 
         <FormDropdown
-          v-model="state.zonaIndustri"
+          v-model="state.zonaIndustri.code"
           label="Kategori Wilayah"
           placeholder="Pilih Wilayah"
           option-label="area"
           option-value="code"
           :options="areaList"
           :required="true"
-          :errors="vuelidate.state.zonaIndustri.area.$errors"
+          :errors="vuelidate.state.zonaIndustri.code.$errors"
         />
 
         <FormInputText
@@ -119,11 +120,12 @@
           placeholder="Masukkan Provinsi"
           :errors="vuelidate.state.alamat.provinsi.$errors"
         />
-        <FormInputText
+        <FormDropdown
           v-model="state.agama"
           placeholder="Masukkan Agama"
           :required="true"
           label="Agama"
+          :options="RELIGION"
           :errors="vuelidate.state.agama.$errors"
         />
 
@@ -137,12 +139,13 @@
         />
 
         <div class="flex items-center">
-          <FormLabel label="No Hp/Telpon" />
+          <FormLabel label="No Hp/Telpon" :required="true" />
           <div class="flex w-full">
             <FormInputText
               v-model="state.nomorTelpon.telpon1"
               class="mr-4"
               placeholder="Nomor Handphone"
+              :required="true"
             />
 
             <FormInputText
@@ -163,7 +166,7 @@
               :errors="vuelidate.state.pendidikan.$errors"
             />
 
-            <FormDropdown
+            <FormInputText
               v-model="state.jurusan"
               type="text"
               placeholder="Jurusan/Program Studi"
@@ -346,7 +349,7 @@ const rules = {
       required: requiredMessage
     },
     zonaIndustri: {
-      area: {
+      code: {
         required: requiredMessage
       }
     },

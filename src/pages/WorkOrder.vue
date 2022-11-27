@@ -15,6 +15,7 @@
         data-key="id"
         :paginator="true"
         :rows="10"
+        scroll-height="flex"
         paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         :rows-per-page-options="[10, 20, 50]"
         current-page-report-template="Showing {first} to {last} of {totalRecords} Work Orders"
@@ -24,7 +25,7 @@
         :scrollable="true"
         :lazy="true"
         :total-records="totalPage"
-        class="mt-3"
+        class="mt-3 min-h-[400px]"
         @page="onPageChange"
       >
         <Column field="id" header="Id" class="table-column-small" frozen>
