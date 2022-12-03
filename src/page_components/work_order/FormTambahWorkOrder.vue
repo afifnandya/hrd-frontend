@@ -30,6 +30,7 @@ import { getWorkOrderCode } from '@/api/work_oder/getWorkOrderCode'
 import { getWorkOrder } from '@/api/work_oder/getWorkOrder'
 import { useRouter } from 'vue-router'
 import { editWorkOrder } from '@/api/work_oder/editWorkOrder'
+import { useI18n } from 'vue-i18n'
 
 let workOrderState = {
   id: ref(0),
@@ -89,6 +90,7 @@ const isLoading = ref(false)
 const store = useAppStore()
 const { departmen, divisi, jabatan } = storeToRefs(store)
 const state = workOrderState
+const { t } = useI18n()
 const toast = useToast()
 const router = useRouter()
 const formTitle = computed(() => {
@@ -134,11 +136,10 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'dropdown',
     model: state.departmentId,
-    label: 'Departemen',
+    label: t('departemen'),
     name: 'department',
     options: computed(() => departmen.value),
     optionValue: 'id',
-
     optionLabel: 'nama',
     required: true,
     disabled: props.read
@@ -146,7 +147,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'dropdown',
     model: state.divisionId,
-    label: 'Divisi',
+    label: t('divisi'),
     options: computed(() => divisi.value),
     optionValue: 'id',
     optionLabel: 'nama',
@@ -157,7 +158,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'date',
     model: state.estimateWorkingDate,
-    label: 'Estimasi Waktu Kerja',
+    label: t('estimasiWaktuKerja'),
     name: 'estimateWorkingDate',
     required: true,
     disabled: props.read
@@ -165,7 +166,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.existingPositionCount,
-    label: 'Jumlah Sekarang',
+    label: t('jumlahKaryawanYangDiposisi'),
     name: 'existingPositionCount',
     required: true,
     disabled: props.read
@@ -173,7 +174,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'date',
     model: state.expireDate,
-    label: 'Tannggal Expired',
+    label: t('tanggalExpired'),
     name: 'expireDate',
     required: true,
     disabled: props.read
@@ -181,7 +182,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'dropdown',
     model: state.hiringType,
-    label: 'Jenis Perekrutan',
+    label: t('calonKaryawan'),
     name: 'hiringType',
     options: HIRING_TYPE_OPTIONS,
     required: true,
@@ -190,7 +191,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.jobDescription,
-    label: 'Deksripsi Pekerjaan',
+    label: t('rincianTugas'),
     name: 'jobDescription',
     required: true,
     disabled: props.read
@@ -198,7 +199,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.neededPositionCount,
-    label: 'Jumlah Yang Dibutuhkan',
+    label: t('jumlahKaryawanYangDibutuhkan'),
     name: 'neededPositionCount',
     required: true,
     disabled: props.read
@@ -206,7 +207,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.otherRequest,
-    label: 'Keterangan Lain',
+    label: t('permintaanLainnya'),
     name: 'otherRequest',
     required: true,
     disabled: props.read
@@ -214,7 +215,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'dropdown',
     model: state.positionId,
-    label: 'Jabatan',
+    label: t('jabatan'),
     name: 'position',
     options: computed(() => jabatan.value),
     optionValue: 'id',
@@ -225,7 +226,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'dropdown',
     model: state.reason,
-    label: 'Alasan',
+    label: t('alasanPerekrutan'),
     name: 'reason',
     options: REASON_OPTIONS,
     required: true,
@@ -234,7 +235,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'date',
     model: state.receiveDate,
-    label: 'Tanggal Diterima',
+    label: t('tanggalDiterima'),
     name: 'receiveDate',
     required: true,
     disabled: props.read
@@ -242,7 +243,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.receiverName,
-    label: 'Penerima',
+    label: t('penerimaForm'),
     name: 'receiverName',
     required: true,
     disabled: props.read
@@ -250,7 +251,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'date',
     model: state.requestDate,
-    label: 'Tanggal Permintaan',
+    label: t('tanggalPengisian'),
     name: 'requestDate',
     required: true,
     disabled: props.read
@@ -258,7 +259,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.requestedAge,
-    label: 'Umur',
+    label: t('umur'),
     name: 'requestedAge',
     required: true,
     disabled: props.read
@@ -266,7 +267,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.requestedCertification,
-    label: 'Sertifikasi',
+    label: t('sertifikatPendukung'),
     name: 'requestedCertification',
     required: true,
     disabled: props.read
@@ -274,7 +275,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.requestedComputerSkill,
-    label: 'Sertifikasi Kemampuan Komputer',
+    label: t('keahlianKomputer'),
     name: 'requestedComputerSkill',
     required: true,
     disabled: props.read
@@ -282,7 +283,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.requestedEducationMajor,
-    label: 'Jurusan',
+    label: t('jurusan'),
     name: 'requestedEducationMajor',
     required: true,
     disabled: props.read
@@ -290,7 +291,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'dropdown',
     model: state.requestedEducationStage,
-    label: 'Tingakt Pendidikan',
+    label: t('tingkatPendidikan'),
     options: PENDIDIKAN,
     name: 'requestedEducationStage',
     required: true,
@@ -299,7 +300,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.requestedExperiences,
-    label: 'Pengalaman',
+    label: t('pengalaman'),
     name: 'requestedExperiences',
     required: true,
     disabled: props.read
@@ -307,7 +308,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'dropdown',
     model: state.requestedGender,
-    label: 'Jenis Kelamin',
+    label: t('jenisKelamin'),
     name: 'requestedGender',
     options: GENDER,
     required: true,
@@ -316,7 +317,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'dropdown',
     model: state.requestedMaritalStatus,
-    label: 'Status Perkawinan',
+    label: t('statusPerkawinan'),
     options: MARTIAL_STATUS,
     name: 'requestedMaritalStatus',
     required: true,
@@ -325,7 +326,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'dropdown',
     model: state.requestedMultiLanguage,
-    label: 'Multi Bahasa',
+    label: t('bahasaLain'),
     name: 'requestedMultiLanguage',
     options: MULTI_LANGUAGE_OPTIONS,
     required: true,
@@ -334,7 +335,7 @@ const fields: Field[] = reactive([
   {
     type: props.read ? 'text' : 'dropdown',
     model: state.requestedMultiLevel,
-    label: 'Tingkat Bahasa',
+    label: t('tingkatBahasa'),
     name: 'requestedMultiLevel',
     options: MULTI_LEVEL_OPTIONS,
     required: true,
@@ -343,7 +344,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.requestedNationality,
-    label: 'Kebangsaan',
+    label: t('kewarganegaraan'),
     name: 'requestedNationality',
     required: true,
     disabled: props.read
@@ -351,7 +352,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.requestedPyhsical,
-    label: 'Fisik',
+    label: t('fisik'),
     name: 'requestedPyhsical',
     required: true,
     disabled: props.read
@@ -359,7 +360,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.requestedResidence,
-    label: 'Tempat Tinggal',
+    label: t('tempatTinggal'),
     name: 'requestedResidence',
     required: true,
     disabled: props.read
@@ -367,7 +368,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.requestedSalary,
-    label: 'Gaji',
+    label: t('gaji'),
     name: 'requestedSalary',
     required: true,
     disabled: props.read
@@ -375,7 +376,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.requestedTall,
-    label: 'Tinggi Badan',
+    label: t('tinggiBadan'),
     name: 'requestedTall',
     required: true,
     disabled: props.read
@@ -383,7 +384,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.requestedVision,
-    label: 'Pengelihatan',
+    label: t('pengelihatan'),
     name: 'requestedVision',
     required: true,
     disabled: props.read
@@ -391,7 +392,7 @@ const fields: Field[] = reactive([
   {
     type: 'text',
     model: state.requesterName,
-    label: 'Pengisi',
+    label: t('pengisi'),
     name: 'requesterName',
     required: true,
     disabled: props.read

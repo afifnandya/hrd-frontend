@@ -106,7 +106,6 @@ export function createDummyKaryawan(): KaryawanInstance {
       id: '',
       nama: ''
     },
-    foto: '',
     grade: '',
     dateOfHiring: '',
     kontrakSebelumnya: '',

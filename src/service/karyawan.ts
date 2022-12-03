@@ -164,12 +164,12 @@ function mapper(karyawan: KaryawanAttribute) {
     umur: umur,
     agama: karyawan.religion,
     divisi: {
-      id: karyawan.division.id,
-      nama: karyawan.division.name
+      id: karyawan.division?.id || '',
+      nama: karyawan.division?.name || ''
     },
     jabatan: {
-      id: karyawan.position.id,
-      nama: karyawan.position.name
+      id: karyawan.position?.id || '',
+      nama: karyawan.position?.name || ''
     },
     grade: karyawan.grade,
     dateOfHiring: '',
@@ -179,11 +179,18 @@ function mapper(karyawan: KaryawanAttribute) {
     jalan: karyawan.address,
     provinsi: karyawan.province,
     kabupatenKota: karyawan.city,
-    kategoriPekerjaan: karyawan.jobCategory,
+    kategoriPekerjaan: {
+      id: karyawan.jobCategory?.id || '',
+      name: karyawan.jobCategory?.name || '',
+      code: karyawan.jobCategory?.code || ''
+    },
     statusAktif: karyawan.activeStatus,
     asalPOHKTP: karyawan.pohOriginKtp,
     tanggalUpdateKartuKeluarga: karyawan.kkUpdatedAt,
-    wilayah: karyawan.area
+    wilayah: {
+      code: karyawan.area?.code || '',
+      area: karyawan.area?.area || ''
+    }
   })
 
   return karyawanObj

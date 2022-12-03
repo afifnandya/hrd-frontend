@@ -55,25 +55,25 @@ export interface KaryawanAttribute {
   npwp: string
   bpjsKesehatan: string
   bpjsKetenagakerjaan: string
-  jobCategory: {
+  jobCategory: null | {
     id: string | number
     code: string
     name: string
   }
-  company: {
+  company: null | {
     id: number
     code: string
     name: string
   }
-  area: {
+  area: null | {
     code: string
     area: string
   }
-  division: {
+  division: null | {
     id: number
     name: string
   }
-  position: {
+  position: null | {
     id: number
     name: string
   }
