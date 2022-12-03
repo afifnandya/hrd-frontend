@@ -182,37 +182,47 @@
         ></Column>
         <Column header="Action" class="table-column-medium">
           <template #body="{ data }">
-            <div class="dropdown">
-              <button class="button button-primary">Action</button>
-              <div class="dropdown-content">
-                <router-link
-                  class="block button !text-sm whitespace-nowrap text-black"
-                  :to="{ name: ROUTE_KARYAWAN_DETAIL, params: { id: data.id } }"
-                  >{{ $t('detailKaryawan') }}</router-link
-                >
-                <router-link
-                  class="block button !text-sm whitespace-nowrap text-black"
-                  :to="{ name: ROUTE_KARYAWAN_DETAIL, params: { id: data.id } }"
-                  >{{ $t('editDataKaryawan') }}</router-link
-                >
-                <button
-                  class="block button !text-sm whitespace-nowrap text-black"
-                  @click="confirmToggleAktifKaraywan(data)"
-                >
-                  {{
-                    data.statusAktif === KARYAWAN_NON_AKTIF
-                      ? 'Aktfikan Karyawan'
-                      : $t('nonAktifkanKaryawan')
-                  }}
-                </button>
-                <button
-                  class="block button !text-sm whitespace-nowrap text-black"
-                  @click="confirmDeleteKaryawan(data)"
-                >
-                  {{ $t('hapusKaryawan') }}
-                </button>
-              </div>
-            </div>
+            <ActionButton>
+              <template #trigger>
+                <button class="button button-primary">Action</button>
+              </template>
+              <template #content>
+                <div class="">
+                  <router-link
+                    class="block button !text-sm whitespace-nowrap text-black"
+                    :to="{
+                      name: ROUTE_KARYAWAN_DETAIL,
+                      params: { id: data.id }
+                    }"
+                    >{{ $t('detailKaryawan') }}</router-link
+                  >
+                  <router-link
+                    class="block button !text-sm whitespace-nowrap text-black"
+                    :to="{
+                      name: ROUTE_KARYAWAN_DETAIL,
+                      params: { id: data.id }
+                    }"
+                    >{{ $t('editDataKaryawan') }}</router-link
+                  >
+                  <button
+                    class="block button !text-sm whitespace-nowrap text-black"
+                    @click="confirmToggleAktifKaraywan(data)"
+                  >
+                    {{
+                      data.statusAktif === KARYAWAN_NON_AKTIF
+                        ? 'Aktfikan Karyawan'
+                        : $t('nonAktifkanKaryawan')
+                    }}
+                  </button>
+                  <button
+                    class="block button !text-sm whitespace-nowrap text-black"
+                    @click="confirmDeleteKaryawan(data)"
+                  >
+                    {{ $t('hapusKaryawan') }}
+                  </button>
+                </div>
+              </template>
+            </ActionButton>
           </template>
         </Column>
       </DataTable>
@@ -238,6 +248,7 @@ import ConfirmDialog from 'primevue/confirmdialog'
 import { useConfirm } from 'primevue/useconfirm'
 import { useAppStore } from '@/stores/app'
 import { useI18n } from 'vue-i18n'
+import ActionButton from '@/components/ActionButton.vue'
 
 type PageChangeEvent = {
   page: number
@@ -409,7 +420,8 @@ onMounted(() => {
 </script>
 <script lang="ts">
 export default {
-  name: 'Karyawan'
+  name: 'Karyawan',
+  components: { ActionButton }
 }
 </script>
 

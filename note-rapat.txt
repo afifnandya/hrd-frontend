@@ -1,3 +1,10 @@
+Date: 29/11/2022
+- bug action
+- bug ketika angkat jadi karyawan lewat wo 
+- input terbaru di taruh paling atas di table pelamar
+- grafik di dashboard ada quota per departement
+- responsive dashboard
+
 Date: 16/11/2022
 
 - data pelamar -> hr requirement

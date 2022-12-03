@@ -165,27 +165,37 @@
         ></Column>
         <Column header="Action" class="table-column-medium">
           <template #body="{ data }">
-            <div class="dropdown">
-              <button class="button button-primary">Action</button>
-              <div class="dropdown-content">
-                <router-link
-                  class="block button !text-sm whitespace-nowrap text-black"
-                  :to="{ name: ROUTE_PELAMAR_DETAIL, params: { id: data.id } }"
-                  >{{ $t('detailPelamar') }}</router-link
-                >
-                <router-link
-                  class="block button !text-sm whitespace-nowrap text-black"
-                  :to="{ name: ROUTE_PELAMAR_DETAIL, params: { id: data.id } }"
-                  >{{ $t('editPelamar') }}</router-link
-                >
-                <button
-                  class="block button !text-sm whitespace-nowrap text-black"
-                  @click="mutasiPelamar(data)"
-                >
-                  {{ $t('mutasiJadiKaryawan') }}
-                </button>
-              </div>
-            </div>
+            <ActionButton>
+              <template #trigger>
+                <button class="button button-primary">Action</button>
+              </template>
+              <template #content>
+                <div>
+                  <router-link
+                    class="block button !text-sm whitespace-nowrap text-black"
+                    :to="{
+                      name: ROUTE_PELAMAR_DETAIL,
+                      params: { id: data.id }
+                    }"
+                    >{{ $t('detailPelamar') }}</router-link
+                  >
+                  <router-link
+                    class="block button !text-sm whitespace-nowrap text-black"
+                    :to="{
+                      name: ROUTE_PELAMAR_DETAIL,
+                      params: { id: data.id }
+                    }"
+                    >{{ $t('editPelamar') }}</router-link
+                  >
+                  <button
+                    class="block button !text-sm whitespace-nowrap text-black"
+                    @click="mutasiPelamar(data)"
+                  >
+                    {{ $t('mutasiJadiKaryawan') }}
+                  </button>
+                </div>
+              </template>
+            </ActionButton>
           </template>
         </Column>
       </DataTable>
@@ -222,6 +232,7 @@ import GenderIcon from '@/components/icons/GenderIcon.vue'
 import { TOAST_TIMEOUT, ROUTE_ADD_PELAMAR } from '@/constants'
 import { pickBy } from 'lodash'
 import FormPelamarToPegawai from '@/page_components/pelamar/FormPelamarToPegawai.vue'
+import ActionButton from '@/components/ActionButton.vue'
 
 type PageChangeEvent = {
   page: number
@@ -331,7 +342,8 @@ onMounted(() => {
 </script>
 <script lang="ts">
 export default {
-  name: 'Pelamar'
+  name: 'Pelamar',
+  components: { ActionButton }
 }
 </script>
 

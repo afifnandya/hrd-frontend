@@ -106,33 +106,37 @@
 
         <Column header="Action" class="table-column-medium">
           <template #body="{ data }">
-            <div class="dropdown">
-              <button class="button button-primary">Action</button>
-              <div class="dropdown-content">
-                <router-link
-                  class="block button !text-sm whitespace-nowrap text-black"
-                  :to="{
-                    name: ROUTE_WORK_ORDER_DETAIL,
-                    params: { id: data.id }
-                  }"
-                  >Detail Work Order</router-link
-                >
-                <router-link
-                  class="block button !text-sm whitespace-nowrap text-black"
-                  :to="{
-                    name: ROUTE_WORK_ORDER_DETAIL,
-                    params: { id: data.id }
-                  }"
-                  >Edit Work Order</router-link
-                >
-                <button
-                  class="block button !text-sm whitespace-nowrap text-black"
-                  @click="confirmDeleteWorkOrder(data)"
-                >
-                  Delete Work Order
-                </button>
-              </div>
-            </div>
+            <ActionButton>
+              <template #trigger>
+                <button class="button button-primary">Action</button>
+              </template>
+              <template #content>
+                <div class="">
+                  <router-link
+                    class="block button !text-sm whitespace-nowrap text-black"
+                    :to="{
+                      name: ROUTE_WORK_ORDER_DETAIL,
+                      params: { id: data.id }
+                    }"
+                    >Detail Work Order</router-link
+                  >
+                  <router-link
+                    class="block button !text-sm whitespace-nowrap text-black"
+                    :to="{
+                      name: ROUTE_WORK_ORDER_DETAIL,
+                      params: { id: data.id }
+                    }"
+                    >Edit Work Order</router-link
+                  >
+                  <button
+                    class="block button !text-sm whitespace-nowrap text-black"
+                    @click="confirmDeleteWorkOrder(data)"
+                  >
+                    Delete Work Order
+                  </button>
+                </div>
+              </template>
+            </ActionButton>
           </template>
         </Column>
       </DataTable>
@@ -152,6 +156,7 @@ import { ROUTE_ADD_WORK_ORDER, ROUTE_WORK_ORDER_DETAIL } from '@/constants'
 import dayjs from 'dayjs'
 import ConfirmDialog from 'primevue/confirmdialog'
 import { useConfirm } from 'primevue/useconfirm'
+import ActionButton from '@/components/ActionButton.vue'
 
 type PageChangeEvent = {
   page: number
