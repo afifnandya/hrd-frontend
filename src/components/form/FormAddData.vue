@@ -37,6 +37,7 @@
       </div>
 
       <button
+        v-if="submitBtn.show !== false"
         class="block mx-auto button button-primary"
         :disabled="submitBtn.disabled"
         @click="$emit('on-submit')"
@@ -78,7 +79,11 @@ const props = defineProps({
     required: true
   },
   submitBtn: {
-    type: Object as PropType<{ label: string; disabled: boolean }>,
+    type: Object as PropType<{
+      label: string
+      disabled: boolean
+      show?: boolean
+    }>,
     required: true
   },
   showSubmit: {

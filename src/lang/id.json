@@ -62,8 +62,8 @@
       "rekening": "Rekening",
       "hubungan": "Hubungan",
       "pekerjaan": "Pekerjaan",
-      "profile": "profile",
-      "kontrak": "kontrak",
+      "profile": "Profile",
+      "kontrak": "Kontrak",
       "noBantex": "No Bantex",
       "tanggalBerkasMasuk": "Tanggal Berkas Masuk",
       "zonaIndustri": "Zona Industri",
@@ -100,6 +100,11 @@
       "tanggalDiterima": "Tanggal Diterima",
       "statusPerkawinan": "Status Perkawinan",
       "pengisi": "Pengisi",
+      "simpan": "Simpan",
+      "area": "Area",
+            "npwp": "NPWP",
+            "nik": "NIK",
+
 
 
 

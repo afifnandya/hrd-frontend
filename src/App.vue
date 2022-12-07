@@ -210,6 +210,7 @@ onMounted(() => {
   appStore.getDivisi()
   appStore.getJabatan()
   appStore.getPerusahaan()
+  appStore.getJobCategory()
 })
 
 onBeforeUpdate(() => {

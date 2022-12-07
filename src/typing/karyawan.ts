@@ -68,7 +68,7 @@ interface Karyawan {
   statusPernikahan: string
   tanggalUpdateKK: string
   ktp: string
-  perusahaan: null | {
+  perusahaan: {
     id: string | number
     code: string | number
     name: string
@@ -101,11 +101,11 @@ interface Karyawan {
   tanggalUpdateKartuKeluarga: string
   umur: number
   agama: string
-  divisi: null | {
+  divisi: {
     id: string | number
     nama: string
   }
-  jabatan: null | {
+  jabatan: {
     id: string | number
     nama: string
   }

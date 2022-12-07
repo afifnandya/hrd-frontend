@@ -86,7 +86,7 @@
           class="table-column-medium"
         >
           <template #body="{ data }: { data: WorkOrder }">
-            {{ data.existingPositionCount }}
+            {{ data.employeesCount }}
           </template>
         </Column>
         <Column
@@ -188,7 +188,7 @@ async function fetchWorkOrder() {
 
   console.log('a', data)
   loading.value = false
-  workOrders.value = data
+  workOrders.value = Array.isArray(data) ? data : [data]
   totalPage.value = meta?.total || 0
 }
 
@@ -241,7 +241,8 @@ function getRemainingTime(date: string) {
   if (!isValid) {
     return 0
   }
-  return dayjs(date).endOf('day').diff(dayjs(), 'days')
+  const remaining = dayjs(date).endOf('day').diff(dayjs(), 'days')
+  return remaining > 0 ? remaining : 0
 }
 
 fetchWorkOrder()

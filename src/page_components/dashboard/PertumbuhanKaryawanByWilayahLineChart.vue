@@ -55,15 +55,16 @@ function initChart() {
   const option: EChartsOption = {
     title: {
       text: chartTitle,
-      left: '25%',
-      // right: 'auto',
-      bottom: '10'
+      left: 'center',
+      right: 'center',
+      top: '10'
     },
     tooltip: {
       trigger: 'axis'
     },
     legend: {
-      data: ['Ambulu', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+      data: ['Ambulu', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine'],
+      bottom: 10
     },
     grid: {
       left: '3%',

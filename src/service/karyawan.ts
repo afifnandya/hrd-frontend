@@ -7,6 +7,10 @@ import {
   KaryawanAttribute
 } from '@/api/karyawan/getKaryawan'
 import {
+  CreateKaryawanPayload,
+  tambahKaryawan as doTambahKaryawan
+} from '@/api/karyawan/tambahKaryawan'
+import {
   updateKaryawan as doUpdateKaryawan,
   UpdateKaryawanPayload
 } from '@/api/karyawan/updateKaryawan'
@@ -103,6 +107,48 @@ async function updateKaryawan(
   }
 }
 
+async function tambahKaryawan(karyawan: Partial<Karyawan>) {
+  const payload: Partial<CreateKaryawanPayload> = {
+    nik: karyawan.nik,
+    name: karyawan.nama,
+    status: karyawan.status,
+    activeStatus: karyawan.statusAktif,
+    grade: karyawan.grade,
+    positionLevel: karyawan.jabatan?.id,
+    level: undefined,
+    taxDependentStatus: karyawan.tanggunganPajak,
+    maritalStatus: karyawan.statusPernikahan,
+    kk: karyawan.kartuKeluarga,
+    kkUpdatedAt: karyawan.tanggalUpdateKartuKeluarga,
+    gender: karyawan.jenisKelamin,
+    birthPlace: karyawan.tempatLahir,
+    birthDate:
+      karyawan.tanggalLahir && dayjs(karyawan.tanggalLahir).isValid()
+        ? dayjs(karyawan.tanggalLahir).format('YYYY-MM-DD')
+        : undefined,
+    religion: karyawan.agama,
+    province: karyawan.provinsi,
+    city: karyawan.kabupatenKota,
+    district: karyawan.kecamatan,
+    address: karyawan.jalan,
+    pohOrigin: karyawan.asalPOH,
+    pohOriginKtp: karyawan.asalPOHKTP,
+    pohWorking: karyawan.kerjaPOH,
+    pohCategory: karyawan.kategoriPOH,
+    phone: karyawan.telepon,
+    phoneEmergency: karyawan.teleponDarurat,
+    ktp: karyawan.ktp,
+    sim: karyawan.sim,
+    npwp: karyawan.npwp,
+    companyId: karyawan.perusahaan?.id,
+    areaCode: karyawan.wilayah?.code,
+    divisionId: karyawan.divisi?.id,
+    positionId: karyawan.jabatan?.id,
+    jobCategoryId: karyawan.kategoriPekerjaan?.id
+  }
+  return await doTambahKaryawan(payload)
+}
+
 async function uploadFotoKaryawan(id: string | number, foto: File) {
   return doUplodFotoKaryawan(id, foto)
 }
@@ -117,7 +163,11 @@ function mapper(karyawan: KaryawanAttribute) {
     status: karyawan.status,
     departement: karyawan.departmentId,
     pendidikan: karyawan.education,
-    perusahaan: karyawan.company,
+    perusahaan: {
+      id: karyawan.company?.id || '',
+      code: karyawan.company?.code || '',
+      name: karyawan.company?.name || ''
+    },
     jurusan: '',
     tanggungan: '',
     tanggunganPajak: karyawan.taxDependentStatus,
@@ -201,5 +251,6 @@ export {
   dummyKaryawan as createDummyKaryawan,
   updateKaryawan,
   deleteKaryawan,
-  uploadFotoKaryawan
+  uploadFotoKaryawan,
+  tambahKaryawan
 }

@@ -44,4 +44,5 @@ export interface WorkOrder {
   otherRequest: string
   receiverName: string
   receiveDate: string
+  employeesCount: number
 }

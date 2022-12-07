@@ -124,11 +124,16 @@ import Column from 'primevue/column'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 
 import { AnggotaKeluarga } from '@/typing/karyawan'
-
-defineProps<{ anak: AnggotaKeluarga[] }>()
+import { useKaryawanStore } from '@/stores/karyawan'
+import { storeToRefs } from 'pinia'
+const karyawanStore = useKaryawanStore()
+const { karyawan } = storeToRefs(karyawanStore)
+const anak = computed(() => {
+  return karyawan.value.getAnak() || []
+})
 
 const loading = ref(false)
 

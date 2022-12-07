@@ -149,12 +149,15 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
-
-import { onMounted, reactive, ref } from 'vue'
-
+import { computed, onMounted, reactive, ref } from 'vue'
 import { AnggotaKeluarga } from '@/typing/karyawan'
-
-defineProps<{ pasangan: AnggotaKeluarga[] }>()
+import { storeToRefs } from 'pinia'
+import { useKaryawanStore } from '@/stores/karyawan'
+const karyawanStore = useKaryawanStore()
+const { karyawan } = storeToRefs(karyawanStore)
+const pasangan = computed(() => {
+  return karyawan.value.getPasangan() || []
+})
 
 const loading = ref(false)
 

@@ -3,9 +3,12 @@
     <div class="card">
       <div class="flex items-center justify-between mb-6">
         <h5 class="mb-0 text-xl font-bold">{{ $t('karyawan') }}</h5>
-        <button class="button button-primary">
+        <router-link
+          :to="{ name: ROUTE_KARYAWAN_TAMBAH }"
+          class="button button-primary"
+        >
           {{ $t('tambahKaryawan') }}
-        </button>
+        </router-link>
       </div>
 
       <DataTable
@@ -240,7 +243,8 @@ import { isAuthenticated } from '@/service/user'
 import {
   KARYAWAN_AKTIF,
   KARYAWAN_NON_AKTIF,
-  ROUTE_KARYAWAN_DETAIL
+  ROUTE_KARYAWAN_DETAIL,
+  ROUTE_KARYAWAN_TAMBAH
 } from '@/constants'
 import GenderIcon from '@/components/icons/GenderIcon.vue'
 import useToast from '@/composable/useToast'

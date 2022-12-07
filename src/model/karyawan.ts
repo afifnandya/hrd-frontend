@@ -67,21 +67,21 @@ export function createDummyKaryawan(): KaryawanInstance {
     kabupatenKota: '',
     provinsi: '',
     rekening: {
-      name: 'todo',
-      bank: 'todo',
-      rekening: 'todo'
+      name: '',
+      bank: '',
+      rekening: ''
     },
     keluar: {
-      tipe: 'todo',
-      kategori: 'todo',
-      tanggalKeluar: 'todo',
-      kontrak: 'todo',
-      tanggalPengajuan: 'todo',
-      keterangan: 'todo'
+      tipe: '',
+      kategori: '',
+      tanggalKeluar: '',
+      kontrak: '',
+      tanggalPengajuan: '',
+      keterangan: ''
     },
     mutasi: {
-      tanggal: 'todo',
-      deskripsi: 'todo'
+      tanggal: '',
+      deskripsi: ''
     },
     dataKeluarga: [],
     kontrak: [],
@@ -90,8 +90,8 @@ export function createDummyKaryawan(): KaryawanInstance {
     tempatLahir: '',
     tanggalLahir: '',
     bpjs: {
-      kesehatan: 'todo',
-      tenagaKerja: 'todo'
+      kesehatan: '',
+      tenagaKerja: ''
     },
     sim: '',
     kartuKeluarga: '',
@@ -163,15 +163,15 @@ export function createKaryawan(data: Karyawan): KaryawanInstance {
     },
     keluar: {
       tipe: 'data',
-      kategori: 'todo',
-      tanggalKeluar: 'todo',
-      kontrak: 'todo',
-      tanggalPengajuan: 'todo',
-      keterangan: 'todo'
+      kategori: '',
+      tanggalKeluar: '',
+      kontrak: '',
+      tanggalPengajuan: '',
+      keterangan: ''
     },
     mutasi: {
-      tanggal: 'todo',
-      deskripsi: 'todo'
+      tanggal: '',
+      deskripsi: ''
     },
     dataKeluarga: isArray(data.dataKeluarga),
     kontrak: isArray(data.kontrak),
@@ -180,8 +180,8 @@ export function createKaryawan(data: Karyawan): KaryawanInstance {
     tempatLahir: isString(data.tempatLahir),
     tanggalLahir: isString(data.tanggalLahir),
     bpjs: {
-      kesehatan: 'todo',
-      tenagaKerja: 'todo'
+      kesehatan: '',
+      tenagaKerja: ''
     },
     sim: isString(data.sim),
     kartuKeluarga: isString(data.kartuKeluarga),

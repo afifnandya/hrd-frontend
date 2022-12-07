@@ -5,7 +5,8 @@
       :fields="fields"
       :submit-btn="{
         label: submitButtonLabel,
-        disabled: isLoading
+        disabled: isLoading,
+        show: false
       }"
       :show-submit="!read"
       @on-submit="onSubmit"

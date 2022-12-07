@@ -35,11 +35,11 @@
 
       <div class="flex items-center justify-center my-4">
         <div class="mr-2 text-2xl font-bold">{{ karyawan.nama }}</div>
-        <div class="mr-2">
+        <div v-if="!karyawanStore.isTambahKaryawan" class="mr-2">
           <button
             v-if="!enableEdit"
             class="button button-primary"
-            @click="enableEdit = !enableEdit"
+            @click="onClickEdit"
           >
             {{ $t('edit') }}
           </button>
@@ -51,14 +51,6 @@
             {{ $t('cancel') }}
           </button>
         </div>
-
-        <button
-          v-if="enableEdit"
-          class="button button-success"
-          @click="submitUpdate"
-        >
-          {{ $t('save') }}
-        </button>
       </div>
     </div>
 
@@ -146,7 +138,7 @@
               :disabled="!enableEdit"
               :value="karyawan.telepon"
               class="w-full"
-              @input="(event: any) => editKaryawan.telpon = event.target.value"
+              @input="(event: any) => editKaryawan.telepon = event.target.value"
             />
           </div>
         </div>
@@ -181,6 +173,26 @@
               :disabled="true"
               :value="karyawan.agama"
               class="w-full"
+            />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center mb-8">
+          <label class="input-label">{{ $t('jenisKelamin') }}</label>
+          <div class="w-full">
+            <Dropdown
+              v-if="enableEdit"
+              v-model="editKaryawan.jenisKelamin"
+              :options="GENDER"
+              class="w-full"
+            />
+            <InputText
+              v-else
+              type="text"
+              :disabled="true"
+              :value="karyawan.jenisKelamin"
+              class="w-full"
+              @input="(event: any) => editKaryawan.jenisKelamin = event.target.value"
             />
           </div>
         </div>
@@ -247,6 +259,18 @@
       </div>
 
       <div class="w-1/2">
+        <div class="flex mb-8">
+          <label class="input-label">{{ $t('nik') }}</label>
+          <div class="w-full">
+            <InputText
+              type="text"
+              :disabled="!enableEdit"
+              :value="karyawan.nik"
+              class="w-full"
+              @input="(event: any) => editKaryawan.nik = event.target.value"
+            />
+          </div>
+        </div>
         <div class="flex mb-8">
           <label for="ktp" class="input-label">{{ $t('noKtp') }}</label>
           <div class="w-full">
@@ -324,6 +348,26 @@
         </div>
 
         <div class="flex mb-8">
+          <label class="input-label">{{ $t('area') }}</label>
+          <div class="w-full">
+            <Dropdown
+              v-if="enableEdit"
+              v-model="editKaryawan.wilayah"
+              :options="area"
+              option-label="area"
+              class="w-full"
+            />
+            <InputText
+              v-else
+              type="text"
+              :disabled="true"
+              :value="karyawan.wilayah.area"
+              class="w-full"
+            />
+          </div>
+        </div>
+
+        <div class="flex mb-8">
           <label for="tanggungan" class="input-label">{{
             $t('tanggungan')
           }}</label>
@@ -349,6 +393,80 @@
               :value="karyawan.sim"
               class="w-full"
               @input="(event: any) => editKaryawan.sim = event.target.value"
+            />
+          </div>
+        </div>
+
+        <div class="flex mb-8">
+          <label class="input-label">{{ $t('statusKaryawan') }}</label>
+          <div class="w-full">
+            <Dropdown
+              v-if="enableEdit"
+              v-model="editKaryawan.status"
+              :options="TIPE_KARYAWAN"
+              class="w-full"
+            />
+            <InputText
+              v-else
+              type="text"
+              :disabled="!enableEdit"
+              :value="karyawan.status"
+              class="w-full"
+              @input="(event: any) => editKaryawan.status = event.target.value"
+            />
+          </div>
+        </div>
+
+        <div class="flex mb-8">
+          <label class="input-label">{{ $t('statusAktif') }}</label>
+          <div class="w-full">
+            <Dropdown
+              v-if="enableEdit"
+              v-model="editKaryawan.statusAktif"
+              :options="STATUS_AKTIF_KARYAWAN"
+              class="w-full"
+            />
+            <InputText
+              v-else
+              type="text"
+              :disabled="!enableEdit"
+              :value="karyawan.statusAktif"
+              class="w-full"
+              @input="(event: any) => editKaryawan.statusAktif = event.target.value"
+            />
+          </div>
+        </div>
+
+        <div class="flex mb-8">
+          <label class="input-label">{{ $t('kategori') }}</label>
+          <div class="w-full">
+            <Dropdown
+              v-if="enableEdit"
+              v-model="editKaryawan.kategoriPekerjaan"
+              :options="kategoriPekerjaan"
+              option-label="name"
+              class="w-full"
+            />
+            <InputText
+              v-else
+              type="text"
+              :disabled="!enableEdit"
+              :value="karyawan.kategoriPekerjaan.name"
+              class="w-full"
+              @input="(event: any) => editKaryawan.kategoriPekerjaan = event.target.value"
+            />
+          </div>
+        </div>
+
+        <div class="flex mb-8">
+          <label class="input-label">{{ $t('npwp') }}</label>
+          <div class="w-full">
+            <InputText
+              type="text"
+              :disabled="!enableEdit"
+              :value="karyawan.npwp"
+              class="w-full"
+              @input="(event: any) => editKaryawan.npwp = event.target.value"
             />
           </div>
         </div>
@@ -446,44 +564,38 @@
 </template>
 
 <script lang="ts" setup>
-import { Karyawan } from '@/typing/karyawan'
-import { computed, PropType, ref, watch } from 'vue'
+import { computed, onMounted, PropType, ref, watch } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
 import Dropdown from 'primevue/dropdown'
-import { RELIGION, PENDIDIKAN } from '@/constants'
-import { updateKaryawan } from '@/service/karyawan'
+import {
+  RELIGION,
+  PENDIDIKAN,
+  GENDER,
+  TIPE_KARYAWAN,
+  STATUS_AKTIF_KARYAWAN
+} from '@/constants'
 import Calendar from 'primevue/calendar'
-import useToast from '@/composable/useToast'
 import IcBaselineCameraAlt from '~icons/ic/baseline-camera-alt'
-import { uploadFotoKaryawan } from '@/service/karyawan'
+import { useKaryawanStore } from '@/stores/karyawan'
+import { cloneDeep } from 'lodash'
 
 const store = useAppStore()
-const toast = useToast()
-const { perusahaan, jabatan, divisi } = storeToRefs(store)
-const enableEdit = ref(false)
+const karyawanStore = useKaryawanStore()
+const { karyawan, editKaryawan, fotoKaryawan } = storeToRefs(karyawanStore)
+const { perusahaan, jabatan, divisi, area, kategoriPekerjaan } =
+  storeToRefs(store)
 const previewFoto = ref('')
-const props = defineProps({
-  karyawan: {
-    type: Object as PropType<Karyawan>,
-    required: true
-  }
+
+const isTambahKaryawan = computed(() => {
+  return karyawan.value.id === 0
 })
 
-const editKaryawan = ref()
-const fotoKaryawan = ref<File>()
-
-watch(
-  () => props.karyawan,
-  (newVal) => {
-    editKaryawan.value = { ...newVal }
-  },
-  { immediate: true }
-)
+const enableEdit = ref(false)
 
 const nickName = computed(() => {
-  if (props.karyawan) {
-    const split = props.karyawan.nama.split(' ')
+  if (karyawan.value) {
+    const split = karyawan.value.nama.split(' ')
     if (split.length) {
       const indexOne = split[0].charAt(0)
       const indexTwo = split[1]?.charAt(0) || ''
@@ -513,24 +625,18 @@ function onInputFileClick() {
   document.getElementById('fotoKaryawan')?.click()
 }
 
-async function submitUpdate() {
-  if (fotoKaryawan.value) {
-    uploadFotoKaryawan(editKaryawan.value.id, fotoKaryawan.value)
-  }
-  const { success, message } = await updateKaryawan(
-    editKaryawan.value.id,
-    editKaryawan.value
-  )
-  if (message) {
-    if (success) {
-      toast.success(message)
-      return
-    }
-    toast.error(message)
-  }
-
-  console.log('s', success, message)
+function onClickEdit() {
+  enableEdit.value = !enableEdit.value
+  editKaryawan.value = cloneDeep(karyawan.value)
 }
+
+watch(
+  () => isTambahKaryawan.value,
+  (newVal) => {
+    enableEdit.value = newVal
+  },
+  { immediate: true }
+)
 </script>
 <script lang="ts">
 export default {

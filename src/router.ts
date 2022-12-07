@@ -8,6 +8,7 @@ import {
   ROUTE_HARIAN_LEPAS,
   ROUTE_KARYAWAN,
   ROUTE_KARYAWAN_DETAIL,
+  ROUTE_KARYAWAN_TAMBAH,
   ROUTE_MASTER_AREA,
   ROUTE_MASTER_DEPARTMEN,
   ROUTE_MASTER_DIVISI,
@@ -76,6 +77,11 @@ const routes = [
         path: '/karyawan/detail/:id',
         name: ROUTE_KARYAWAN_DETAIL,
         props: true,
+        component: () => import('@/pages/KaryawanDetail.vue')
+      },
+      {
+        path: '/karyawan/tambah',
+        name: ROUTE_KARYAWAN_TAMBAH,
         component: () => import('@/pages/KaryawanDetail.vue')
       },
       {

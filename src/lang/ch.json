@@ -102,7 +102,9 @@
       "tanggalDiterima": "Tanggal Diterima",
       "statusPerkawinan": "Status Perkawinan",
       "pengisi": "Pengisi",
-
+      "area": "Area",
+      "npwp": "NPWP",
+      "nik": "NIK",
 
 
   "masterJabatan": "岗位代码",

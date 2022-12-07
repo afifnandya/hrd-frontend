@@ -115,6 +115,14 @@
       </div>
     </div>
   </div>
+
+  <div class="flex flex-wrap mt-4">
+    <div class="w-full lg:w-6/12 xl:w-6/12">
+      <div class="p-0 mb-0 card">
+        <WorkOrderChart />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -126,6 +134,7 @@ import PendidikanPieChart from '@/page_components/dashboard/PendidikanPieChart.v
 import UmurPieChart from '@/page_components/dashboard/UmurPieChart.vue'
 import PertumbuhanKaryawanLineChart from '@/page_components/dashboard/PertumbuhanKaryawanLineChart.vue'
 import PertumbuhanKaryawanByWilayahLineChart from '@/page_components/dashboard/PertumbuhanKaryawanByWilayahLineChart.vue'
+import WorkOrderChart from '@/page_components/dashboard/WorkOrderChart.vue'
 </script>
 
 <style scoped>
