@@ -3,7 +3,7 @@
     <div ref="trigger">
       <slot name="trigger"></slot>
     </div>
-    <div ref="content" class="hidden">
+    <div ref="content">
       <div class="p-3">
         <slot name="content"></slot>
       </div>
@@ -22,7 +22,7 @@ onMounted(() => {
     return
   }
   tippy(trigger.value, {
-    content: content.value.innerHTML,
+    content: content.value,
     interactive: true,
     allowHTML: true,
     theme: 'custom'
