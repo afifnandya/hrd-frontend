@@ -93,11 +93,11 @@
   </div>
 
   <div class="flex flex-wrap mt-4">
-    <div class="w-full lg:w-6/12 xl:w-2/12">
+    <!-- <div class="w-full lg:w-6/12 xl:w-2/12">
       <div class="mb-0 card">
-        <!-- <StatusKontrakPieChart /> -->
+        <StatusKontrakPieChart />
       </div>
-    </div>
+    </div> -->
     <div class="w-full lg:w-6/12 xl:w-2/12">
       <div class="mb-0 card">
         <GenderPieChart :data="genders" />
