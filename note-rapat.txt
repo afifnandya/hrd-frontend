@@ -1,3 +1,40 @@
+Date: 15/12/2022
+
+
+Skenario Cuti 
+
+ Cuti Familiy Visit: 1 Maret 2022 (2 bulan dari DOH/Cuti familiy visit terakhir)
+ jumlah cuti familiy visit: 12 (apakah sama untuk semua golongan ?)
+ jumlah kompensasi overday: ? (bagiaman rumusnya berdasarkan golongan ?)
+
+ Pegawai Budi
+ Jabatan: Manager
+ DOH: 1 jan 2022
+ Roster Kerja: 2 Bulan
+
+ Skenario 1 (tanpa kasus lain):
+ Budi akan cuti mulai 1 maret 2022 hingga  12 maret 2022, maka budi akan masuk kerja pada tanggal 13 Maret 2022
+
+ Skenario 2 (ada libur nasional di tanggal cuti): 
+ Budi akan cuti mulai 1 maret 2022 hingga  12 maret 2022, namun pada tanggal 8 maret 2022 terdapat 1 hari libur nasional sehingga cuti nya menjadi 13 hari sampai tanggal 13 maret 2022. maka budi akan masuk kerja pada tanggal 14 Maret 2022
+
+ Skenario 3 (overday): 
+ Budi akan cuti mulai 1 maret 2022 hingga  12 maret 2022, namun pada tanggal 1 maret 2022 hingga 3 maret 2022 budi diminta tetap bekerja, sehingga tanggal mulai cuti menjadi 4 maret 2022 selain itu budi mendapatkan kompensasi overday sebanyak 1 hari.
+ maka budi cuti hingga 16 maret 2022 dan budi akan masuk kerja pada tanggal 17 Maret 2022
+
+ Skenario 4(overday+libur nasional):
+ Skenario 5(overday+libur nasional+tambah cuti tahunan di akhir masa cuti)
+ Skenario 6(overday+libur nasional+tambah cuti tahunan di awal masa cuti)
+ Skenario 7 dst?
+
+- data work order di dashboard
+- reminder kontrak
+- cuti
+- sub menu karyawan
+  - data karyawan
+  - cuti
+  - reminder kontrak
+  - IR
 Date: 29/11/2022
 - bug action
 - bug ketika angkat jadi karyawan lewat wo 

@@ -5,6 +5,8 @@ import {
   ROUTE_ADD_PELAMAR,
   ROUTE_ADD_WORK_ORDER,
   ROUTE_DASHBOARD,
+  ROUTE_DASHBOARD_KARYAWAN,
+  ROUTE_DASHBOARD_REKRUITMEN,
   ROUTE_HARIAN_LEPAS,
   ROUTE_KARYAWAN,
   ROUTE_KARYAWAN_DETAIL,
@@ -29,7 +31,17 @@ const routes = [
       {
         path: '',
         name: ROUTE_DASHBOARD,
-        component: () => import('./components/Dashboard.vue')
+        component: () => import('./pages/dashboard/DashboardKaryawan.vue')
+      },
+      {
+        path: '/dashboard/karyawan',
+        name: ROUTE_DASHBOARD_KARYAWAN,
+        component: () => import('./pages/dashboard/DashboardKaryawan.vue')
+      },
+      {
+        path: '/dashboard/rekruitmen',
+        name: ROUTE_DASHBOARD_REKRUITMEN,
+        component: () => import('./pages/dashboard/DashboardRektruitmen.vue')
       },
       {
         path: '/karyawan',
@@ -83,6 +95,16 @@ const routes = [
         path: '/karyawan/tambah',
         name: ROUTE_KARYAWAN_TAMBAH,
         component: () => import('@/pages/KaryawanDetail.vue')
+      },
+      {
+        path: '/karyawan/cuti',
+        name: ROUTE_KARYAWAN_TAMBAH,
+        component: () => import('@/pages/karyawan/KaryawanCuti.vue')
+      },
+      {
+        path: '/karyawan/reminder-kontrak',
+        name: ROUTE_KARYAWAN_TAMBAH,
+        component: () => import('@/pages/karyawan/KaryawanCuti.vue')
       },
       {
         path: '/pelamar/detail/:id',

@@ -5,24 +5,43 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, PropType, ref, watch } from 'vue'
 import { usePieChart } from '@/composable/usePieChart'
+import { EChartsType } from 'echarts/core'
 
 const chartEl = ref<HTMLElement>()
-const { init } = usePieChart()
+const { init, setData } = usePieChart()
+let chartInstance = ref<EChartsType>()
+
+const props = defineProps({
+  data: Array as PropType<{ value: number | string; name: string }[]>
+})
+
+const color = ['#8ecae6', '#219ebc', '#023047', '#ffb703', '#fb8500']
 
 onMounted(() => {
-  const data = [
-    { value: 20, name: '17-30' },
-    { value: 20, name: '31-40' },
-    { value: 20, name: '>41' }
-  ]
-  const color = ['#8ecae6', '#219ebc', '#023047', '#ffb703', '#fb8500']
-
   if (chartEl.value) {
-    init({ el: chartEl.value, data: data, title: 'Umur', color })
+    chartInstance.value = init({ el: chartEl.value, title: 'Umur', color })
+    chartInstance.value.showLoading()
   }
 })
+
+watch(
+  () => props.data,
+  (newVal) => {
+    if (newVal?.length) {
+      setData({
+        data: newVal,
+        color: color
+      })
+      chartInstance.value?.hideLoading()
+    }
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+)
 </script>
 <script lang="ts">
 export default {

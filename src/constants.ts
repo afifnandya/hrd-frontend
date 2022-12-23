@@ -1,4 +1,6 @@
 export const ROUTE_DASHBOARD = 'dashboard'
+export const ROUTE_DASHBOARD_KARYAWAN = 'dashboardKaryawan'
+export const ROUTE_DASHBOARD_REKRUITMEN = 'dashboardRekruitmen'
 export const ROUTE_KARYAWAN = 'karyawan'
 export const ROUTE_HARIAN_LEPAS = 'harianLepas'
 export const ROUTE_KARYAWAN_DETAIL = 'karyawanDetail'
@@ -14,6 +16,8 @@ export const ROUTE_PELAMAR = 'pelamar'
 export const ROUTE_ADD_PELAMAR = 'addPelamar'
 export const ROUTE_WORK_ORDER = 'workOrder'
 export const ROUTE_ADD_WORK_ORDER = 'addWorkOrder'
+export const ROUTE_KARYAWAN_CUTI = 'karyawanCuti'
+export const ROUTE_KARYAWAN_REMINDER_KONTRAK = 'karyawanReminderKontrak'
 export const TOAST_TIMEOUT = 2000
 export const POH_CATEGORY = [
   'Nasional',

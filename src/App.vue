@@ -46,9 +46,20 @@ const menu = reactive([
     label: 'Home',
     items: [
       {
-        label: 'dashboard',
+        label: t('dashboard'),
         icon: 'pi pi-fw pi-home',
-        to: '/'
+        items: [
+          {
+            label: t('karyawan'),
+            icon: 'pi pi-fw pi-id-card',
+            to: '/dashboard/karyawan'
+          },
+          {
+            label: t('rekruitmen'),
+            icon: 'pi pi-fw pi-id-card',
+            to: '/dashboard/rekruitmen'
+          }
+        ]
       }
     ]
   },
@@ -94,7 +105,24 @@ const menu = reactive([
       {
         label: t('karyawan'),
         icon: 'pi pi-fw pi-id-card',
-        to: '/karyawan'
+        // to: '/karyawan',
+        items: [
+          {
+            label: t('karyawan'),
+            icon: 'pi pi-fw pi-id-card',
+            to: '/karyawan'
+          },
+          {
+            label: t('cuti'),
+            icon: 'pi pi-fw pi-id-card',
+            to: '/karyawan/cuti'
+          },
+          {
+            label: t('reminderKontrak'),
+            icon: 'pi pi-fw pi-id-card',
+            to: '/karyawan/reminder-kontrak'
+          }
+        ]
       },
       // {
       //   label: 'Harian Lepas',

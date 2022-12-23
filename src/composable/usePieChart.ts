@@ -6,10 +6,11 @@ import {
   TooltipComponent,
   LegendComponent
 } from 'echarts/components'
+import { EChartsType } from 'echarts/core'
 
 type Option = {
   el: HTMLElement
-  data: any
+  data?: any
   title: string
   color?: string[]
 }
@@ -31,6 +32,7 @@ const DEFAULT_COLOR = [
 ]
 
 export function usePieChart() {
+  let myChart: EChartsType | undefined = undefined
   echarts.use([
     PieChart,
     CanvasRenderer,
@@ -39,8 +41,8 @@ export function usePieChart() {
     LegendComponent
   ])
 
-  function init({ el, data, title, color }: Option) {
-    const myChart = echarts.init(el)
+  function init({ el, title }: Option) {
+    myChart = echarts.init(el)
     const option = {
       title: {
         text: title,
@@ -49,11 +51,19 @@ export function usePieChart() {
       },
       tooltip: {
         trigger: 'item'
-      },
+      }
       // legend: {
       //   orient: 'vertical',
       //   left: 'left'
       // },
+    }
+
+    myChart.setOption(option)
+    return myChart
+  }
+
+  function setData({ data, color }: { data: any; color?: string[] }) {
+    myChart?.setOption({
       series: [
         {
           // name: 'Access From',
@@ -70,12 +80,11 @@ export function usePieChart() {
           color: color || DEFAULT_COLOR
         }
       ]
-    }
-
-    myChart.setOption(option)
+    })
   }
 
   return {
-    init
+    init,
+    setData
   }
 }

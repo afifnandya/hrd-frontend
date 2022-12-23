@@ -5,38 +5,57 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, PropType, ref, watch } from 'vue'
 import { usePieChart } from '@/composable/usePieChart'
+import { EChartsType } from 'echarts/core'
 
 const chartEl = ref<HTMLElement>()
-const { init } = usePieChart()
+const { init, setData } = usePieChart()
+let chartInstance = ref<EChartsType>()
+
+const props = defineProps({
+  data: Array as PropType<{ value: number | string; name: string }[]>
+})
+
+const color = [
+  '#001219',
+  '#005f73',
+  '#0a9396',
+  '#94d2bd',
+  '#e9d8a6',
+  '#ee9b00',
+  '#ca6702',
+  '#bb3e03',
+  '#ae2012',
+  '#9b2226'
+]
 
 onMounted(() => {
-  const data = [
-    { value: 20, name: 'D1' },
-    { value: 20, name: 'D3' },
-    { value: 20, name: 'S1' },
-    { value: 18, name: 'S2' },
-    { value: 2, name: 'SD' },
-    { value: 10, name: 'SMA' },
-    { value: 10, name: 'SMP' }
-  ]
-  const color = [
-    '#001219',
-    '#005f73',
-    '#0a9396',
-    '#94d2bd',
-    '#e9d8a6',
-    '#ee9b00',
-    '#ca6702',
-    '#bb3e03',
-    '#ae2012',
-    '#9b2226'
-  ]
-
   if (chartEl.value) {
-    init({ el: chartEl.value, data: data, title: 'Pendidikan', color })
+    chartInstance.value = init({
+      el: chartEl.value,
+      title: 'Pendidikan',
+      color
+    })
+    chartInstance.value.showLoading()
   }
 })
+
+watch(
+  () => props.data,
+  (newVal) => {
+    if (newVal?.length) {
+      setData({
+        data: newVal,
+        color: color
+      })
+      chartInstance.value?.hideLoading()
+    }
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+)
 </script>
 <script lang="ts"></script>
