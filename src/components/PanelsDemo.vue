@@ -4,7 +4,7 @@
       <div class="card">
         <h5>Toolbar</h5>
         <Toolbar>
-          <template v-slot:start>
+          <template #start>
             <Button label="New" icon="pi pi-plus" class="mr-2" />
             <Button
               label="Open"
@@ -18,7 +18,7 @@
             <Button icon="pi pi-trash" class="p-button-warning mr-2" />
             <Button icon="pi pi-print" class="p-button-danger" />
           </template>
-          <template v-slot:end>
+          <template #end>
             <SplitButton label="Options" :model="toolbarItems"></SplitButton>
           </template>
         </Toolbar>
@@ -27,7 +27,7 @@
     <div class="col-12 md:col-6">
       <div class="card">
         <h5>AccordionPanel</h5>
-        <Accordion :activeIndex="0">
+        <Accordion :active-index="0">
           <AccordionTab header="Header I">
             <p class="line-height-3 m-0">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -133,15 +133,15 @@
       </div>
 
       <Card>
-        <template v-slot:title>
-          <div class="flex align-items-center justify-content-between mb-0">
+        <template #title>
+          <div class="flex items-center justify-content-between mb-0">
             <h5>Card</h5>
             <Button icon="pi pi-plus" class="p-button-text" @click="toggle" />
           </div>
           <Menu id="config_menu" ref="menu" :model="cardMenu" :popup="true" />
         </template>
 
-        <template v-slot:content>
+        <template #content>
           <p class="line-height-3 m-0">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -159,7 +159,7 @@
       <div class="card">
         <h5>Divider</h5>
         <div class="grid">
-          <div class="col-5 flex align-items-center justify-content-center">
+          <div class="col-5 flex items-center justify-center">
             <div class="p-fluid">
               <div class="field">
                 <label for="username">Username</label>
@@ -178,7 +178,7 @@
               <b>OR</b>
             </Divider>
           </div>
-          <div class="col-5 align-items-center justify-content-center">
+          <div class="col-5 items-center justify-center">
             <p class="line-height-3 m-0">
               Sed ut perspiciatis unde omnis iste natus error sit voluptatem
               accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
@@ -230,7 +230,7 @@
         <h5>Splitter</h5>
         <div class="grid">
           <Splitter style="height: 300px" class="mb-5">
-            <SplitterPanel :size="40" :minSize="10" style="overflow: scroll">
+            <SplitterPanel :size="40" :min-size="10" style="overflow: scroll">
               <p class="col m-3">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 Consequatur pariatur recusandae rerum atque nisi ipsum fuga

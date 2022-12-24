@@ -12,309 +12,244 @@
       <AppFooter />
     </div>
 
-    <AppConfig :layoutMode="layoutMode" @layout-change="onLayoutChange" />
     <transition name="layout-mask">
       <div
-        class="layout-mask p-component-overlay"
         v-if="mobileMenuActive"
+        class="layout-mask p-component-overlay"
       ></div>
     </transition>
+    <Toast />
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import AppTopBar from './AppTopbar.vue'
 import AppMenu from './AppMenu.vue'
-import AppConfig from './AppConfig.vue'
 import AppFooter from './AppFooter.vue'
+import { useI18n } from 'vue-i18n'
+import { reactive, ref, computed, onBeforeUpdate, onMounted } from 'vue'
+import { useAppStore } from '@/stores/app'
+const appStore = useAppStore()
+defineEmits(['change-theme'])
 
-export default {
-  emits: ['change-theme'],
-  data() {
-    return {
-      layoutMode: 'static',
-      staticMenuInactive: false,
-      overlayMenuActive: false,
-      mobileMenuActive: false,
-      menu: [
-        {
-          label: 'Home',
-          items: [
-            {
-              label: 'Dashboard',
-              icon: 'pi pi-fw pi-home',
-              to: '/'
-            }
-          ]
-        },
-        {
-          label: 'UI Components',
-          icon: 'pi pi-fw pi-sitemap',
-          items: [
-            {
-              label: 'Form Layout',
-              icon: 'pi pi-fw pi-id-card',
-              to: '/formlayout'
-            },
-            { label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/input' },
-            {
-              label: 'Float Label',
-              icon: 'pi pi-fw pi-bookmark',
-              to: '/floatlabel'
-            },
-            {
-              label: 'Invalid State',
-              icon: 'pi pi-fw pi-exclamation-circle',
-              to: '/invalidstate'
-            },
-            { label: 'Button', icon: 'pi pi-fw pi-mobile', to: '/button' },
-            { label: 'Table', icon: 'pi pi-fw pi-table', to: '/table' },
-            { label: 'List', icon: 'pi pi-fw pi-list', to: '/list' },
-            { label: 'Tree', icon: 'pi pi-fw pi-share-alt', to: '/tree' },
-            { label: 'Panel', icon: 'pi pi-fw pi-tablet', to: '/panel' },
-            { label: 'Overlay', icon: 'pi pi-fw pi-clone', to: '/overlay' },
-            { label: 'Media', icon: 'pi pi-fw pi-image', to: '/media' },
-            { label: 'Menu', icon: 'pi pi-fw pi-bars', to: '/menu' },
-            { label: 'Message', icon: 'pi pi-fw pi-comment', to: '/messages' },
-            { label: 'File', icon: 'pi pi-fw pi-file', to: '/file' },
-            { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/chart' },
-            { label: 'Misc', icon: 'pi pi-fw pi-circle-off', to: '/misc' }
-          ]
-        },
-        {
-          label: 'PrimeBlocks',
-          items: [
-            {
-              label: 'Free Blocks',
-              icon: 'pi pi-fw pi-eye',
-              to: '/blocks',
-              badge: 'NEW'
-            },
-            {
-              label: 'All Blocks',
-              icon: 'pi pi-fw pi-globe',
-              url: 'https://www.primefaces.org/primeblocks-vue',
-              target: '_blank'
-            }
-          ]
-        },
-        {
-          label: 'Utilities',
-          items: [
-            { label: 'PrimeIcons', icon: 'pi pi-fw pi-prime', to: '/icons' },
-            {
-              label: 'PrimeFlex',
-              icon: 'pi pi-fw pi-desktop',
-              url: 'https://www.primefaces.org/primeflex/',
-              target: '_blank'
-            }
-          ]
-        },
-        {
-          label: 'Pages',
-          icon: 'pi pi-fw pi-clone',
-          items: [
-            { label: 'Crud', icon: 'pi pi-fw pi-user-edit', to: '/crud' },
-            {
-              label: 'Timeline',
-              icon: 'pi pi-fw pi-calendar',
-              to: '/timeline'
-            },
-            { label: 'Landing', icon: 'pi pi-fw pi-globe', to: '/landing' },
-            { label: 'Login', icon: 'pi pi-fw pi-sign-in', to: '/login' },
-            { label: 'Error', icon: 'pi pi-fw pi-times-circle', to: '/error' },
-            {
-              label: 'Not Found',
-              icon: 'pi pi-fw pi-exclamation-circle',
-              to: '/notfound'
-            },
-            { label: 'Access Denied', icon: 'pi pi-fw pi-lock', to: '/access' },
-            { label: 'Empty', icon: 'pi pi-fw pi-circle-off', to: '/empty' }
-          ]
-        },
-        {
-          label: 'Menu Hierarchy',
-          icon: 'pi pi-fw pi-search',
-          items: [
-            {
-              label: 'Submenu 1',
-              icon: 'pi pi-fw pi-bookmark',
-              items: [
-                {
-                  label: 'Submenu 1.1',
-                  icon: 'pi pi-fw pi-bookmark',
-                  items: [
-                    { label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark' },
-                    { label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark' },
-                    { label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark' }
-                  ]
-                },
-                {
-                  label: 'Submenu 1.2',
-                  icon: 'pi pi-fw pi-bookmark',
-                  items: [
-                    { label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-bookmark' },
-                    { label: 'Submenu 1.2.2', icon: 'pi pi-fw pi-bookmark' }
-                  ]
-                }
-              ]
-            },
-            {
-              label: 'Submenu 2',
-              icon: 'pi pi-fw pi-bookmark',
-              items: [
-                {
-                  label: 'Submenu 2.1',
-                  icon: 'pi pi-fw pi-bookmark',
-                  items: [
-                    { label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark' },
-                    { label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark' },
-                    { label: 'Submenu 2.1.3', icon: 'pi pi-fw pi-bookmark' }
-                  ]
-                },
-                {
-                  label: 'Submenu 2.2',
-                  icon: 'pi pi-fw pi-bookmark',
-                  items: [
-                    { label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark' },
-                    { label: 'Submenu 2.2.2', icon: 'pi pi-fw pi-bookmark' }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          label: 'Get Started',
-          items: [
-            {
-              label: 'Documentation',
-              icon: 'pi pi-fw pi-question',
-              command: () => {
-                window.location = '#/documentation'
-              }
-            },
-            {
-              label: 'View Source',
-              icon: 'pi pi-fw pi-search',
-              command: () => {
-                window.location = 'https://github.com/primefaces/sakai-vue'
-              }
-            }
-          ]
-        }
-      ]
-    }
-  },
-  watch: {
-    $route() {
-      this.menuActive = false
-      this.$toast.removeAllGroups()
-    }
-  },
-  methods: {
-    onWrapperClick() {
-      if (!this.menuClick) {
-        this.overlayMenuActive = false
-        this.mobileMenuActive = false
-      }
+const { t } = useI18n({
+  useScope: 'global'
+})
 
-      this.menuClick = false
-    },
-    onMenuToggle() {
-      this.menuClick = true
-
-      if (this.isDesktop()) {
-        if (this.layoutMode === 'overlay') {
-          if (this.mobileMenuActive === true) {
-            this.overlayMenuActive = true
+const layoutMode = ref('static')
+const staticMenuInactive = ref(false)
+const overlayMenuActive = ref(false)
+const mobileMenuActive = ref(false)
+const menuClick = ref(false)
+const menu = reactive([
+  {
+    label: 'Home',
+    items: [
+      {
+        label: t('dashboard'),
+        icon: 'pi pi-fw pi-home',
+        items: [
+          {
+            label: t('karyawan'),
+            icon: 'pi pi-fw pi-id-card',
+            to: '/dashboard/karyawan'
+          },
+          {
+            label: t('rekruitmen'),
+            icon: 'pi pi-fw pi-id-card',
+            to: '/dashboard/rekruitmen'
           }
-
-          this.overlayMenuActive = !this.overlayMenuActive
-          this.mobileMenuActive = false
-        } else if (this.layoutMode === 'static') {
-          this.staticMenuInactive = !this.staticMenuInactive
-        }
-      } else {
-        this.mobileMenuActive = !this.mobileMenuActive
+        ]
       }
-
-      event.preventDefault()
-    },
-    onSidebarClick() {
-      this.menuClick = true
-    },
-    onMenuItemClick(event) {
-      if (event.item && !event.item.items) {
-        this.overlayMenuActive = false
-        this.mobileMenuActive = false
+    ]
+  },
+  {
+    label: 'Master Data',
+    items: [
+      {
+        label: 'jabatan',
+        icon: 'pi pi-fw pi-box',
+        to: '/master/jabatan'
+      },
+      {
+        label: 'divisi',
+        icon: 'pi pi-fw pi-box',
+        to: '/master/divisi'
+      },
+      {
+        label: 'departemen',
+        icon: 'pi pi-fw pi-box',
+        to: '/master/departmen'
+      },
+      {
+        label: 'area',
+        icon: 'pi pi-fw pi-box',
+        to: '/master/area'
+      },
+      {
+        label: 'perusahaan',
+        icon: 'pi pi-fw pi-box',
+        to: '/master/perusahaan'
       }
-    },
-    onLayoutChange(layoutMode) {
-      this.layoutMode = layoutMode
-    },
-    addClass(element, className) {
-      if (element.classList) element.classList.add(className)
-      else element.className += ' ' + className
-    },
-    removeClass(element, className) {
-      if (element.classList) element.classList.remove(className)
-      else
-        element.className = element.className.replace(
-          new RegExp(
-            '(^|\\b)' + className.split(' ').join('|') + '(\\b|$)',
-            'gi'
-          ),
-          ' '
-        )
-    },
-    isDesktop() {
-      return window.innerWidth >= 992
-    },
-    isSidebarVisible() {
-      if (this.isDesktop()) {
-        if (this.layoutMode === 'static') return !this.staticMenuInactive
-        else if (this.layoutMode === 'overlay') return this.overlayMenuActive
+      // {
+      //   label: 'kategori',
+      //   icon: 'pi pi-fw pi-box',
+      //   to: '/'
+      // }
+    ]
+  },
+  {
+    label: 'Data Peserta',
+    icon: 'pi pi-fw pi-sitemap',
+    items: [
+      {
+        label: t('karyawan'),
+        icon: 'pi pi-fw pi-id-card',
+        // to: '/karyawan',
+        items: [
+          {
+            label: t('karyawan'),
+            icon: 'pi pi-fw pi-id-card',
+            to: '/karyawan'
+          },
+          {
+            label: t('cuti'),
+            icon: 'pi pi-fw pi-id-card',
+            to: '/karyawan/cuti'
+          },
+          {
+            label: t('reminderKontrak'),
+            icon: 'pi pi-fw pi-id-card',
+            to: '/karyawan/reminder-kontrak'
+          }
+        ]
+      },
+      // {
+      //   label: 'Harian Lepas',
+      //   icon: 'pi pi-fw pi-check-square',
+      //   to: '/karyawan'
+      // },
+      {
+        label: 'HR Recruitment',
+        icon: 'pi pi-fw pi-bookmark',
+        items: [
+          {
+            label: 'Data Pelamar',
+            icon: 'pi pi-fw pi-bookmark',
+            to: '/pelamar'
+          },
+          {
+            label: 'Work Order',
+            icon: 'pi pi-fw pi-bookmark',
+            to: '/work-order'
+          }
+        ]
       }
+    ]
+  }
+])
 
-      return true
+const containerClass = computed(() => {
+  return [
+    'layout-wrapper',
+    {
+      'layout-overlay': layoutMode.value === 'overlay',
+      'layout-static': layoutMode.value === 'static',
+      'layout-static-sidebar-inactive':
+        staticMenuInactive.value && layoutMode.value === 'static',
+      'layout-overlay-sidebar-active':
+        overlayMenuActive.value && layoutMode.value === 'overlay',
+      'layout-mobile-sidebar-active': mobileMenuActive.value
     }
-  },
-  computed: {
-    containerClass() {
-      return [
-        'layout-wrapper',
-        {
-          'layout-overlay': this.layoutMode === 'overlay',
-          'layout-static': this.layoutMode === 'static',
-          'layout-static-sidebar-inactive':
-            this.staticMenuInactive && this.layoutMode === 'static',
-          'layout-overlay-sidebar-active':
-            this.overlayMenuActive && this.layoutMode === 'overlay',
-          'layout-mobile-sidebar-active': this.mobileMenuActive,
-          'p-input-filled': this.$primevue.config.inputStyle === 'filled',
-          'p-ripple-disabled': this.$primevue.config.ripple === false
-        }
-      ]
-    },
-    logo() {
-      return this.$appState.darkTheme
-        ? 'images/logo-white.svg'
-        : 'images/logo.svg'
-    }
-  },
-  beforeUpdate() {
-    if (this.mobileMenuActive)
-      this.addClass(document.body, 'body-overflow-hidden')
-    else this.removeClass(document.body, 'body-overflow-hidden')
-  },
-  components: {
-    AppTopBar: AppTopBar,
-    AppMenu: AppMenu,
-    AppConfig: AppConfig,
-    AppFooter: AppFooter
+  ]
+})
+
+function onWrapperClick() {
+  if (!menuClick.value) {
+    overlayMenuActive.value = false
+    mobileMenuActive.value = false
+  }
+
+  menuClick.value = false
+}
+
+function addClass(element: HTMLElement, className: string) {
+  if (element.classList) element.classList.add(className)
+  else element.className += ' ' + className
+}
+
+function removeClass(element: HTMLElement, className: string) {
+  if (element.classList) element.classList.remove(className)
+  else
+    element.className = element.className.replace(
+      new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'),
+      ' '
+    )
+}
+
+function onSidebarClick() {
+  menuClick.value = true
+}
+
+function isDesktop() {
+  return window.innerWidth >= 992
+}
+
+function onMenuItemClick(event: any) {
+  if (event.item && !event.item.items) {
+    overlayMenuActive.value = false
+    mobileMenuActive.value = false
   }
 }
+
+function isSidebarVisible() {
+  if (isDesktop()) {
+    if (layoutMode.value === 'static') return !staticMenuInactive.value
+    else if (layoutMode.value === 'overlay') return overlayMenuActive.value
+  }
+
+  return true
+}
+
+function onMenuToggle() {
+  menuClick.value = true
+
+  if (isDesktop()) {
+    if (layoutMode.value === 'overlay') {
+      if (mobileMenuActive.value === true) {
+        overlayMenuActive.value = true
+      }
+
+      overlayMenuActive.value = !overlayMenuActive.value
+      mobileMenuActive.value = false
+    } else if (layoutMode.value === 'static') {
+      staticMenuInactive.value = !staticMenuInactive.value
+    }
+  } else {
+    mobileMenuActive.value = !mobileMenuActive.value
+  }
+
+  // event.preventDefault()
+}
+
+onMounted(() => {
+  appStore.getArea()
+  appStore.getDepartment()
+  appStore.getDivisi()
+  appStore.getJabatan()
+  appStore.getPerusahaan()
+  appStore.getJobCategory()
+})
+
+onBeforeUpdate(() => {
+  if (mobileMenuActive.value) {
+    if (mobileMenuActive.value) {
+      addClass(document.body, 'body-overflow-hidden')
+    } else {
+      removeClass(document.body, 'body-overflow-hidden')
+    }
+  }
+})
 </script>
 
 <style lang="scss">

@@ -8,7 +8,7 @@
             <ProgressBar :value="value"></ProgressBar>
           </div>
           <div class="col">
-            <ProgressBar :value="50" :showValue="false"></ProgressBar>
+            <ProgressBar :value="50" :show-value="false"></ProgressBar>
           </div>
         </div>
       </div>
@@ -27,19 +27,19 @@
 
         <h5>Positioned Badge</h5>
         <i
+          v-badge="2"
           class="pi pi-bell mr-4 p-text-secondary"
           style="font-size: 2rem"
-          v-badge="2"
         ></i>
         <i
+          v-badge.danger="'10+'"
           class="pi pi-calendar mr-4 p-text-secondary"
           style="font-size: 2rem"
-          v-badge.danger="'10+'"
         ></i>
         <i
+          v-badge.danger
           class="pi pi-envelope p-text-secondary"
           style="font-size: 2rem"
-          v-badge.danger
         ></i>
 
         <h5>Inline Button Badge</h5>
@@ -49,7 +49,7 @@
           icon="pi pi-users"
           class="p-button-warning"
           badge="8"
-          badgeClass="p-badge-danger"
+          badge-class="p-badge-danger"
         ></Button>
 
         <h5>Sizes</h5>
@@ -120,10 +120,10 @@
 
         <h5>Icon - Badge</h5>
         <Avatar
+          v-badge.success="4"
           icon="pi pi-user"
           class="mr-2"
           size="xlarge"
-          v-badge.success="4"
         ></Avatar>
       </div>
 
@@ -209,7 +209,7 @@
       <div class="card">
         <h4>Chip</h4>
         <h5>Basic</h5>
-        <div class="flex align-items-center flex-column sm:flex-row">
+        <div class="flex items-center flex-column sm:flex-row">
           <Chip label="Action" class="mr-2 mb-2"></Chip>
           <Chip label="Comedy" class="mr-2 mb-2"></Chip>
           <Chip label="Mystery" class="mr-2 mb-2"></Chip>
@@ -217,7 +217,7 @@
         </div>
 
         <h5>Icon</h5>
-        <div class="flex align-items-center flex-column sm:flex-row">
+        <div class="flex items-center flex-column sm:flex-row">
           <Chip label="Apple" icon="pi pi-apple" class="mr-2 mb-2"></Chip>
           <Chip label="Facebook" icon="pi pi-facebook" class="mr-2 mb-2"></Chip>
           <Chip label="Google" icon="pi pi-google" class="mr-2 mb-2"></Chip>
@@ -230,7 +230,7 @@
         </div>
 
         <h5>Image</h5>
-        <div class="flex align-items-center flex-column sm:flex-row">
+        <div class="flex items-center flex-column sm:flex-row">
           <Chip
             label="Amy Elsner"
             image="images/avatar/amyelsner.png"
@@ -279,6 +279,12 @@ export default {
     }
   },
   interval: null,
+  mounted() {
+    this.startProgress()
+  },
+  beforeUnmount() {
+    this.endProgress()
+  },
   methods: {
     startProgress() {
       this.interval = setInterval(() => {
@@ -293,12 +299,6 @@ export default {
       clearInterval(this.interval)
       this.interval = null
     }
-  },
-  mounted() {
-    this.startProgress()
-  },
-  beforeUnmount() {
-    this.endProgress()
   }
 }
 </script>

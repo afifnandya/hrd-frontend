@@ -1,20 +1,19 @@
 <template>
   <div class="surface-0 overflow-hidden">
     <div
-      class="py-4 px-4 mx-0 md:mx-6 lg:mx-8 lg:px-8 flex align-items-center justify-content-between relative lg:static"
+      class="py-4 px-4 mx-0 md:mx-6 lg:mx-8 lg:px-8 flex items-center justify-content-between relative lg:static"
     >
-      <router-link to="/" class="flex align-items-center">
+      <router-link to="/" class="flex items-center">
         <img
           :src="'layout/images/logo-' + logoColor + '.svg'"
           alt="Sakai Logo"
           height="50"
           class="mr-0 lg:mr-2"
-        /><span class="text-900 font-medium text-2xl line-height-3 mr-8"
+        /><span class="text-gray-900 font-medium text-2xl line-height-3 mr-8"
           >SAKAI</span
         >
       </router-link>
       <a
-        class="cursor-pointer block lg:hidden text-700 p-ripple"
         v-ripple
         v-styleclass="{
           selector: '@next',
@@ -22,48 +21,49 @@
           leaveToClass: 'hidden',
           hideOnOutsideClick: true
         }"
+        class="cursor-pointer block lg:hidden text-700 p-ripple"
       >
         <i class="pi pi-bars text-4xl"></i>
       </a>
       <div
-        class="surface-0 align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full left-0 px-6 lg:px-0 z-2"
+        class="surface-0 items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full left-0 px-6 lg:px-0 z-2"
         style="top: 92%"
       >
         <ul
-          class="list-none p-0 m-0 flex lg:align-items-center select-none flex-column lg:flex-row cursor-pointer"
+          class="list-none p-0 m-0 flex lg:items-center select-none flex-column lg:flex-row cursor-pointer"
         >
           <li>
             <a
-              @click="smoothScroll('#hero')"
-              class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 p-ripple"
               v-ripple
+              class="flex m-0 md:ml-5 px-0 py-3 text-gray-900 font-medium line-height-3 p-ripple"
+              @click="smoothScroll('#hero')"
             >
               <span>Home</span>
             </a>
           </li>
           <li>
             <a
-              @click="smoothScroll('#features')"
-              class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 p-ripple"
               v-ripple
+              class="flex m-0 md:ml-5 px-0 py-3 text-gray-900 font-medium line-height-3 p-ripple"
+              @click="smoothScroll('#features')"
             >
               <span>Features</span>
             </a>
           </li>
           <li>
             <a
-              @click="smoothScroll('#highlight')"
-              class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 p-ripple"
               v-ripple
+              class="flex m-0 md:ml-5 px-0 py-3 text-gray-900 font-medium line-height-3 p-ripple"
+              @click="smoothScroll('#highlight')"
             >
               <span>Highlight</span>
             </a>
           </li>
           <li>
             <a
-              @click="smoothScroll('#pricing')"
-              class="flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 p-ripple"
               v-ripple
+              class="flex m-0 md:ml-5 px-0 py-3 text-gray-900 font-medium line-height-3 p-ripple"
+              @click="smoothScroll('#pricing')"
             >
               <span>Pricing</span>
             </a>
@@ -84,7 +84,7 @@
       </div>
     </div>
 
-    <div class="grid py-4 px-4 lg:px-8 relative" id="hero">
+    <div id="hero" class="grid py-4 px-4 lg:px-8 relative">
       <div class="mx-4 md:mx-8 mt-0 md:mt-4">
         <h1 class="text-6xl font-bold text-gray-900 line-height-2">
           <span class="font-light block">Eu sem integer</span>eget magna
@@ -107,10 +107,10 @@
       />
     </div>
 
-    <div class="py-4 px-4 lg:px-8 mt-5 mx-0 lg:mx-8" id="features">
-      <div class="grid justify-content-center">
+    <div id="features" class="py-4 px-4 lg:px-8 mt-5 mx-0 lg:mx-8">
+      <div class="grid justify-center">
         <div class="col-12 text-center mt-8 mb-4">
-          <h2 class="text-900 font-normal mb-2">Marvelous Features</h2>
+          <h2 class="text-gray-900 font-normal mb-2">Marvelous Features</h2>
           <span class="text-600 text-2xl">Placerat in egestas erat...</span>
         </div>
 
@@ -134,12 +134,12 @@
           >
             <div class="p-3 surface-card h-full" style="border-radius: 8px">
               <div
-                class="flex align-items-center justify-content-center bg-yellow-200 mb-3"
+                class="flex items-center justify-center bg-yellow-200 mb-3"
                 style="width: 3.5rem; height: 3.5rem; border-radius: 10px"
               >
                 <i class="pi pi-fw pi-users text-2xl text-yellow-700"></i>
               </div>
-              <h5 class="mb-2 text-900">Easy to Use</h5>
+              <h5 class="mb-2 text-gray-900">Easy to Use</h5>
               <span class="text-600">Posuere morbi leo urna molestie.</span>
             </div>
           </div>
@@ -165,12 +165,12 @@
           >
             <div class="p-3 surface-card h-full" style="border-radius: 8px">
               <div
-                class="flex align-items-center justify-content-center bg-cyan-200 mb-3"
+                class="flex items-center justify-center bg-cyan-200 mb-3"
                 style="width: 3.5rem; height: 3.5rem; border-radius: 10px"
               >
                 <i class="pi pi-fw pi-palette text-2xl text-cyan-700"></i>
               </div>
-              <h5 class="mb-2 text-900">Fresh Design</h5>
+              <h5 class="mb-2 text-gray-900">Fresh Design</h5>
               <span class="text-600">Semper risus in hendrerit.</span>
             </div>
           </div>
@@ -196,12 +196,12 @@
           >
             <div class="p-3 surface-card h-full" style="border-radius: 8px">
               <div
-                class="flex align-items-center justify-content-center bg-indigo-200"
+                class="flex items-center justify-center bg-indigo-200"
                 style="width: 3.5rem; height: 3.5rem; border-radius: 10px"
               >
                 <i class="pi pi-fw pi-map text-2xl text-indigo-700"></i>
               </div>
-              <h5 class="mb-2 text-900">Well Documented</h5>
+              <h5 class="mb-2 text-gray-900">Well Documented</h5>
               <span class="text-600"
                 >Non arcu risus quis varius quam quisque.</span
               >
@@ -229,12 +229,12 @@
           >
             <div class="p-3 surface-card h-full" style="border-radius: 8px">
               <div
-                class="flex align-items-center justify-content-center bg-bluegray-200 mb-3"
+                class="flex items-center justify-center bg-bluegray-200 mb-3"
                 style="width: 3.5rem; height: 3.5rem; border-radius: 10px"
               >
                 <i class="pi pi-fw pi-id-card text-2xl text-bluegray-700"></i>
               </div>
-              <h5 class="mb-2 text-900">Responsive Layout</h5>
+              <h5 class="mb-2 text-gray-900">Responsive Layout</h5>
               <span class="text-600">Nulla malesuada pellentesque elit.</span>
             </div>
           </div>
@@ -260,12 +260,12 @@
           >
             <div class="p-3 surface-card h-full" style="border-radius: 8px">
               <div
-                class="flex align-items-center justify-content-center bg-orange-200 mb-3"
+                class="flex items-center justify-center bg-orange-200 mb-3"
                 style="width: 3.5rem; height: 3.5rem; border-radius: 10px"
               >
                 <i class="pi pi-fw pi-star text-2xl text-orange-700"></i>
               </div>
-              <h5 class="mb-2 text-900">Clean Code</h5>
+              <h5 class="mb-2 text-gray-900">Clean Code</h5>
               <span class="text-600">Condimentum lacinia quis vel eros.</span>
             </div>
           </div>
@@ -291,12 +291,12 @@
           >
             <div class="p-3 surface-card h-full" style="border-radius: 8px">
               <div
-                class="flex align-items-center justify-content-center bg-pink-200 mb-3"
+                class="flex items-center justify-center bg-pink-200 mb-3"
                 style="width: 3.5rem; height: 3.5rem; border-radius: 10px"
               >
                 <i class="pi pi-fw pi-moon text-2xl text-pink-700"></i>
               </div>
-              <h5 class="mb-2 text-900">Dark Mode</h5>
+              <h5 class="mb-2 text-gray-900">Dark Mode</h5>
               <span class="text-600"
                 >Convallis tellus id interdum velit laoreet.</span
               >
@@ -324,12 +324,12 @@
           >
             <div class="p-3 surface-card h-full" style="border-radius: 8px">
               <div
-                class="flex align-items-center justify-content-center bg-teal-200 mb-3"
+                class="flex items-center justify-center bg-teal-200 mb-3"
                 style="width: 3.5rem; height: 3.5rem; border-radius: 10px"
               >
                 <i class="pi pi-fw pi-shopping-cart text-2xl text-teal-700"></i>
               </div>
-              <h5 class="mb-2 text-900">Ready to Use</h5>
+              <h5 class="mb-2 text-gray-900">Ready to Use</h5>
               <span class="text-600">Mauris sit amet massa vitae.</span>
             </div>
           </div>
@@ -355,12 +355,12 @@
           >
             <div class="p-3 surface-card h-full" style="border-radius: 8px">
               <div
-                class="flex align-items-center justify-content-center bg-blue-200 mb-3"
+                class="flex items-center justify-center bg-blue-200 mb-3"
                 style="width: 3.5rem; height: 3.5rem; border-radius: 10px"
               >
                 <i class="pi pi-fw pi-globe text-2xl text-blue-700"></i>
               </div>
-              <h5 class="mb-2 text-900">Modern Practices</h5>
+              <h5 class="mb-2 text-gray-900">Modern Practices</h5>
               <span class="text-600"
                 >Elementum nibh tellus molestie nunc non.</span
               >
@@ -388,12 +388,12 @@
           >
             <div class="p-3 surface-card h-full" style="border-radius: 8px">
               <div
-                class="flex align-items-center justify-content-center bg-purple-200 mb-3"
+                class="flex items-center justify-center bg-purple-200 mb-3"
                 style="width: 3.5rem; height: 3.5rem; border-radius: 10px"
               >
                 <i class="pi pi-fw pi-eye text-2xl text-purple-700"></i>
               </div>
-              <h5 class="mb-2 text-900">Privacy</h5>
+              <h5 class="mb-2 text-gray-900">Privacy</h5>
               <span class="text-600">Neque egestas congue quisque.</span>
             </div>
           </div>
@@ -416,7 +416,7 @@
           "
         >
           <div
-            class="flex flex-column justify-content-center align-items-center text-center px-3 py-3 md:py-0"
+            class="flex flex-column justify-center items-center text-center px-3 py-3 md:py-0"
           >
             <h3 class="text-gray-900 mb-2">Joséphine Miller</h3>
             <span class="text-gray-600 text-2xl">Peak Interactive</span>
@@ -435,9 +435,9 @@
       </div>
     </div>
 
-    <div class="py-4 px-4 lg:px-8 mx-0 my-6 lg:mx-8" id="highlight">
+    <div id="highlight" class="py-4 px-4 lg:px-8 mx-0 my-6 lg:mx-8">
       <div class="text-center">
-        <h2 class="text-900 font-normal mb-2">Powerful Everywhere</h2>
+        <h2 class="text-gray-900 font-normal mb-2">Powerful Everywhere</h2>
         <span class="text-600 text-2xl"
           >Amet consectetur adipiscing elit...</span
         >
@@ -445,7 +445,7 @@
 
       <div class="grid mt-8 pb-2 md:pb-8">
         <div
-          class="flex justify-content-center col-12 lg:col-6 bg-purple-100 p-0 flex-order-1 lg:flex-order-0"
+          class="flex justify-center col-12 lg:col-6 bg-purple-100 p-0 flex-order-1 lg:flex-order-0"
           style="border-radius: 8px"
         >
           <img
@@ -456,15 +456,15 @@
         </div>
 
         <div
-          class="col-12 lg:col-6 my-auto flex flex-column lg:align-items-end lg:text-right align-items-center text-center"
+          class="col-12 lg:col-6 my-auto flex flex-column lg:align-items-end lg:text-right items-center text-center"
         >
           <div
-            class="flex align-items-center justify-content-center bg-purple-200"
+            class="flex items-center justify-center bg-purple-200"
             style="width: 4.2rem; height: 4.2rem; border-radius: 10px"
           >
             <i class="pi pi-fw pi-mobile text-5xl text-purple-700"></i>
           </div>
-          <h2 class="line-height-1 text-900 text-4xl font-normal">
+          <h2 class="line-height-1 text-gray-900 text-4xl font-normal">
             Congue Quisque Egestas
           </h2>
           <span
@@ -479,15 +479,15 @@
 
       <div class="grid my-8 pt-2 md:pt-8">
         <div
-          class="col-12 lg:col-6 my-auto flex flex-column lg:align-items-start align-items-center"
+          class="col-12 lg:col-6 my-auto flex flex-column lg:align-items-start items-center"
         >
           <div
-            class="flex align-items-center justify-content-center bg-yellow-200"
+            class="flex items-center justify-center bg-yellow-200"
             style="width: 4.2rem; height: 4.2rem; border-radius: 10px"
           >
             <i class="pi pi-fw pi-desktop text-5xl text-yellow-700"></i>
           </div>
-          <h2 class="line-height-1 text-900 text-4xl font-normal">
+          <h2 class="line-height-1 text-gray-900 text-4xl font-normal">
             Celerisque Eu Ultrices
           </h2>
           <span
@@ -513,9 +513,9 @@
       </div>
     </div>
 
-    <div class="py-4 px-4 lg:px-8 my-2 md:my-4" id="pricing">
+    <div id="pricing" class="py-4 px-4 lg:px-8 my-2 md:my-4">
       <div class="text-center">
-        <h2 class="text-900 font-normal mb-2">Matchless Pricing</h2>
+        <h2 class="text-gray-900 font-normal mb-2">Matchless Pricing</h2>
         <span class="text-600 text-2xl"
           >Amet consectetur adipiscing elit...</span
         >
@@ -527,14 +527,14 @@
             class="p-3 flex flex-column border-200 hover:border-cyan-200"
             style="border: 2px solid; border-radius: 10px"
           >
-            <h3 class="text-900 text-center">Free</h3>
+            <h3 class="text-gray-900 text-center">Free</h3>
             <img
               src="layout/images/asset-tier-1.svg"
               class="w-10 h-10 mx-auto"
               alt=""
             />
             <div class="my-5 text-center">
-              <span class="text-5xl font-bold mr-2 text-900">$0</span>
+              <span class="text-5xl font-bold mr-2 text-gray-900">$0</span>
               <span class="text-600">per month</span>
               <Button
                 label="Get Started"
@@ -542,7 +542,7 @@
               ></Button>
             </div>
             <Divider class="w-full bg-surface-200"></Divider>
-            <ul class="my-5 list-none p-0 flex text-900 flex-column">
+            <ul class="my-5 list-none p-0 flex text-gray-900 flex-column">
               <li class="py-2">
                 <i class="pi pi-fw pi-check text-xl text-cyan-500 mr-2"></i>
                 <span class="text-xl line-height-3">Responsive Layout</span>
@@ -570,14 +570,14 @@
             class="p-3 flex flex-column border-200 hover:border-cyan-200"
             style="border: 2px solid; border-radius: 10px"
           >
-            <h3 class="text-900 text-center">Startup</h3>
+            <h3 class="text-gray-900 text-center">Startup</h3>
             <img
               src="layout/images/asset-tier-2.svg"
               class="w-10 h-10 mx-auto"
               alt=""
             />
             <div class="my-5 text-center">
-              <span class="text-5xl font-bold mr-2 text-900">$1</span>
+              <span class="text-5xl font-bold mr-2 text-gray-900">$1</span>
               <span class="text-600">per month</span>
               <Button
                 label="Try Free"
@@ -585,7 +585,7 @@
               ></Button>
             </div>
             <Divider class="w-full bg-surface-200"></Divider>
-            <ul class="my-5 list-none p-0 flex text-900 flex-column">
+            <ul class="my-5 list-none p-0 flex text-gray-900 flex-column">
               <li class="py-2">
                 <i class="pi pi-fw pi-check text-xl text-cyan-500 mr-2"></i>
                 <span class="text-xl line-height-3">Responsive Layout</span>
@@ -613,14 +613,14 @@
             class="p-3 flex flex-column border-200 hover:border-cyan-200"
             style="border: 2px solid; border-radius: 10px"
           >
-            <h3 class="text-900 text-center">Enterprice</h3>
+            <h3 class="text-gray-900 text-center">Enterprice</h3>
             <img
               src="layout/images/asset-tier-3.svg"
               class="w-10 h-10 mx-auto"
               alt=""
             />
             <div class="my-5 text-center">
-              <span class="text-5xl font-bold mr-2 text-900">$999</span>
+              <span class="text-5xl font-bold mr-2 text-gray-900">$999</span>
               <span class="text-600">per month</span>
               <Button
                 label="Get a Quote"
@@ -628,7 +628,7 @@
               ></Button>
             </div>
             <Divider class="w-full bg-surface-200"></Divider>
-            <ul class="my-5 list-none p-0 flex text-900 flex-column">
+            <ul class="my-5 list-none p-0 flex text-gray-900 flex-column">
               <li class="py-2">
                 <i class="pi pi-fw pi-check text-xl text-cyan-500 mr-2"></i>
                 <span class="text-xl line-height-3">Responsive Layout</span>
@@ -653,11 +653,11 @@
       </div>
     </div>
 
-    <div class="py-4 px-4 mx-0 mt-8 lg:mx-8" id="contact">
+    <div id="contact" class="py-4 px-4 mx-0 mt-8 lg:mx-8">
       <div class="grid justify-content-between">
         <div class="col-12 md:col-2" style="margin-top: -1.5rem">
           <div
-            class="flex flex-wrap align-items-center justify-content-center md:justify-content-start md:mb-0 mb-3"
+            class="flex flex-wrap items-center justify-center md:justify-content-start md:mb-0 mb-3"
           >
             <img
               :src="'layout/images/logo-' + logoColor + '.svg'"
@@ -666,14 +666,14 @@
               height="50"
               class="mr-2"
             />
-            <h4 class="font-medium text-3xl text-900">SAKAI</h4>
+            <h4 class="font-medium text-3xl text-gray-900">SAKAI</h4>
           </div>
         </div>
 
         <div class="col-12 md:col-7">
           <div class="grid text-center md:text-left">
             <div class="col-12 md:col-3">
-              <h4 class="font-medium text-2xl line-height-3 mb-3 text-900">
+              <h4 class="font-medium text-2xl line-height-3 mb-3 text-gray-900">
                 Company
               </h4>
               <a
@@ -698,7 +698,7 @@
             </div>
 
             <div class="col-12 md:col-3 mt-4 md:mt-0">
-              <h4 class="font-medium text-2xl line-height-3 mb-3 text-900">
+              <h4 class="font-medium text-2xl line-height-3 mb-3 text-gray-900">
                 Resources
               </h4>
               <a
@@ -715,7 +715,7 @@
             </div>
 
             <div class="col-12 md:col-3 mt-4 md:mt-0">
-              <h4 class="font-medium text-2xl line-height-3 mb-3 text-900">
+              <h4 class="font-medium text-2xl line-height-3 mb-3 text-gray-900">
                 Community
               </h4>
               <a
@@ -736,7 +736,7 @@
             </div>
 
             <div class="col-12 md:col-3 mt-4 md:mt-0">
-              <h4 class="font-medium text-2xl line-height-3 mb-3 text-900">
+              <h4 class="font-medium text-2xl line-height-3 mb-3 text-gray-900">
                 Legal
               </h4>
               <a
@@ -760,17 +760,17 @@
 
 <script>
 export default {
+  computed: {
+    logoColor() {
+      if (this.$appState.darkTheme) return 'white'
+      return 'dark'
+    }
+  },
   methods: {
     smoothScroll(id) {
       document.querySelector(id).scrollIntoView({
         behavior: 'smooth'
       })
-    }
-  },
-  computed: {
-    logoColor() {
-      if (this.$appState.darkTheme) return 'white'
-      return 'dark'
     }
   }
 }

@@ -24,18 +24,18 @@
         <template v-else>
           <router-link
             v-if="item.to"
+            v-ripple
             :to="item.to"
             :class="[item.class, 'p-ripple', { 'p-disabled': item.disabled }]"
             :style="item.style"
-            @click="onMenuItemClick($event, item, i)"
             :target="item.target"
             :aria-label="item.label"
             exact
             role="menuitem"
-            v-ripple
+            @click="onMenuItemClick($event, item, i)"
           >
             <i :class="item.icon"></i>
-            <span>{{ item.label }}</span>
+            <span>{{ t(item.label) }}</span>
             <i
               v-if="item.items"
               class="pi pi-fw pi-angle-down menuitem-toggle-icon"
@@ -44,14 +44,14 @@
           </router-link>
           <a
             v-if="!item.to"
+            v-ripple
             :href="item.url || '#'"
             :style="item.style"
             :class="[item.class, 'p-ripple', { 'p-disabled': item.disabled }]"
-            @click="onMenuItemClick($event, item, i)"
             :target="item.target"
             :aria-label="item.label"
             role="menuitem"
-            v-ripple
+            @click="onMenuItemClick($event, item, i)"
           >
             <i :class="item.icon"></i>
             <span>{{ item.label }}</span>
@@ -71,23 +71,32 @@
         </template>
       </li>
       <li
-        class="p-menu-separator"
-        :style="item.style"
         v-if="visible(item) && item.separator"
         :key="'separator' + i"
+        class="p-menu-separator"
+        :style="item.style"
         role="separator"
       ></li>
     </template>
   </ul>
 </template>
 <script>
+import { useI18n } from 'vue-i18n'
 export default {
-  name: 'appsubmenu',
+  name: 'Appsubmenu',
   props: {
     items: Array,
     root: {
       type: Boolean,
       default: false
+    }
+  },
+  setup() {
+    const { t } = useI18n({
+      useScope: 'global'
+    })
+    return {
+      t
     }
   },
   data() {

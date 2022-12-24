@@ -44,41 +44,41 @@
 
         <h5>Float Label</h5>
         <span class="p-float-label">
-          <InputText id="username" type="text" v-model="floatValue" />
+          <InputText id="username" v-model="floatValue" type="text" />
           <label for="username">Username</label>
         </span>
 
         <h5>Textarea</h5>
         <Textarea
           placeholder="Your Message"
-          :autoResize="true"
+          :auto-resize="true"
           rows="3"
           cols="30"
         />
 
         <h5>AutoComplete</h5>
         <AutoComplete
-          placeholder="Search"
           id="dd"
+          v-model="selectedAutoValue"
+          placeholder="Search"
           :dropdown="true"
           :multiple="true"
-          v-model="selectedAutoValue"
           :suggestions="autoFilteredValue"
-          @complete="searchCountry($event)"
           field="name"
+          @complete="searchCountry($event)"
         />
 
         <h5>Calendar</h5>
         <Calendar
-          :showIcon="true"
-          :showButtonBar="true"
           v-model="calendarValue"
+          :show-icon="true"
+          :show-button-bar="true"
         ></Calendar>
 
         <h5>Spinner</h5>
         <InputNumber
           v-model="inputNumberValue"
-          showButtons
+          show-buttons
           mode="decimal"
         ></InputNumber>
 
@@ -99,7 +99,7 @@
           </div>
           <div class="col-12 md:col-6">
             <h5>ColorPicker</h5>
-            <ColorPicker style="width: 2rem" v-model="colorValue" />
+            <ColorPicker v-model="colorValue" style="width: 2rem" />
           </div>
           <div class="col-12">
             <h5>Knob</h5>
@@ -108,7 +108,7 @@
               :step="10"
               :min="-50"
               :max="50"
-              valueTemplate="{value}%"
+              value-template="{value}%"
             />
           </div>
         </div>
@@ -123,9 +123,9 @@
             <div class="field-radiobutton mb-0">
               <RadioButton
                 id="option1"
+                v-model="radioValue"
                 name="option"
                 value="Chicago"
-                v-model="radioValue"
               />
               <label for="option1">Chicago</label>
             </div>
@@ -134,9 +134,9 @@
             <div class="field-radiobutton mb-0">
               <RadioButton
                 id="option2"
+                v-model="radioValue"
                 name="option"
                 value="Los Angeles"
-                v-model="radioValue"
               />
               <label for="option2">Los Angeles</label>
             </div>
@@ -145,9 +145,9 @@
             <div class="field-radiobutton mb-0">
               <RadioButton
                 id="option3"
+                v-model="radioValue"
                 name="option"
                 value="New York"
-                v-model="radioValue"
               />
               <label for="option3">New York</label>
             </div>
@@ -160,9 +160,9 @@
             <div class="field-checkbox mb-0">
               <Checkbox
                 id="checkOption1"
+                v-model="checkboxValue"
                 name="option"
                 value="Chicago"
-                v-model="checkboxValue"
               />
               <label for="checkOption1">Chicago</label>
             </div>
@@ -171,9 +171,9 @@
             <div class="field-checkbox mb-0">
               <Checkbox
                 id="checkOption2"
+                v-model="checkboxValue"
                 name="option"
                 value="Los Angeles"
-                v-model="checkboxValue"
               />
               <label for="checkOption2">Los Angeles</label>
             </div>
@@ -182,9 +182,9 @@
             <div class="field-checkbox mb-0">
               <Checkbox
                 id="checkOption3"
+                v-model="checkboxValue"
                 name="option"
                 value="New York"
-                v-model="checkboxValue"
               />
               <label for="checkOption3">New York</label>
             </div>
@@ -200,7 +200,7 @@
         <Listbox
           v-model="listboxValue"
           :options="listboxValues"
-          optionLabel="name"
+          option-label="name"
           :filter="true"
         />
 
@@ -208,7 +208,7 @@
         <Dropdown
           v-model="dropdownValue"
           :options="dropdownValues"
-          optionLabel="name"
+          option-label="name"
           placeholder="Select"
         />
 
@@ -216,15 +216,15 @@
         <MultiSelect
           v-model="multiselectValue"
           :options="multiselectValues"
-          optionLabel="name"
+          option-label="name"
           placeholder="Select Countries"
           :filter="true"
         >
           <template #value="slotProps">
             <div
-              class="inline-flex align-items-center py-1 px-2 bg-primary text-primary border-round mr-2"
               v-for="option of slotProps.value"
               :key="option.code"
+              class="inline-flex items-center py-1 px-2 bg-primary text-primary border-round mr-2"
             >
               <span
                 :class="'mr-2 flag flag-' + option.code.toLowerCase()"
@@ -237,7 +237,7 @@
             </template>
           </template>
           <template #option="slotProps">
-            <div class="flex align-items-center">
+            <div class="flex items-center">
               <span
                 :class="'mr-2 flag flag-' + slotProps.option.code.toLowerCase()"
                 style="width: 18px; height: 12px"
@@ -259,8 +259,8 @@
         <h5>ToggleButton</h5>
         <ToggleButton
           v-model="toggleValue"
-          onLabel="Yes"
-          offLabel="No"
+          on-label="Yes"
+          off-label="No"
           :style="{ width: '10em' }"
         />
 
@@ -268,14 +268,14 @@
         <SelectButton
           v-model="selectButtonValue1"
           :options="selectButtonValues1"
-          optionLabel="name"
+          option-label="name"
         />
 
         <h5>SelectButton - Multiple</h5>
         <SelectButton
           v-model="selectButtonValue2"
           :options="selectButtonValues2"
-          optionLabel="name"
+          option-label="name"
           :multiple="true"
         />
       </div>

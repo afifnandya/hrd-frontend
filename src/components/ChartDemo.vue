@@ -6,7 +6,7 @@
         <Chart type="line" :data="lineData" :options="lineOptions" />
       </div>
 
-      <div class="card flex flex-column align-items-center">
+      <div class="card flex flex-column items-center">
         <h5 class="align-self-start">Pie Chart</h5>
         <Chart
           type="pie"
@@ -16,7 +16,7 @@
         />
       </div>
 
-      <div class="card flex flex-column align-items-center">
+      <div class="card flex flex-column items-center">
         <h5 class="align-self-start">Polar Area Chart</h5>
         <Chart
           type="polarArea"
@@ -32,7 +32,7 @@
         <Chart type="bar" :data="barData" :options="barOptions" />
       </div>
 
-      <div class="card flex flex-column align-items-center">
+      <div class="card flex flex-column items-center">
         <h5 class="align-self-start">Doughnut Chart</h5>
         <Chart
           type="doughnut"
@@ -42,7 +42,7 @@
         />
       </div>
 
-      <div class="card flex flex-column align-items-center">
+      <div class="card flex flex-column items-center">
         <h5 class="align-self-start">Radar Chart</h5>
         <Chart
           type="radar"
@@ -56,26 +56,10 @@
 </template>
 
 <script>
-import EventBus from '#src/AppEventBus'
+import EventBus from '@/AppEventBus'
 
 export default {
   themeChangeListener: null,
-  mounted() {
-    this.themeChangeListener = (event) => {
-      if (event.dark) this.applyDarkTheme()
-      else this.applyLightTheme()
-    }
-    EventBus.on('change-theme', this.themeChangeListener)
-
-    if (this.isDarkTheme()) {
-      this.applyDarkTheme()
-    } else {
-      this.applyLightTheme()
-    }
-  },
-  beforeUnmount() {
-    EventBus.off('change-theme', this.themeChangeListener)
-  },
   data() {
     return {
       lineData: {
@@ -195,6 +179,22 @@ export default {
       barOptions: null,
       radarOptions: null
     }
+  },
+  mounted() {
+    this.themeChangeListener = (event) => {
+      if (event.dark) this.applyDarkTheme()
+      else this.applyLightTheme()
+    }
+    EventBus.on('change-theme', this.themeChangeListener)
+
+    if (this.isDarkTheme()) {
+      this.applyDarkTheme()
+    } else {
+      this.applyLightTheme()
+    }
+  },
+  beforeUnmount() {
+    EventBus.off('change-theme', this.themeChangeListener)
   },
   methods: {
     isDarkTheme() {
