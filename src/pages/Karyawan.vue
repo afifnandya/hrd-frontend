@@ -119,7 +119,7 @@
               v-model="filterModel.value"
               class="w-full"
               :options="karyawanStatus"
-              placeholder="Status"
+              placeholder="--Pilih--"
               @change="filterCallback()"
             >
             </Dropdown>
@@ -140,7 +140,7 @@
               v-model="filterModel.value"
               class="w-full"
               :options="karyawanStatusAktif"
-              placeholder="Status Aktif"
+              placeholder="--Pilih--"
               @change="filterCallback()"
             >
             </Dropdown>
@@ -276,7 +276,8 @@ const tableFilters = ref({
   statusAktif: { value: '', matchMode: 'contains' },
   jenisKelamin: { value: '', matchMode: 'contains' }
 })
-const karyawanStatus = ['Karyawan', 'Karyawan Harian Lepas']
+// const karyawanStatus = ['HL','PKWT','PKWTT']
+const karyawanStatus = ['Karyawan','Karyawan Harian Lepas']
 const karyawanStatusAktif = ['Akitif', 'Tidak aktif']
 const karyawanJenisKelamin = ['Laki-laki', 'Perempuan']
 const selectedKaryawan = ref<Karyawan>()

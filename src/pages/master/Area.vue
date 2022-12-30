@@ -1,5 +1,11 @@
 <template>
   <div class="p-10 bg-white">
+    <div class="flex items-center justify-between mb-6">
+      <h5 class="text-xl font-bold">{{ $t('masterArea') }}</h5>
+      <div>
+        <button class="button button-primary" @click="">{{ $t('tambaharea') }}</button>
+      </div>
+    </div>
     <DataTable
       ref="dt"
       :value="areas"
@@ -14,14 +20,6 @@
       scroll-height="400px"
       scrollable
     >
-      <template #header>
-        <div
-          class="flex flex-column md:flex-row md:justify-content-between md:items-center"
-        >
-          <h5 class="m-0">{{ $t('masterArea') }}</h5>
-        </div>
-      </template>
-
       <Column
         field="no"
         header="Id"

@@ -1,5 +1,11 @@
 <template>
   <div class="p-10 bg-white">
+    <div class="flex items-center justify-between mb-6">
+      <h5 class="text-xl font-bold">{{ $t('masterDepartemen') }}</h5>
+      <div>
+        <button class="button button-primary" @click="showAddModal">{{ $t('tambahdepartment') }}</button>
+      </div>
+    </div>
     <DataTable
       ref="dt"
       :value="departments"
@@ -14,14 +20,6 @@
       scroll-height="400px"
       scrollable
     >
-      <template #header>
-        <div
-          class="flex flex-column md:flex-row md:justify-content-between md:items-center"
-        >
-          <h5 class="m-0">{{ $t('masterDepartemen') }}</h5>
-        </div>
-      </template>
-
       <Column
         field="no"
         header="Id"
@@ -52,6 +50,40 @@
         </template>
       </Column>
     </DataTable>
+
+    <Dialog
+      v-model:visible="showModal.add"
+      :style="{ width: '450px' }"
+      header="Add Departemet"
+      :modal="true"
+      class="p-fluid"
+    >
+      <div class="field">
+        <label for="DepartmentNama">Nama</label>
+
+        <InputText
+          id="DepartmentNama"
+          v-model="createDepartment.name"
+          type="text"
+        />
+      </div>
+
+      <template #footer>
+        <Button
+          label="Cancel"
+          icon="pi pi-times"
+          class="p-button-text"
+          @click="showModal.add = false"
+        />
+        <Button
+          label="Save"
+          icon="pi pi-check"
+          class="p-button-text"
+          :disabled="!createDepartment.name"
+          @click="tambahDepartment"
+        />
+      </template>
+    </Dialog>
 
     <Dialog
       v-model:visible="showModal.edit"
@@ -127,6 +159,7 @@ import { onMounted, reactive, ref } from 'vue'
 import useToast from '@/composable/useToast'
 import { getDepartment } from '@/api/master/getDepartmen'
 import { editDepartment } from '@/api/master/editDepartment'
+import { CreateDepartment } from '@/api/master/createDepartment'
 import { deleteDepartment } from '@/api/master/deleteDepartment'
 import { Divisi as Department } from '@/typing/dataMaster'
 
@@ -138,14 +171,40 @@ const selectedDepartmen: Department = reactive({
   nama: ''
 })
 
+const createDepartment = reactive({
+  name: ''
+})
+
+
 const showModal = reactive({
   delete: false,
-  edit: false
+  edit: false,
+  add: false
+
 })
 
 onMounted(async () => {
   getData()
 })
+
+function showAddModal() {
+  showModal.add = true
+}
+
+async function tambahDepartment() {
+  const { success, message } = await CreateDepartment({
+name: createDepartment.name
+})
+  if (message) {
+    if (success) {
+      toast.success(message)
+    } else {
+      toast.error(message)
+    }
+  }
+  showModal.add = false
+  getData()
+}
 
 async function getData() {
   loading.value = true

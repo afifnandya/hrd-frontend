@@ -104,12 +104,12 @@ const menu = reactive([
     items: [
       {
         label: t('karyawan'),
-        icon: 'pi pi-fw pi-id-card',
+        icon: 'pi pi-user pi-id-card',
         // to: '/karyawan',
         items: [
           {
             label: t('karyawan'),
-            icon: 'pi pi-fw pi-id-card',
+            icon: 'pi pi-users pi-id-card',
             to: '/karyawan'
           },
           {

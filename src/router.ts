@@ -11,6 +11,7 @@ import {
   ROUTE_KARYAWAN,
   ROUTE_KARYAWAN_DETAIL,
   ROUTE_KARYAWAN_TAMBAH,
+  ROUTE_KARYAWAN_CUTI,
   ROUTE_MASTER_AREA,
   ROUTE_MASTER_DEPARTMEN,
   ROUTE_MASTER_PERUSAHAAN,
@@ -20,7 +21,8 @@ import {
   ROUTE_PELAMAR_DETAIL,
   ROUTE_WORK_ORDER,
   ROUTE_WORK_ORDER_DETAIL,
-  ROUTE_WORK_ORDER_EDIT
+  ROUTE_WORK_ORDER_EDIT,
+  ROUTE_KARYAWAN_REMINDER_KONTRAK
 } from '@/constants'
 
 const routes = [
@@ -99,12 +101,12 @@ const routes = [
       },
       {
         path: '/karyawan/cuti',
-        name: ROUTE_KARYAWAN_TAMBAH,
+        name: ROUTE_KARYAWAN_CUTI,
         component: () => import('@/pages/karyawan/KaryawanCuti.vue')
       },
       {
         path: '/karyawan/reminder-kontrak',
-        name: ROUTE_KARYAWAN_TAMBAH,
+        name: ROUTE_KARYAWAN_REMINDER_KONTRAK,
         component: () => import('@/pages/karyawan/KaryawanCuti.vue')
       },
       {

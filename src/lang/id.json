@@ -110,6 +110,12 @@
   "masterJabatan": "Master Jabatan",
   "masterDivisi": "Master Divisi",
   "masterDepartemen": "Master Departemen",
+  "masterPerusahaan": "Master Perusahaan",
   "masterKategori": "Master Kategori",
-  "masterArea": "Master Area"
+  "masterArea": "Master Area",
+
+
+  "tambahdepartment": "Tambah Departemen",
+  "tambaharea": "Tambah Area"
+
 }
