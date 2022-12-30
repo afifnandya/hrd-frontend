@@ -13,6 +13,7 @@ import {
   ROUTE_KARYAWAN_TAMBAH,
   ROUTE_MASTER_AREA,
   ROUTE_MASTER_DEPARTMEN,
+  ROUTE_MASTER_PERUSAHAAN,
   ROUTE_MASTER_DIVISI,
   ROUTE_MASTER_JABATAN,
   ROUTE_PELAMAR,
@@ -132,7 +133,7 @@ const routes = [
       },
       {
         path: '/master/perusahaan',
-        name: ROUTE_MASTER_DEPARTMEN,
+        name: ROUTE_MASTER_PERUSAHAAN,
         props: true,
         component: () => import('@/pages/master/Perusahaan.vue')
       },
