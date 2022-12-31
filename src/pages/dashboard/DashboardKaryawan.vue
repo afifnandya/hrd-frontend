@@ -95,7 +95,7 @@
   <div class="flex flex-wrap mt-4">
     <div class="w-full lg:w-6/12 xl:w-2/12">
       <div class="mb-0 card">
-        <StatusKontrakPieChart />
+        <StatusKontrakPieChart :data="statusKontrak" />
       </div>
     </div>
     <div class="w-full lg:w-6/12 xl:w-2/12">
@@ -158,7 +158,7 @@ import PertumbuhanKaryawanLineChart from '@/page_components/dashboard/Pertumbuha
 import PertumbuhanKaryawanByWilayahLineChart from '@/page_components/dashboard/PertumbuhanKaryawanByWilayahLineChart.vue'
 import WorkOrderChart from '@/page_components/dashboard/WorkOrderChart.vue'
 import useAxios from '@/composable/useAxios'
-import { isEmpty, startCase } from 'lodash'
+import { isEmpty, startCase, toUpper, trim, upperCase } from 'lodash'
 import { camelizeKeys } from 'humps'
 import { onMounted, reactive, ref } from 'vue'
 
@@ -174,6 +174,12 @@ export interface Data {
   allEmployee: Employee
   permanentEmployee: Employee
   dailyEmployee: Employee
+  contract: {
+    PKWTT: number
+    'PKWT 1': number
+    'PKWT 2': number
+    'PKWT 3': number
+  }
   applicants: {
     total: number
     totalApplicant: number
@@ -254,15 +260,15 @@ const agama = ref<{ value: string | number; name: string }[]>([])
 const statusNikah = ref<{ value: string | number; name: string }[]>([])
 const pendidikan = ref<{ value: string | number; name: string }[]>([])
 const umur = ref<{ value: string | number; name: string }[]>([])
+const statusKontrak = ref<{ value: string | number; name: string }[]>([])
 
 async function getData() {
   const { data: response } = await useAxios({
-    url: '/reports/dashboard'
+    url: '/reports/employee'
   })
 
   if (!isEmpty(response)) {
     const { data } = camelizeKeys(response) as ReportsResponse
-    console.log('dd', data)
     const {
       age,
       maritalStatus,
@@ -272,7 +278,8 @@ async function getData() {
       allEmployee,
       permanentEmployee,
       dailyEmployee,
-      applicants
+      applicants,
+      contract
     } = data
     totalKaryawan.active = allEmployee.totalActive
     totalKaryawan.total = allEmployee.total
@@ -312,6 +319,12 @@ async function getData() {
       statusNikah.value.push({
         name: startCase(key),
         value: maritalStatus[key]
+      })
+    }
+    for (const key in contract) {
+      statusKontrak.value.push({
+        name: toUpper(trim(key)),
+        value: contract[key]
       })
     }
     for (const key in education) {

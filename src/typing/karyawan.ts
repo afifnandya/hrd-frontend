@@ -50,6 +50,14 @@ interface Keluar {
   keterangan: string
 }
 
+interface KontrakKaryawan {
+  contractType: string
+  duration: number | null
+  startDate: string
+  endDate: string | null
+  positionName: string
+}
+
 interface Karyawan {
   id: number
   nik: string
@@ -126,6 +134,7 @@ interface KaryawanInstance extends Karyawan {
 }
 
 export {
+  KontrakKaryawan,
   Karyawan,
   Keluar,
   AnggotaKeluarga,
