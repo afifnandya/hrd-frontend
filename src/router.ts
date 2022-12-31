@@ -15,6 +15,7 @@ import {
   ROUTE_KARYAWAN_TAMBAH,
   ROUTE_MASTER_AREA,
   ROUTE_MASTER_DEPARTMEN,
+  ROUTE_MASTER_PERUSAHAAN,
   ROUTE_MASTER_DIVISI,
   ROUTE_MASTER_JABATAN,
   ROUTE_PELAMAR,
@@ -23,12 +24,15 @@ import {
   ROUTE_WORK_ORDER_DETAIL,
   ROUTE_WORK_ORDER_EDIT
 } from '@/constants'
+import createToast from './composable/useToast'
 
+const toast = createToast()
 const routes = [
   {
     path: '/',
     name: 'app',
     component: App,
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
@@ -134,7 +138,7 @@ const routes = [
       },
       {
         path: '/master/perusahaan',
-        name: ROUTE_MASTER_DEPARTMEN,
+        name: ROUTE_MASTER_PERUSAHAAN,
         props: true,
         component: () => import('@/pages/master/Perusahaan.vue')
       },
@@ -164,8 +168,10 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'login' && !isAuthenticated()) next({ name: 'login' })
-  else next()
+  if (to.meta.requiresAuth && !isAuthenticated()) {
+    toast.error('Please login to continue')
+    next({ name: 'login' })
+  } else next()
 })
 
 export default router
