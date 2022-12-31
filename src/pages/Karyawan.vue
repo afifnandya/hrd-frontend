@@ -3,12 +3,19 @@
     <div class="card">
       <div class="flex items-center justify-between mb-6">
         <h5 class="mb-0 text-xl font-bold">{{ $t('karyawan') }}</h5>
-        <router-link
-          :to="{ name: ROUTE_KARYAWAN_TAMBAH }"
-          class="button button-primary"
-        >
-          {{ $t('tambahKaryawan') }}
-        </router-link>
+        <div>
+          <a
+            href="https://projek.alwaysdata.net/api/employees/export"
+            class="button mr-2 bg-orange-400 text-white"
+            >Export</a
+          >
+          <router-link
+            :to="{ name: ROUTE_KARYAWAN_TAMBAH }"
+            class="button button-primary"
+          >
+            {{ $t('tambahKaryawan') }}
+          </router-link>
+        </div>
       </div>
 
       <DataTable

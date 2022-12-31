@@ -10,6 +10,8 @@ import {
   ROUTE_HARIAN_LEPAS,
   ROUTE_KARYAWAN,
   ROUTE_KARYAWAN_DETAIL,
+  ROUTE_KARYAWAN_REMINDER_KONTRAK,
+  ROUTE_KARYAWAN_CUTI,
   ROUTE_KARYAWAN_TAMBAH,
   ROUTE_MASTER_AREA,
   ROUTE_MASTER_DEPARTMEN,
@@ -98,13 +100,13 @@ const routes = [
       },
       {
         path: '/karyawan/cuti',
-        name: ROUTE_KARYAWAN_TAMBAH,
+        name: ROUTE_KARYAWAN_CUTI,
         component: () => import('@/pages/karyawan/KaryawanCuti.vue')
       },
       {
         path: '/karyawan/reminder-kontrak',
-        name: ROUTE_KARYAWAN_TAMBAH,
-        component: () => import('@/pages/karyawan/KaryawanCuti.vue')
+        name: ROUTE_KARYAWAN_REMINDER_KONTRAK,
+        component: () => import('@/pages/Kontrak.vue')
       },
       {
         path: '/pelamar/detail/:id',
