@@ -1,12 +1,31 @@
 import NProgress from 'nprogress'
 import axios from 'axios'
+import { getCookie } from '@/helper/cookie'
+import { isNil, omitBy } from 'lodash-es'
+
+function setDefaultHeaders() {
+  const token = getCookie('login-token')
+  const authHeader = token?.length
+    ? {
+        Authorization: 'Bearer ' + token
+      }
+    : null
+  const langHeader = {
+    'Accept-Language': getCookie('selected-lang')
+  }
+  return omitBy({ ...authHeader, ...langHeader }, isNil)
+}
+
 const instance = axios.create({
+  // baseURL: 'http://192.168.1.13:8000/api'
   baseURL: 'https://projek.alwaysdata.net/api'
+  // headers: omitBy(setDefaultHeaders(), isNil)
   // timeout: 1000,
 })
 
 instance.interceptors.request.use(
   function (config) {
+    config.headers = setDefaultHeaders()
     NProgress.start()
     // Do something before request is sent
     return config
