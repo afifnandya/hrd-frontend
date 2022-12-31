@@ -15,6 +15,7 @@ import { getDivisi } from '@/api/master/getDivisi'
 import { getJabatan } from '@/api/master/getJabatan'
 import { getJobCategory } from '@/api/master/getJobCategory'
 import useToast from '@/composable/useToast'
+import { setCookie } from '@/helper/cookie'
 
 const toast = useToast()
 
@@ -35,6 +36,7 @@ export const useAppStore = defineStore('app', {
     changLang(paramLang: 'ID' | 'EN' | 'CH') {
       this.lang = paramLang
       i18n.global.locale.value = paramLang
+      setCookie('selected-lang', this.lang)
       console.log('parma', paramLang, i18n.global.locale.value)
     },
     async getArea() {

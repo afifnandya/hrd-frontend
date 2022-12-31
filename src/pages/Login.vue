@@ -112,10 +112,12 @@ export default {
     }
   },
   methods: {
-    doLogin() {
+    async doLogin() {
       console.log('aa')
-      logIn(this.username, this.password)
-      this.$router.push({ name: ROUTE_DASHBOARD })
+      const success = await logIn(this.username, this.password)
+      if (success) {
+        this.$router.push({ name: ROUTE_DASHBOARD })
+      }
     }
   }
 }
