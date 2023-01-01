@@ -1,4 +1,4 @@
-import useHttp from '@/composable/useHttp'
+import useAxios, { isAxiosError } from '@/composable/useAxios'
 import { camelizeKeys, decamelizeKeys } from 'humps'
 import qs from 'qs'
 import { Pelamar } from '@/typing/pelamar'
@@ -85,8 +85,8 @@ export async function getPelamar(payload: GetPelamarPayload) {
   const url = payload.id
     ? `/applicants/${payload.id}?${filter}`
     : `/applicants?${filter}`
-  const { data: responseData } = await useHttp(url)
-  const response = camelizeKeys(responseData.value) as GetPelamarResponse
+  const { data: responseData } = await useAxios({ url })
+  const response = camelizeKeys(responseData) as GetPelamarResponse
   if (!isEmpty(response)) {
     success = true
     // if (response.status === 200) {

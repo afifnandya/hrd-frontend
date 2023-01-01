@@ -10,8 +10,9 @@ import {
   ROUTE_HARIAN_LEPAS,
   ROUTE_KARYAWAN,
   ROUTE_KARYAWAN_DETAIL,
-  ROUTE_KARYAWAN_TAMBAH,
+  ROUTE_KARYAWAN_REMINDER_KONTRAK,
   ROUTE_KARYAWAN_CUTI,
+  ROUTE_KARYAWAN_TAMBAH,
   ROUTE_MASTER_AREA,
   ROUTE_MASTER_DEPARTMEN,
   ROUTE_MASTER_PERUSAHAAN,
@@ -21,15 +22,17 @@ import {
   ROUTE_PELAMAR_DETAIL,
   ROUTE_WORK_ORDER,
   ROUTE_WORK_ORDER_DETAIL,
-  ROUTE_WORK_ORDER_EDIT,
-  ROUTE_KARYAWAN_REMINDER_KONTRAK
+  ROUTE_WORK_ORDER_EDIT
 } from '@/constants'
+import createToast from './composable/useToast'
 
+const toast = createToast()
 const routes = [
   {
     path: '/',
     name: 'app',
     component: App,
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
@@ -107,7 +110,7 @@ const routes = [
       {
         path: '/karyawan/reminder-kontrak',
         name: ROUTE_KARYAWAN_REMINDER_KONTRAK,
-        component: () => import('@/pages/karyawan/KaryawanCuti.vue')
+        component: () => import('@/pages/Kontrak.vue')
       },
       {
         path: '/pelamar/detail/:id',
@@ -165,8 +168,10 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'login' && !isAuthenticated()) next({ name: 'login' })
-  else next()
+  if (to.meta.requiresAuth && !isAuthenticated()) {
+    toast.error('Please login to continue')
+    next({ name: 'login' })
+  } else next()
 })
 
 export default router

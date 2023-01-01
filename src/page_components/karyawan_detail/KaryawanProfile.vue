@@ -51,6 +51,13 @@
             {{ $t('cancel') }}
           </button>
         </div>
+        <button
+          v-if="isTambahKaryawan || (!isTambahKaryawan && enableEdit)"
+          class="button button-primary"
+          @click="onSave"
+        >
+          {{ t('simpan') }}
+        </button>
       </div>
     </div>
 
@@ -579,7 +586,11 @@ import Calendar from 'primevue/calendar'
 import IcBaselineCameraAlt from '~icons/ic/baseline-camera-alt'
 import { useKaryawanStore } from '@/stores/karyawan'
 import { cloneDeep } from 'lodash'
+import router from '@/router'
+import { ROUTE_KARYAWAN } from '@/constants'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const store = useAppStore()
 const karyawanStore = useKaryawanStore()
 const { karyawan, editKaryawan, fotoKaryawan } = storeToRefs(karyawanStore)
@@ -617,6 +628,22 @@ function uploadFoto() {
         previewFoto.value = e.target.result
       }
       reader.readAsDataURL(file)
+    }
+  }
+}
+
+async function onSave() {
+  if (isTambahKaryawan.value) {
+    const result = await karyawanStore.tambahKaryawan()
+    if (result.success) {
+      router.push({ name: ROUTE_KARYAWAN })
+      return
+    }
+  } else {
+    const result = await karyawanStore.updateKaryawan()
+    if (result.success) {
+      router.push({ name: ROUTE_KARYAWAN })
+      return
     }
   }
 }
