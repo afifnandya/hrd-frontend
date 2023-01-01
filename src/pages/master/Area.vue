@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between mb-6">
       <h5 class="text-xl font-bold">{{ $t('masterArea') }}</h5>
       <div>
-        <button class="button button-primary" @click="">{{ $t('tambaharea') }}</button>
+        <button class="button button-primary" @click="showAddModal">{{ $t('tambaharea') }}</button>
       </div>
     </div>
     <DataTable
@@ -15,14 +15,14 @@
       :rows="10"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[5, 10, 25]"
-      current-page-report-template="Showing {first} to {last} of {totalRecords} Divisi"
+      current-page-report-template="Showing {first} to {last} of {totalRecords}"
       responsive-layout="scroll"
       scroll-height="400px"
       scrollable
     >
       <Column
         field="no"
-        header="Id"
+        :header="$t('codeArea')"
         :sortable="true"
         header-style="width:14%; min-width:10rem;"
       >
@@ -30,7 +30,7 @@
           {{ data.code }}
         </template>
       </Column>
-      <Column field="Nama" header="Nama" :sortable="true">
+      <Column field="Nama" :header="$t('area')" :sortable="true">
         <template #body="{ data }">
           {{ data.area }}
         </template>
@@ -51,28 +51,75 @@
       </Column>
     </DataTable>
 
+
     <Dialog
-      v-model:visible="showModal.edit"
+      v-model:visible="showModal.add"
       :style="{ width: '450px' }"
-      header="Edit Area"
+      :header="$t('tambahArea')"
       :modal="true"
       class="p-fluid"
     >
       <div class="field">
-        <label for="divisiNama">Nama</label>
+        <label for="AreaCode">{{ $t('codeArea') }}</label>
 
-        <InputText id="divisiNama" v-model="selectedArea.area" type="text" />
+        <InputText
+          id="codeArea"
+          v-model="createArea.code"
+          type="text"
+        />
+      </div>
+      <div class="field">
+        <label for="AreaNama">{{ $t('area') }}</label>
+
+        <InputText
+          id="AreaNama"
+          v-model="createArea.area"
+          type="text"
+        />
       </div>
 
       <template #footer>
         <Button
-          label="Cancel"
+          :label="$t('cancel')"
+          icon="pi pi-times"
+          class="p-button-text"
+          @click="showModal.add = false"
+        />
+        <Button
+          :label="$t('save')"
+          icon="pi pi-check"
+          class="p-button-text"
+          :disabled="!createArea.area"
+          @click="tambahArea"
+        />
+      </template>
+    </Dialog>
+
+    <Dialog
+      v-model:visible="showModal.edit"
+      :style="{ width: '450px' }"
+      :header="$t('ubahArea')"
+      :modal="true"
+      class="p-fluid"
+    >
+     <div class="field">
+        <InputText id="codeArea" :v-model="selectedArea.code" type="hidden" />
+      </div>
+      <div class="field">
+        <label for="area">Nama</label>
+
+        <InputText id="area" v-model="selectedArea.area" type="text" />
+      </div>
+
+      <template #footer>
+        <Button
+          :label="$t('cancel')"
           icon="pi pi-times"
           class="p-button-text"
           @click="showModal.edit = false"
         />
         <Button
-          label="Save"
+          :label="$t('save')"
           icon="pi pi-check"
           class="p-button-text"
           @click="editData"
@@ -83,13 +130,13 @@
     <Dialog
       v-model:visible="showModal.delete"
       :style="{ width: '450px' }"
-      header="Confirm"
+      :header="$t('konfirmasi')"
       :modal="true"
     >
       <div class="flex items-center justify-center">
         <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
         <span
-          >Are you sure you want to delete <b>{{ selectedArea.area }}</b
+          >{{ $t('apakahandayakiningimenghapus') }} <b>{{ selectedArea.area }}</b
           >?</span
         >
       </div>
@@ -120,6 +167,7 @@ import Button from 'primevue/button'
 import { onMounted, reactive, ref } from 'vue'
 import useToast from '@/composable/useToast'
 import { getArea } from '@/api/master/getArea'
+import { CreateArea } from '@/api/master/createArea'
 import { editArea } from '@/api/master/editArea'
 import { Area } from '@/typing/dataMaster'
 import { deleteArea } from '@/api/master/deleteArea'
@@ -133,10 +181,36 @@ const selectedArea: Area = reactive({
   area: ''
 })
 
+const createArea = reactive({
+  code: '',
+  area: ''
+})
+
 const showModal = reactive({
   delete: false,
-  edit: false
+  edit: false,
+  add: false
 })
+
+function showAddModal() {
+  showModal.add = true
+}
+
+async function tambahArea() {
+  const { success, message } = await CreateArea({
+    code: createArea.code,
+    area: createArea.area
+  })
+  if (message) {
+    if (success) {
+      toast.success(message)
+    } else {
+      toast.error(message)
+    }
+  }
+  showModal.add = false
+  getData()
+}
 
 async function getData() {
   loading.value = true

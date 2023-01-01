@@ -2,36 +2,33 @@ import useAxios from '@/composable/useAxios'
 import { DEFAULT_ERROR_MESSAGE } from '@/constants'
 import axios from 'axios'
 
-export interface EditAreaResponse {
+export interface CreateJabatanResponse {
   status: number
   message: string
   data: {
-    code: string | number
-    area: string
+    id: string | number
+    name: string
   }
 }
 
-export interface EditAreaPayload {
-  code: string | number
-  area: string
+export interface CreateJabatanPayload {
+  name: string
 }
 
-export async function editArea(payload: EditAreaPayload) {
-  const id = payload?.code
+export async function CreateJabatan(payload: CreateJabatanPayload) {
   let success = false
   let message = null
   let data = null
-  const url = `/areas/${id}`
+  const url = `/positions`
   try {
     const response = await useAxios({
       url: url,
-      method: 'put',
+      method: 'post',
       data: {
-        code: payload.code,
-        area: payload.area
+        name: payload.name
       }
     })
-    const responseData = response.data as EditAreaResponse
+    const responseData = response.data as CreateJabatanResponse
     // const response = data.value as GetJabatan
     if (responseData.status === 200) {
       success = true

@@ -2,8 +2,9 @@
   <div class="p-10 bg-white">
     <div class="flex items-center justify-between mb-6">
       <h5 class="text-xl font-bold">{{ $t('masterJabatan') }}</h5>
+
       <div>
-        <button class="button button-primary" @click="">Tambah Jabatan</button>
+        <button class="button button-primary" @click="showAddModal">{{ $t('tambahJabatan') }}</button>
       </div>
     </div>
     <DataTable
@@ -20,9 +21,44 @@
       scroll-height="400px"
       scrollable
     >
+
+    <Dialog
+      v-model:visible="showModal.add"
+      :style="{ width: '450px' }"
+      :header="$t('tambahJabatan')"
+      :modal="true"
+      class="p-fluid"
+    >
+      <div class="field">
+        <label for="JabatanNama">{{ $t('namaJabatan') }}</label>
+
+        <InputText
+          id="JabatanNama"
+          v-model="createJabatan.name"
+          type="text"
+        />
+      </div>
+
+      <template #footer>
+        <Button
+          :label="$t('cancel')"
+          icon="pi pi-times"
+          class="p-button-text"
+          @click="showModal.add = false"
+        />
+        <Button
+          :label="$t('save')"
+          icon="pi pi-check"
+          class="p-button-text"
+          :disabled="!createJabatan.name"
+          @click="tambahJabatan"
+        />
+      </template>
+    </Dialog>
+
       <Column
         field="no"
-        header="Id"
+        :header="$t('idJabatan')"
         :sortable="true"
         header-style="width:14%; min-width:10rem;"
       >
@@ -30,7 +66,8 @@
           {{ data.id }}
         </template>
       </Column>
-      <Column field="Nama" header="Nama" :sortable="true">
+     
+      <Column field="Nama" :header="$t('namaJabatan')" :sortable="true">
         <template #body="{ data }">
           {{ data.nama }}
         </template>
@@ -54,12 +91,12 @@
     <Dialog
       v-model:visible="showModal.edit"
       :style="{ width: '450px' }"
-      header="Edit Jabatan"
+      :header="$t('ubahJabatan')"
       :modal="true"
       class="p-fluid"
     >
       <div class="field">
-        <label for="jabatanNama">Nama</label>
+        <label for="jabatanNama">{{ $t('namaJabatan') }}</label>
 
         <InputText
           id="jabatanNama"
@@ -70,13 +107,13 @@
 
       <template #footer>
         <Button
-          label="Cancel"
+          :label="$t('cancel')"
           icon="pi pi-times"
           class="p-button-text"
           @click="showModal.edit = false"
         />
         <Button
-          label="Save"
+          :label="$t('save')"
           icon="pi pi-check"
           class="p-button-text"
           :disabled="!selectedJabatan.id || !selectedJabatan.nama"
@@ -88,13 +125,13 @@
     <Dialog
       v-model:visible="showModal.delete"
       :style="{ width: '450px' }"
-      header="Confirm"
+      :header="$t('konfirmasi')"
       :modal="true"
     >
       <div class="flex items-center justify-center">
         <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
         <span
-          >Are you sure you want to delete <b>{{ selectedJabatan.nama }}</b
+          >{{ $t('apakahandayakiningimenghapus') }} <b>{{ selectedJabatan.nama }}</b
           >?</span
         >
       </div>
@@ -125,6 +162,7 @@ import Button from 'primevue/button'
 import { onMounted, reactive, ref } from 'vue'
 import useToast from '@/composable/useToast'
 import { getJabatan } from '@/api/master/getJabatan'
+import { CreateJabatan } from '@/api/master/createJabatan'
 import { editJabatan } from '@/api/master/editJabatan'
 import { deleteJabatan } from '@/api/master/deleteJabatan'
 import { Jabatan } from '@/typing/dataMaster'
@@ -138,10 +176,53 @@ const selectedJabatan: Jabatan = reactive({
   nama: ''
 })
 
+const createJabatan = reactive({
+  name: ''
+})
+
+
+
 const showModal = reactive({
   delete: false,
-  edit: false
+  edit: false,
+  add: false
+
 })
+
+function showAddModal() {
+  showModal.add = true
+}
+
+async function tambahJabatan() {
+  const { success, message } = await CreateJabatan({
+    name: createJabatan.name
+  })
+  if (message) {
+    if (success) {
+      toast.success(message)
+    } else {
+      toast.error(message)
+    }
+  }
+  showModal.add = false
+  getData()
+}
+
+async function getData() {
+  loading.value = true
+  const { success, data, message } = await getJabatan()
+  if (success && data) {
+    jabatans.value = data.map((jabatan) => {
+      return {
+        id: jabatan.id,
+        nama: jabatan.name
+      }
+    })
+    loading.value = false
+    return
+  }
+}
+
 
 onMounted(async () => {
   loading.value = true
@@ -173,6 +254,8 @@ async function editData() {
     toast.error(message)
   }
   showModal.edit = false
+  getData()
+
 }
 
 function showDeleteModal(data: Jabatan) {
@@ -187,9 +270,11 @@ async function deleteData() {
     toast.error(message)
   }
   showModal.delete = false
+  getData()
 }
 </script>
 <script lang="ts">
+const newLocal = "Confirm"
 export default {
   name: 'MasterJabatanPage'
 }

@@ -2,37 +2,34 @@ import useAxios from '@/composable/useAxios'
 import { DEFAULT_ERROR_MESSAGE } from '@/constants'
 import axios from 'axios'
 
-export interface EditAreaResponse {
+export interface CreateDivisiResponse {
   status: number
   message: string
   data: {
-    code: string | number
-    area: string
+    id: string | number
+    name: string
   }
 }
 
-export interface EditAreaPayload {
-  code: string | number
-  area: string
+export interface CreateDivisiPayload {
+  name: string
 }
 
-export async function editArea(payload: EditAreaPayload) {
-  const id = payload?.code
+export async function CreateDivisi(payload: CreateDivisiPayload) {
   let success = false
   let message = null
   let data = null
-  const url = `/areas/${id}`
+  const url = `/divisions`
   try {
     const response = await useAxios({
       url: url,
-      method: 'put',
+      method: 'post',
       data: {
-        code: payload.code,
-        area: payload.area
+        name: payload.name
       }
     })
-    const responseData = response.data as EditAreaResponse
-    // const response = data.value as GetJabatan
+    const responseData = response.data as CreateDivisiResponse
+    // const response = data.value as GetDivisi
     if (responseData.status === 200) {
       success = true
       data = responseData.data

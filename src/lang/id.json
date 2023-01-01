@@ -52,9 +52,9 @@
   "searchByName": "Search By Name",
   "nama": "Nama",
   "tambahKaryawan": "Tambah Karyawan",
-  "edit": "Edit",
-  "cancel": "Cancel",
-  "save": "Save",
+  "edit": "Ubah",
+  "cancel": "Batal",
+  "save": "Simpan",
   "kecamatan": "Kecamatan",
   "kabupatenKota": "Kabupaten/Kota",
   "provinsi": "Provinsi",
@@ -100,7 +100,6 @@
   "tanggalDiterima": "Tanggal Diterima",
   "statusPerkawinan": "Status Perkawinan",
   "pengisi": "Pengisi",
-  "simpan": "Simpan",
   "area": "Area",
   "npwp": "NPWP",
   "nik": "NIK",
@@ -115,7 +114,40 @@
   "masterArea": "Master Area",
 
 
+  //  belum diterjemahkan ke bahasa china
+  "home": "Beranda",
+  "masterData": "Master Data",
   "tambahdepartment": "Tambah Departemen",
-  "tambaharea": "Tambah Area"
+  "tambaharea": "Tambah Area",
+  "tambahJabatan": "Tambah Jabatan",
+  "namaJabatan": "Nama Jabatan",
+  "idJabatan": "Id Jabatan",
+  "ubahJabatan" : "Ubah Jabatan",
+
+
+  "tambahDivisi": "Tambah Divisi",
+  "namaDivisi": "Nama Divisi",
+  "idDivisi": "Id Divisi",
+  "ubahDivisi" : "Ubah Divisi",
+
+  "tambahDepartement": "Tambah Departemen",
+  "namaDepartement": "Nama Departemen",
+  "idDepartement": "Id Departemen",
+  "ubahDepartement" : "Ubah Departemen",
+
+  "tambahArea": "Tambah Area",
+  "codeArea": "Kode Area",
+  "ubahArea" : "Ubah Area",
+
+  "tambahPerusahaan": "Tambah Perusahaan",
+  "namaPerusahaan": "Nama Perusahaan",
+  "kodePerusahaan": "Kode Perusahaan",
+  "ubahPerusahaan" : "Ubah Perusahaan",
+
+
+
+  "apakahandayakiningimenghapus": "Apakah Anda Yakin Ingin Menghapus",
+  "konfirmasi" : "konfirmasi"
+
 
 }

@@ -23,7 +23,6 @@ export interface Area {
 
 export interface Peruahaan {
   id: string | number
-  code: string
   name: string
 }
 

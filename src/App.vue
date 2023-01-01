@@ -43,19 +43,19 @@ const mobileMenuActive = ref(false)
 const menuClick = ref(false)
 const menu = reactive([
   {
-    label: 'Home',
+    label: 'Menu Aplikasi',
     items: [
       {
         label: t('dashboard'),
         icon: 'pi pi-fw pi-home',
         items: [
           {
-            label: t('karyawan'),
+            label: 'karyawan',
             icon: 'pi pi-fw pi-id-card',
             to: '/dashboard/karyawan'
           },
           {
-            label: t('rekruitmen'),
+            label: 'rekruitmen',
             icon: 'pi pi-fw pi-id-card',
             to: '/dashboard/rekruitmen'
           }
@@ -64,51 +64,58 @@ const menu = reactive([
     ]
   },
   {
-    label: 'Master Data',
     items: [
       {
-        label: 'jabatan',
-        icon: 'pi pi-fw pi-box',
-        to: '/master/jabatan'
-      },
-      {
-        label: 'divisi',
-        icon: 'pi pi-fw pi-box',
-        to: '/master/divisi'
-      },
-      {
-        label: 'departemen',
-        icon: 'pi pi-fw pi-box',
-        to: '/master/departmen'
-      },
-      {
-        label: 'area',
-        icon: 'pi pi-fw pi-box',
-        to: '/master/area'
-      },
-      {
-        label: 'perusahaan',
-        icon: 'pi pi-fw pi-box',
-        to: '/master/perusahaan'
+        label: t('masterData'),
+        icon: 'pi pi-fw pi-database',
+        items: [
+
+        {
+          label: 'jabatan',
+          icon: 'pi pi-fw pi-box',
+          to: '/master/jabatan'
+        },
+        {
+          label: 'divisi',
+          icon: 'pi pi-fw pi-box',
+          to: '/master/divisi'
+        },
+        {
+          label: 'departemen',
+          icon: 'pi pi-fw pi-box',
+          to: '/master/departmen'
+        },
+        {
+          label: 'area',
+          icon: 'pi pi-fw pi-box',
+          to: '/master/area'
+        },
+        {
+          label: 'perusahaan',
+          icon: 'pi pi-fw pi-box',
+          to: '/master/perusahaan'
+        }
+        // {
+        //   label: 'Kategori Pekerjaan',
+        //   icon: 'pi pi-fw pi-box',
+        //   to: '/master/jobcategory'
+        // }
+      ]
       }
-      // {
-      //   label: 'kategori',
-      //   icon: 'pi pi-fw pi-box',
-      //   to: '/'
-      // }
+      
+      
     ]
   },
   {
-    label: 'Data Peserta',
+    // label: 'Data Peserta',
     icon: 'pi pi-fw pi-sitemap',
     items: [
       {
-        label: t('karyawan'),
-        icon: 'pi pi-user pi-id-card',
-        // to: '/karyawan',
+        label: 'karyawan',
+        icon: 'pi pi-user pi-id-users',
         items: [
           {
-            label: t('karyawan'),
+            label: 'karyawan',
             icon: 'pi pi-users pi-id-card',
             to: '/karyawan'
           },
