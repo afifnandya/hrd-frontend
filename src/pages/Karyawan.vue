@@ -7,7 +7,7 @@
           <a
             href="https://projek.alwaysdata.net/api/employees/export"
             class="button mr-2 bg-orange-400 text-white"
-            >Export</a
+            >{{ $t('ekspor') }}</a
           >
           <router-link
             :to="{ name: ROUTE_KARYAWAN_TAMBAH }"
@@ -84,7 +84,7 @@
         </Column>
         <Column
           field="nik"
-          header="NIK"
+          :header="$t('noBantex')"
           class="table-column-medium"
           :show-filter-menu="false"
         >
@@ -100,7 +100,7 @@
         </Column>
         <Column
           field="ktp"
-          header="KTP"
+          :header="$t('noKtp')"
           class="table-column-medium"
           :show-filter-menu="false"
         >
@@ -126,7 +126,7 @@
               v-model="filterModel.value"
               class="w-full"
               :options="karyawanStatus"
-              placeholder="--Pilih--"
+              :placeholder="$t('pilihStatus')"
               @change="filterCallback()"
             >
             </Dropdown>
@@ -147,7 +147,7 @@
               v-model="filterModel.value"
               class="w-full"
               :options="karyawanStatusAktif"
-              placeholder="--Pilih--"
+              :placeholder="$t('pilihStatus')"
               @change="filterCallback()"
             >
             </Dropdown>
@@ -190,11 +190,11 @@
           :header="$t('umur')"
           class="table-column-small"
         ></Column>
-        <Column header="Action" class="table-column-medium">
+        <Column :header="$t('aksi')" class="table-column-medium">
           <template #body="{ data }">
             <ActionButton>
               <template #trigger>
-                <button class="button button-primary">Action</button>
+                <button class="button button-primary">{{ $t('aksi') }}</button>
               </template>
               <template #content>
                 <div class="">

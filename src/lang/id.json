@@ -17,7 +17,7 @@
   "noTelpon": "No Telpon",
   "noTelponDarurat": "No Telpon Darurat",
   "agama": "Agama",
-  "noKtp": "No Ktp",
+  "noKtp": "KTP",
   "perusahaan": "Perusahaan",
   "tanggungan": "Tanggungan",
   "pendidikan": "Pendidikan",
@@ -38,7 +38,7 @@
   "pilihDepartemen": "Pilih Departemen",
   "pilihPosisiYangDilamar": "Pilih Posisi Yang Dilamar",
   "pekerjaHarianLepas": "Pekerja Harian Lepas",
-  "pilihStatus": "Pilih Status",
+  "pilihStatus": "--Pilih--",
   "editDataKaryawan": "Edit Data Karyawan",
   "nonAktifkanKaryawan": "Non Aktifkan Karyawan",
   "hapusKaryawan": "Hapus Karyawan",
@@ -47,9 +47,9 @@
   "terjadiKesalahan": "Terjadi Kesalahan",
   "statusKaryawan": "Status Karyawan",
   "statusAktif": "Status Aktif",
-  "searchByKtp": "Search By KTP",
-  "searchByNIK": "Search By NIK",
-  "searchByName": "Search By Name",
+  "searchByKtp": "Cari by KTP",
+  "searchByNIK": "Cari By NIK",
+  "searchByName": "Cari By Name",
   "nama": "Nama",
   "tambahKaryawan": "Tambah Karyawan",
   "edit": "Ubah",
@@ -147,7 +147,14 @@
 
 
   "apakahandayakiningimenghapus": "Apakah Anda Yakin Ingin Menghapus",
-  "konfirmasi" : "konfirmasi"
+  "konfirmasi" : "konfirmasi",
+  "no" : "No",
+  "aksi" : "Aksi",
+  "ekspor" : "Ekspor",
+  "menuAplikasi" : "Menu Aplikasi"
+
+
+
 
 
 }

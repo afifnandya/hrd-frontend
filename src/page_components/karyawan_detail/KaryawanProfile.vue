@@ -56,7 +56,7 @@
           class="button button-primary"
           @click="onSave"
         >
-          {{ t('simpan') }}
+          {{ t('save') }}
         </button>
       </div>
     </div>

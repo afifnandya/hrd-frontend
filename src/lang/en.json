@@ -4,7 +4,7 @@
   "divisi": "Division",
   "departemen": "Department",
   "kategori": "Category",
-  "karyawan": "Karyawan",
+  "karyawan": "Employee",
   "harianLepas": "Employee",
   "dataPelamar": "Applicant Data",
   "orangTua": "Parent",
@@ -38,7 +38,7 @@
   "pilihDepartemen": "Select Department",
   "pilihPosisiYangDilamar": "Select the Position Applied",
   "pekerjaHarianLepas": "Daily Workers",
-  "pilihStatus": "Select Status",
+  "pilihStatus": "--Select--",
   "editDataKaryawan": "Edit employee data",
   "nonAktifkanKaryawan": "Disable employee",
   "hapusKaryawan": "Delete Employee",
@@ -146,7 +146,15 @@
 
 
   "apakahandayakiningimenghapus": "Are You Sure You Want To Delete",
-  "konfirmasi" : "Confirm"
+  "konfirmasi" : "Confirm",
+  "no" : "No",
+  "aksi" : "Action",
+  "ekspor" : "Export",
+  "menuAplikasi" : "Menu Application"
+
+
+
+
 
 
 }

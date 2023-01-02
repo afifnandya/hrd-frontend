@@ -43,10 +43,10 @@ const mobileMenuActive = ref(false)
 const menuClick = ref(false)
 const menu = reactive([
   {
-    label: 'Menu Aplikasi',
+    label: 'menuAplikasi',
     items: [
       {
-        label: t('dashboard'),
+        label: 'dashboard',
         icon: 'pi pi-fw pi-home',
         items: [
           {
@@ -120,12 +120,12 @@ const menu = reactive([
             to: '/karyawan'
           },
           {
-            label: t('cuti'),
+            label: 'cuti',
             icon: 'pi pi-fw pi-id-card',
             to: '/karyawan/cuti'
           },
           {
-            label: t('reminderKontrak'),
+            label: 'reminderKontrak',
             icon: 'pi pi-fw pi-id-card',
             to: '/karyawan/reminder-kontrak'
           }
@@ -141,7 +141,7 @@ const menu = reactive([
         icon: 'pi pi-fw pi-bookmark',
         items: [
           {
-            label: 'Data Pelamar',
+            label: 'dataPelamar',
             icon: 'pi pi-fw pi-bookmark',
             to: '/pelamar'
           },
