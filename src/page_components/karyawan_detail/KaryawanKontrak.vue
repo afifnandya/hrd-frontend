@@ -23,8 +23,14 @@
           <Column field="duration" header="Durasi"></Column>
           <Column field="positionName" header="Posisi"></Column>
           <Column header="Aksi">
-            <template #body="{ index }">
-              <button class="button button-primary">Detail</button>
+            <template #body="{ data }">
+              <a
+                class="button button-primary"
+                target="_blank"
+                :href="documentContractUrl(data.id)"
+              >
+                Detail
+              </a>
             </template>
           </Column>
         </DataTable>
@@ -40,6 +46,9 @@ import { getKontrak as fetchGetKontrak } from '@/api/karyawan/getKontrak'
 import { onMounted, ref, watch } from 'vue'
 import { useKaryawanStore } from '@/stores/karyawan'
 import { storeToRefs } from 'pinia'
+import { API_BASE_URL } from '@/constants'
+import useAxios from '@/composable/useAxios'
+import { getCookie } from '@/helper/cookie'
 
 const kontraks = ref<KontrakKaryawan[]>([])
 const isLoading = ref(false)
@@ -51,6 +60,13 @@ async function getKontrak(idKaryawan: string | number) {
     kontraks.value = data
   }
   console.log('M', data)
+}
+
+function documentContractUrl(contractId: number) {
+  const token = getCookie('login-token')
+  if (token) {
+    return `${API_BASE_URL}/employees/${karyawan.value.id}/contracts/${contractId}/document?auth_token=${token}`
+  }
 }
 
 watch(
