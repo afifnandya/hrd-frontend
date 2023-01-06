@@ -1,6 +1,5 @@
 import useAxios from '@/composable/useAxios'
 import { DEFAULT_ERROR_MESSAGE } from '@/constants'
-import axios from 'axios'
 
 export interface CreateDivisiResponse {
   status: number

@@ -19,7 +19,7 @@ function setDefaultHeaders() {
 const instance = axios.create({
   // baseURL: 'http://192.168.1.13:8000/api'
   baseURL: 'https://projek.alwaysdata.net/api'
-  // headers: omitBy(setDefaultHeaders(), isNil)
+  // headers: omitBy(setDefaultHeaders(), isNil),
   // timeout: 1000,
 })
 
