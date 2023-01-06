@@ -44,6 +44,9 @@ const menuClick = ref(false)
 const menu = reactive([
   {
     label: 'menuAplikasi',
+    items: []
+  },
+  {
     items: [
       {
         label: 'dashboard',
@@ -66,49 +69,46 @@ const menu = reactive([
   {
     items: [
       {
-        label: t('masterData'),
+        label: 'masterData',
         icon: 'pi pi-fw pi-database',
         items: [
-
-        {
-          label: 'jabatan',
-          icon: 'pi pi-fw pi-box',
-          to: '/master/jabatan'
-        },
-        {
-          label: 'divisi',
-          icon: 'pi pi-fw pi-box',
-          to: '/master/divisi'
-        },
-        {
-          label: 'departemen',
-          icon: 'pi pi-fw pi-box',
-          to: '/master/departmen'
-        },
-        {
-          label: 'area',
-          icon: 'pi pi-fw pi-box',
-          to: '/master/area'
-        },
-        {
-          label: 'perusahaan',
-          icon: 'pi pi-fw pi-box',
-          to: '/master/perusahaan'
-        }
-        // {
-        //   label: 'Kategori Pekerjaan',
-        //   icon: 'pi pi-fw pi-box',
-        //   to: '/master/jobcategory'
-        // }
-      ]
+          {
+            label: 'jabatan',
+            icon: 'pi pi-fw pi-box',
+            to: '/master/jabatan'
+          },
+          {
+            label: 'divisi',
+            icon: 'pi pi-fw pi-box',
+            to: '/master/divisi'
+          },
+          {
+            label: 'departemen',
+            icon: 'pi pi-fw pi-box',
+            to: '/master/departmen'
+          },
+          {
+            label: 'area',
+            icon: 'pi pi-fw pi-box',
+            to: '/master/area'
+          },
+          {
+            label: 'perusahaan',
+            icon: 'pi pi-fw pi-box',
+            to: '/master/perusahaan'
+          }
+          // {
+          //   label: 'Kategori Pekerjaan',
+          //   icon: 'pi pi-fw pi-box',
+          //   to: '/master/jobcategory'
+          // }
+        ]
       }
-      
-      
     ]
   },
   {
     // label: 'Data Peserta',
-    icon: 'pi pi-fw pi-sitemap',
+    // icon: 'pi pi-fw pi-sitemap',
     items: [
       {
         label: 'karyawan',
