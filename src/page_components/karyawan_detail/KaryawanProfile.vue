@@ -430,7 +430,8 @@
             <Dropdown
               v-if="enableEdit"
               v-model="editKaryawan.statusAktif"
-              :options="STATUS_AKTIF_KARYAWAN"
+              :options="statusKaryawan"
+              option-label="label"
               class="w-full"
             />
             <InputText
@@ -580,7 +581,9 @@ import {
   PENDIDIKAN,
   GENDER,
   TIPE_KARYAWAN,
-  STATUS_AKTIF_KARYAWAN
+  STATUS_AKTIF_KARYAWAN,
+  KARYAWAN_AKTIF,
+  KARYAWAN_NON_AKTIF
 } from '@/constants'
 import Calendar from 'primevue/calendar'
 import IcBaselineCameraAlt from '~icons/ic/baseline-camera-alt'
@@ -603,6 +606,10 @@ const isTambahKaryawan = computed(() => {
 })
 
 const enableEdit = ref(false)
+const statusKaryawan = [
+  { label: t('aktif'), value: KARYAWAN_AKTIF },
+  { label: t('tidakAktif'), value: KARYAWAN_NON_AKTIF }
+]
 
 const nickName = computed(() => {
   if (karyawan.value) {

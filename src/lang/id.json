@@ -112,7 +112,8 @@
   "masterPerusahaan": "Master Perusahaan",
   "masterKategori": "Master Kategori",
   "masterArea": "Master Area",
-
+  "aktif": "Aktif",
+  "tidakAktif": "Tidak Aktif",
 
   //  belum diterjemahkan ke bahasa china
   "home": "Beranda",
@@ -122,39 +123,31 @@
   "tambahJabatan": "Tambah Jabatan",
   "namaJabatan": "Nama Jabatan",
   "idJabatan": "Id Jabatan",
-  "ubahJabatan" : "Ubah Jabatan",
-
+  "ubahJabatan": "Ubah Jabatan",
 
   "tambahDivisi": "Tambah Divisi",
   "namaDivisi": "Nama Divisi",
   "idDivisi": "Id Divisi",
-  "ubahDivisi" : "Ubah Divisi",
+  "ubahDivisi": "Ubah Divisi",
 
   "tambahDepartement": "Tambah Departemen",
   "namaDepartement": "Nama Departemen",
   "idDepartement": "Id Departemen",
-  "ubahDepartement" : "Ubah Departemen",
+  "ubahDepartement": "Ubah Departemen",
 
   "tambahArea": "Tambah Area",
   "codeArea": "Kode Area",
-  "ubahArea" : "Ubah Area",
+  "ubahArea": "Ubah Area",
 
   "tambahPerusahaan": "Tambah Perusahaan",
   "namaPerusahaan": "Nama Perusahaan",
   "kodePerusahaan": "Kode Perusahaan",
-  "ubahPerusahaan" : "Ubah Perusahaan",
-
-
+  "ubahPerusahaan": "Ubah Perusahaan",
 
   "apakahandayakiningimenghapus": "Apakah Anda Yakin Ingin Menghapus",
-  "konfirmasi" : "konfirmasi",
-  "no" : "No",
-  "aksi" : "Aksi",
-  "ekspor" : "Ekspor",
-  "menuAplikasi" : "Menu Aplikasi"
-
-
-
-
-
+  "konfirmasi": "konfirmasi",
+  "no": "No",
+  "aksi": "Aksi",
+  "ekspor": "Ekspor",
+  "menuAplikasi": "Menu Aplikasi"
 }
