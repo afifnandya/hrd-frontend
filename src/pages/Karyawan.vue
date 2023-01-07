@@ -151,6 +151,11 @@
               :placeholder="$t('pilihStatus')"
               @change="filterCallback()"
             >
+              <template #option="slotProps">
+                <div class="">
+                  <span>{{ t(slotProps.option.label) }}</span>
+                </div>
+              </template>
             </Dropdown>
           </template>
           <template #body="{ data }">
@@ -290,8 +295,8 @@ const tableFilters = ref({
 // const karyawanStatus = ['HL','PKWT','PKWTT']
 const karyawanStatus = ['Karyawan', 'Karyawan Harian Lepas']
 const statusKaryawan = [
-  { label: t('aktif'), value: KARYAWAN_AKTIF },
-  { label: t('tidakAktif'), value: KARYAWAN_NON_AKTIF }
+  { label: 'aktif', value: KARYAWAN_AKTIF },
+  { label: 'tidakAktif', value: KARYAWAN_NON_AKTIF }
 ]
 const karyawanJenisKelamin = ['Laki-laki', 'Perempuan']
 const selectedKaryawan = ref<Karyawan>()

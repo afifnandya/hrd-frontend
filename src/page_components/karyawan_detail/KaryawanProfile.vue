@@ -433,7 +433,13 @@
               :options="statusKaryawan"
               option-label="label"
               class="w-full"
-            />
+            >
+              <template #option="slotProps">
+                <div class="">
+                  <span>{{ t(slotProps.option.label) }}</span>
+                </div>
+              </template>
+            </Dropdown>
             <InputText
               v-else
               type="text"
@@ -607,8 +613,8 @@ const isTambahKaryawan = computed(() => {
 
 const enableEdit = ref(false)
 const statusKaryawan = [
-  { label: t('aktif'), value: KARYAWAN_AKTIF },
-  { label: t('tidakAktif'), value: KARYAWAN_NON_AKTIF }
+  { label: 'aktif', value: KARYAWAN_AKTIF },
+  { label: 'tidakAktif', value: KARYAWAN_NON_AKTIF }
 ]
 
 const nickName = computed(() => {
