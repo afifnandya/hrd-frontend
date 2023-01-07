@@ -112,7 +112,8 @@
   "masterPerusahaan": "Master Company",
   "masterKategori": "Master Category",
   "masterArea": "Master Area",
-
+  "aktif": "Active",
+  "tidakAktif": "Non Active",
 
   "home": "Home",
   "masterData": "Master Data",
@@ -121,40 +122,31 @@
   "tambahJabatan": "Add Position",
   "namaJabatan": "Name Position",
   "idJabatan": "Id Position",
-  "ubahJabatan" : "Edit Position",
-
+  "ubahJabatan": "Edit Position",
 
   "tambahDivisi": "Add Division",
   "namaDivisi": "Name Division",
   "idDivisi": "Id Division",
-  "ubahDivisi" : "Edit Division",
+  "ubahDivisi": "Edit Division",
 
   "tambahDepartement": "Add Departement",
   "namaDepartement": "Name Departement",
   "idDepartement": "Id Departement",
-  "ubahDepartement" : "Edit Departement",
+  "ubahDepartement": "Edit Departement",
 
   "tambahArea": "Add Area",
   "codeArea": "Code Area",
-  "ubahArea" : "Edit Area",
+  "ubahArea": "Edit Area",
 
   "tambahPerusahaan": "Add company",
   "namaPerusahaan": "Nam company",
   "kodePerusahaan": "Code company",
-  "ubahPerusahaan" : "Edit company",
-
-
+  "ubahPerusahaan": "Edit company",
 
   "apakahandayakiningimenghapus": "Are You Sure You Want To Delete",
-  "konfirmasi" : "Confirm",
-  "no" : "No",
-  "aksi" : "Action",
-  "ekspor" : "Export",
-  "menuAplikasi" : "Menu Application"
-
-
-
-
-
-
+  "konfirmasi": "Confirm",
+  "no": "No",
+  "aksi": "Action",
+  "ekspor": "Export",
+  "menuAplikasi": "Menu Application"
 }

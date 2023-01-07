@@ -113,5 +113,7 @@
   "masterDepartemen": "部门代码 ",
   "masterKategori": "类型代码",
   "masterArea": "地区代码",
+  "aktif": "Active",
+  "tidakAktif": "Non Active",
   "menuAplikasi": "Menu Application"
 }
