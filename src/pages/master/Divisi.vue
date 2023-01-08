@@ -1,5 +1,12 @@
 <template>
   <div class="p-10 bg-white">
+    <div class="flex items-center justify-between mb-6">
+      <h5 class="text-xl font-bold">{{ $t('masterDivisi') }}</h5>
+
+      <div>
+        <button class="button button-primary" @click="showAddModal">{{ $t('tambahDivisi') }}</button>
+      </div>
+    </div>
     <DataTable
       ref="dt"
       :value="divisis"
@@ -14,17 +21,44 @@
       scroll-height="400px"
       scrollable
     >
-      <template #header>
-        <div
-          class="flex flex-column md:flex-row md:justify-content-between md:items-center"
-        >
-          <h5 class="m-0">{{ $t('masterDivisi') }}</h5>
+
+        <Dialog
+        v-model:visible="showModal.add"
+        :style="{ width: '450px' }"
+        :header="$t('tambahDivisi')"
+        :modal="true"
+        class="p-fluid"
+      >
+        <div class="field">
+          <label for="DivisiNama">{{ $t('namaDivisi') }}</label>
+
+          <InputText
+            id="DivisiNama"
+            v-model="createDivisi.name"
+            type="text"
+          />
         </div>
-      </template>
+
+        <template #footer>
+          <Button
+            :label="$t('cancel')"
+            icon="pi pi-times"
+            class="p-button-text"
+            @click="showModal.add = false"
+          />
+          <Button
+            :label="$t('save')"
+            icon="pi pi-check"
+            class="p-button-text"
+            :disabled="!createDivisi.name"
+            @click="tambahDivisi"
+          />
+        </template>
+      </Dialog>
 
       <Column
         field="no"
-        header="Id"
+        :header="$t('idDivisi')"
         :sortable="true"
         header-style="width:14%; min-width:10rem;"
       >
@@ -32,7 +66,7 @@
           {{ data.id }}
         </template>
       </Column>
-      <Column field="Nama" header="Nama" :sortable="true">
+      <Column field="Nama" :header="$t('namaDivisi')" :sortable="true">
         <template #body="{ data }">
           {{ data.nama }}
         </template>
@@ -56,25 +90,25 @@
     <Dialog
       v-model:visible="showModal.edit"
       :style="{ width: '450px' }"
-      header="Edit Divisi"
+      :header="$t('ubahDivisi')"
       :modal="true"
       class="p-fluid"
     >
       <div class="field">
-        <label for="divisiNama">Nama</label>
+        <label for="divisiNama">{{ $t('namaDivisi') }}</label>
 
         <InputText id="divisiNama" v-model="selectedDivisi.nama" type="text" />
       </div>
 
       <template #footer>
         <Button
-          label="Cancel"
+          :label="$t('cancel')"
           icon="pi pi-times"
           class="p-button-text"
           @click="showModal.edit = false"
         />
         <Button
-          label="Save"
+          :label="$t('save')"
           icon="pi pi-check"
           class="p-button-text"
           @click="editData"
@@ -85,13 +119,13 @@
     <Dialog
       v-model:visible="showModal.delete"
       :style="{ width: '450px' }"
-      header="Confirm"
+      :header="$t('konfirmasi')"
       :modal="true"
     >
       <div class="flex items-center justify-center">
         <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
         <span
-          >Are you sure you want to delete <b>{{ selectedDivisi.nama }}</b
+          >{{ $t('apakahandayakiningimenghapus') }} <b>{{ selectedDivisi.nama }}</b
           >?</span
         >
       </div>
@@ -124,6 +158,7 @@ import useToast from '@/composable/useToast'
 
 import { getDivisi } from '@/api/master/getDivisi'
 import { editDivisi } from '@/api/master/editDivisi'
+import { CreateDivisi } from '@/api/master/createDivisi'
 import { deleteDivisi } from '@/api/master/deleteDivisi'
 import { Divisi } from '@/typing/dataMaster'
 
@@ -136,14 +171,38 @@ const selectedDivisi: Divisi = reactive({
   nama: ''
 })
 
+const createDivisi = reactive({
+  name: ''
+})
+
 const showModal = reactive({
   delete: false,
-  edit: false
+  edit: false,
+  add: false
 })
 
 onMounted(() => {
   getData()
 })
+
+function showAddModal() {
+  showModal.add = true
+}
+
+async function tambahDivisi() {
+  const { success, message } = await CreateDivisi({
+    name: createDivisi.name
+  })
+  if (message) {
+    if (success) {
+      toast.success(message)
+    } else {
+      toast.error(message)
+    }
+  }
+  showModal.add = false
+  getData()
+}
 
 async function getData() {
   loading.value = true

@@ -77,6 +77,7 @@ export default defineComponent({
       selectedLang,
       availableLang,
       lang
+      
     }
   },
   data() {

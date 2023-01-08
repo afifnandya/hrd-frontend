@@ -7,7 +7,7 @@ export interface DeleteAreaResponse {
 }
 
 export interface DeleteAreaPayload {
-  code: string
+  code: string | number
 }
 
 export async function deleteArea(payload: DeleteAreaPayload) {

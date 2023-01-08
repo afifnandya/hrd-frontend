@@ -6,8 +6,8 @@
         <div>
           <a
             href="https://projek.alwaysdata.net/api/employees/export"
-            class="button mr-2 bg-orange-400 text-white"
-            >Export</a
+            class="mr-2 text-white bg-orange-400 button"
+            >{{ $t('ekspor') }}</a
           >
           <router-link
             :to="{ name: ROUTE_KARYAWAN_TAMBAH }"
@@ -84,7 +84,7 @@
         </Column>
         <Column
           field="nik"
-          header="NIK"
+          :header="$t('noBantex')"
           class="table-column-medium"
           :show-filter-menu="false"
         >
@@ -100,7 +100,7 @@
         </Column>
         <Column
           field="ktp"
-          header="KTP"
+          :header="$t('noKtp')"
           class="table-column-medium"
           :show-filter-menu="false"
         >
@@ -126,7 +126,7 @@
               v-model="filterModel.value"
               class="w-full"
               :options="karyawanStatus"
-              placeholder="Status"
+              :placeholder="$t('pilihStatus')"
               @change="filterCallback()"
             >
             </Dropdown>
@@ -146,10 +146,16 @@
             <Dropdown
               v-model="filterModel.value"
               class="w-full"
-              :options="karyawanStatusAktif"
-              placeholder="Status Aktif"
+              :options="statusKaryawan"
+              option-label="label"
+              :placeholder="$t('pilihStatus')"
               @change="filterCallback()"
             >
+              <template #option="slotProps">
+                <div class="">
+                  <span>{{ t(slotProps.option.label) }}</span>
+                </div>
+              </template>
             </Dropdown>
           </template>
           <template #body="{ data }">
@@ -190,11 +196,11 @@
           :header="$t('umur')"
           class="table-column-small"
         ></Column>
-        <Column header="Action" class="table-column-medium">
+        <Column :header="$t('aksi')" class="table-column-medium">
           <template #body="{ data }">
             <ActionButton>
               <template #trigger>
-                <button class="button button-primary">Action</button>
+                <button class="button button-primary">{{ $t('aksi') }}</button>
               </template>
               <template #content>
                 <div class="">
@@ -258,15 +264,17 @@ import useToast from '@/composable/useToast'
 import ConfirmDialog from 'primevue/confirmdialog'
 import { useConfirm } from 'primevue/useconfirm'
 import { useAppStore } from '@/stores/app'
-import { useI18n } from 'vue-i18n'
 import ActionButton from '@/components/ActionButton.vue'
+import { useI18n } from 'vue-i18n'
 
 type PageChangeEvent = {
   page: number
   pageCount: number
   rows: number
 }
-
+const { t } = useI18n({
+  useScope: 'global'
+})
 const appStore = useAppStore()
 const karyawans: Ref<KaryawanInstance[]> = ref([])
 const isLoading = ref(false)
@@ -283,14 +291,16 @@ const tableFilters = ref({
   statusAktif: { value: '', matchMode: 'contains' },
   jenisKelamin: { value: '', matchMode: 'contains' }
 })
+
+// const karyawanStatus = ['HL','PKWT','PKWTT']
 const karyawanStatus = ['Karyawan', 'Karyawan Harian Lepas']
-const karyawanStatusAktif = ['Akitif', 'Tidak aktif']
+const statusKaryawan = [
+  { label: 'aktif', value: KARYAWAN_AKTIF },
+  { label: 'tidakAktif', value: KARYAWAN_NON_AKTIF }
+]
 const karyawanJenisKelamin = ['Laki-laki', 'Perempuan']
 const selectedKaryawan = ref<Karyawan>()
 const confirm = useConfirm()
-const { t } = useI18n({
-  useScope: 'global'
-})
 const toast = useToast()
 
 async function getKaryawanList() {

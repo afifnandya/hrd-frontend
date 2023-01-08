@@ -2,7 +2,7 @@
   <div class="w-full">
     <div class="card">
       <div class="flex items-center justify-between mb-6">
-        <h5 class="mb-0 text-xl font-bold">{{ $t('kontrak') }}</h5>
+        <h5 class="mb-0 text-xl font-bold">{{ $t('reminderKontrak') }}</h5>
       </div>
 
       <div>

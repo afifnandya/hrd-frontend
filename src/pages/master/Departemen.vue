@@ -1,5 +1,15 @@
 <template>
   <div class="p-10 bg-white">
+    <div class="flex items-center justify-between mb-6">
+      <h5 class="text-xl font-bold">{{ $t('masterDepartemen') }}</h5>
+
+      <div>
+        <button class="button button-primary" @click="showAddModal">
+          {{ $t('tambahdepartment') }}
+        </button>
+      </div>
+    </div>
+
     <DataTable
       ref="dt"
       :value="departments"
@@ -9,22 +19,14 @@
       :rows="10"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[5, 10, 25]"
-      current-page-report-template="Showing {first} to {last} of {totalRecords} Divisi"
+      current-page-report-template="Showing {first} to {last} of {totalRecords} Departemen"
       responsive-layout="scroll"
       scroll-height="400px"
       scrollable
     >
-      <template #header>
-        <div
-          class="flex flex-column md:flex-row md:justify-content-between md:items-center"
-        >
-          <h5 class="m-0">{{ $t('masterDepartemen') }}</h5>
-        </div>
-      </template>
-
       <Column
         field="no"
-        header="Id"
+        :header="$t('idDepartement')"
         :sortable="true"
         header-style="width:14%; min-width:10rem;"
       >
@@ -32,7 +34,7 @@
           {{ data.id }}
         </template>
       </Column>
-      <Column field="Nama" header="Nama" :sortable="true">
+      <Column field="Nama" :header="$t('namaDepartement')" :sortable="true">
         <template #body="{ data }">
           {{ data.nama }}
         </template>
@@ -44,6 +46,7 @@
             class="mr-2 p-button-rounded p-button-success"
             @click="showEditModal(slotProps.data)"
           />
+
           <Button
             icon="pi pi-trash"
             class="mt-2 p-button-rounded p-button-warning"
@@ -54,17 +57,52 @@
     </DataTable>
 
     <Dialog
-      v-model:visible="showModal.edit"
+      v-model:visible="showModal.add"
       :style="{ width: '450px' }"
-      header="Edit Divisi"
+      :header="$t('tambahDepartement')"
       :modal="true"
       class="p-fluid"
     >
       <div class="field">
-        <label for="divisiNama">Nama</label>
+        <label for="DepartmentName">{{ $t('namaDepartement') }}</label>
 
         <InputText
-          id="divisiNama"
+          id="DepartmentName"
+          v-model="createDepartment.name"
+          type="text"
+        />
+      </div>
+
+      <template #footer>
+        <Button
+          :label="$t('cancel')"
+          icon="pi pi-times"
+          class="p-button-text"
+          @click="showModal.add = false"
+        />
+
+        <Button
+          :label="$t('save')"
+          icon="pi pi-check"
+          class="p-button-text"
+          :disabled="!createDepartment.name"
+          @click="tambahDepartment"
+        />
+      </template>
+    </Dialog>
+
+    <Dialog
+      v-model:visible="showModal.edit"
+      :style="{ width: '450px' }"
+      :header="$t('ubahDepartement')"
+      :modal="true"
+      class="p-fluid"
+    >
+      <div class="field">
+        <label for="DepartmentNama">{{ $t('namaDepartement') }}</label>
+
+        <InputText
+          id="DepartmentNama"
           v-model="selectedDepartmen.nama"
           type="text"
         />
@@ -72,13 +110,14 @@
 
       <template #footer>
         <Button
-          label="Cancel"
+          :label="$t('cancel')"
           icon="pi pi-times"
           class="p-button-text"
           @click="showModal.edit = false"
         />
+
         <Button
-          label="Save"
+          :label="$t('save')"
           icon="pi pi-check"
           class="p-button-text"
           @click="editData()"
@@ -89,13 +128,14 @@
     <Dialog
       v-model:visible="showModal.delete"
       :style="{ width: '450px' }"
-      header="Confirm"
+      :header="$t('konfirmasi')"
       :modal="true"
     >
       <div class="flex items-center justify-center">
         <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
         <span
-          >Are you sure you want to delete <b>{{ selectedDepartmen.nama }}</b
+          >{{ $t('apakahandayakiningimenghapus') }}
+          <b>{{ selectedDepartmen.nama }}</b
           >?</span
         >
       </div>
@@ -106,6 +146,7 @@
           class="p-button-text"
           @click="showModal.delete = false"
         />
+
         <Button
           label="Yes"
           icon="pi pi-check"
@@ -126,6 +167,7 @@ import Button from 'primevue/button'
 import { onMounted, reactive, ref } from 'vue'
 import useToast from '@/composable/useToast'
 import { getDepartment } from '@/api/master/getDepartmen'
+import { createDepartment as htppCreateDepartment } from '@/api/master/createDepartment'
 import { editDepartment } from '@/api/master/editDepartment'
 import { deleteDepartment } from '@/api/master/deleteDepartment'
 import { Divisi as Department } from '@/typing/dataMaster'
@@ -137,15 +179,38 @@ const selectedDepartmen: Department = reactive({
   id: 0,
   nama: ''
 })
+const createDepartment = reactive({
+  name: ''
+})
 
 const showModal = reactive({
   delete: false,
-  edit: false
+  edit: false,
+  add: false
 })
 
 onMounted(async () => {
   getData()
 })
+
+function showAddModal() {
+  showModal.add = true
+}
+
+async function tambahDepartment() {
+  const { success, message } = await htppCreateDepartment({
+    name: createDepartment.name
+  })
+  if (message) {
+    if (success) {
+      toast.success(message)
+    } else {
+      toast.error(message)
+    }
+  }
+  showModal.add = false
+  getData()
+}
 
 async function getData() {
   loading.value = true

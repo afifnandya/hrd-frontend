@@ -56,7 +56,7 @@
           class="button button-primary"
           @click="onSave"
         >
-          {{ t('simpan') }}
+          {{ t('save') }}
         </button>
       </div>
     </div>
@@ -430,9 +430,16 @@
             <Dropdown
               v-if="enableEdit"
               v-model="editKaryawan.statusAktif"
-              :options="STATUS_AKTIF_KARYAWAN"
+              :options="statusKaryawan"
+              option-label="label"
               class="w-full"
-            />
+            >
+              <template #option="slotProps">
+                <div class="">
+                  <span>{{ t(slotProps.option.label) }}</span>
+                </div>
+              </template>
+            </Dropdown>
             <InputText
               v-else
               type="text"
@@ -580,7 +587,9 @@ import {
   PENDIDIKAN,
   GENDER,
   TIPE_KARYAWAN,
-  STATUS_AKTIF_KARYAWAN
+  STATUS_AKTIF_KARYAWAN,
+  KARYAWAN_AKTIF,
+  KARYAWAN_NON_AKTIF
 } from '@/constants'
 import Calendar from 'primevue/calendar'
 import IcBaselineCameraAlt from '~icons/ic/baseline-camera-alt'
@@ -603,6 +612,10 @@ const isTambahKaryawan = computed(() => {
 })
 
 const enableEdit = ref(false)
+const statusKaryawan = [
+  { label: 'aktif', value: KARYAWAN_AKTIF },
+  { label: 'tidakAktif', value: KARYAWAN_NON_AKTIF }
+]
 
 const nickName = computed(() => {
   if (karyawan.value) {

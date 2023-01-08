@@ -2,7 +2,7 @@
   <div class="w-full">
     <div class="card">
       <div class="flex items-center justify-between">
-        <h5 class="mb-6 text-xl font-bold">Pelamar</h5>
+        <h5 class="mb-6 text-xl font-bold">{{ $t('dataPelamar') }}</h5>
         <div>
           <button
             class="button button-primary"

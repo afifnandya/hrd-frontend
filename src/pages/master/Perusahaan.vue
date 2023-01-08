@@ -1,7 +1,7 @@
 <template>
   <div class="p-10 bg-white">
     <div class="flex items-center justify-between mb-6">
-      <h5 class="text-xl font-bold">Master Perusahaan</h5>
+      <h5 class="text-xl font-bold">{{ $t('masterPerusahaan') }}</h5>
       <div>
         <button class="button button-primary" @click="showAddModal">
           Tambah Perusahaan
@@ -32,12 +32,12 @@
           {{ data.id }}
         </template>
       </Column>
-      <Column field="code" header="Code" :sortable="true">
+      <Column field="code" :header="$t('kodePerusahaan')" :sortable="true">
         <template #body="{ data }">
           {{ data.code }}
         </template>
       </Column>
-      <Column field="nama" header="Nama" :sortable="true">
+      <Column field="nama" :header="$t('namaPerusahaan')" :sortable="true">
         <template #body="{ data }">
           {{ data.name }}
         </template>
@@ -61,12 +61,12 @@
     <Dialog
       v-model:visible="showModal.edit"
       :style="{ width: '450px' }"
-      header="Edit Perusahaan"
+      :header="$t('ubahPerusahaan')"
       :modal="true"
       class="p-fluid"
     >
       <div class="field">
-        <label for="perusahaanNama">Nama</label>
+        <label for="perusahaanNama">{{ $t('namaPerusahaan') }}</label>
 
         <InputText
           id="perusahaanNama"
@@ -95,21 +95,12 @@
     <Dialog
       v-model:visible="showModal.add"
       :style="{ width: '450px' }"
-      header="Add Perusahaan"
+      :header="$t('tambahPerusahaan')"
       :modal="true"
       class="p-fluid"
     >
       <div class="field">
-        <label for="perusahaanCode">Code</label>
-
-        <InputText
-          id="perusahaanCode"
-          v-model="createPerusahaan.code"
-          type="text"
-        />
-      </div>
-      <div class="field">
-        <label for="perusahaanNama">Nama</label>
+        <label for="perusahaanNama">{{ $t('namaPerusahaan') }}</label>
 
         <InputText
           id="perusahaanNama"
@@ -223,7 +214,6 @@ async function getData() {
 
 function showEditModal(data: Peruahaan) {
   selectedPerusahaan.id = data.id
-  selectedPerusahaan.code = data.code
   selectedPerusahaan.name = data.name
   showModal.edit = true
 }
@@ -234,8 +224,8 @@ function showAddModal() {
 
 async function tambahPerusahaan() {
   const { success, message } = await createCompany({
-    name: createPerusahaan.name,
-    code: createPerusahaan.code
+    code: createPerusahaan.code,
+    name: createPerusahaan.name
   })
   if (message) {
     if (success) {

@@ -8,7 +8,6 @@ const messages = {
   ID: id,
   CH: ch
 }
-
 const i18n = createI18n({
   legacy: false,
   locale: 'ID',

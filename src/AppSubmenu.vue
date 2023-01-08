@@ -14,7 +14,7 @@
       >
         <template v-if="root">
           <div class="layout-menuitem-root-text" :aria-label="item.label">
-            {{ item.label }}
+            {{ item.label ? t(item.label) : '' }}
           </div>
           <appsubmenu
             :items="visible(item) && item.items"
@@ -54,7 +54,7 @@
             @click="onMenuItemClick($event, item, i)"
           >
             <i :class="item.icon"></i>
-            <span>{{ item.label }}</span>
+            <span>{{ t(item.label) }}</span>
             <i
               v-if="item.items"
               class="pi pi-fw pi-angle-down menuitem-toggle-icon"
