@@ -24,13 +24,57 @@
           <Column field="positionName" header="Posisi"></Column>
           <Column header="Aksi">
             <template #body="{ data }">
-              <a
+              <!-- <a
                 class="button button-primary"
                 target="_blank"
                 :href="documentContractUrl(data.id)"
               >
                 Detail
-              </a>
+              </a> -->
+
+              <ActionButton>
+                <template #trigger>
+                  <button class="button button-primary">
+                    {{ $t('action') }}
+                  </button>
+                </template>
+                <template #content>
+                  <div class="">
+                    <!-- <router-link
+                      class="block button !text-sm whitespace-nowrap text-black"
+                      to="/"
+                      >{{ $t('detail') }}</router-link
+                    > -->
+                    <a
+                      class="block button !text-sm whitespace-nowrap text-black"
+                      target="_blank"
+                      :href="documentContractUrl(data.id)"
+                    >
+                      {{ $t('detail') }}
+                    </a>
+                    <router-link
+                      class="block button !text-sm whitespace-nowrap text-black"
+                      to="/"
+                      >{{ $t('edit') }}</router-link
+                    >
+                    <router-link
+                      class="block button !text-sm whitespace-nowrap text-black"
+                      to="/"
+                      >{{ $t('delete') }}</router-link
+                    >
+                    <router-link
+                      class="block button !text-sm whitespace-nowrap text-black"
+                      to="/"
+                      >{{ $t('print') }}</router-link
+                    >
+                    <router-link
+                      class="block button !text-sm whitespace-nowrap text-black"
+                      to="/"
+                      >{{ $t('done') }}</router-link
+                    >
+                  </div>
+                </template>
+              </ActionButton>
             </template>
           </Column>
         </DataTable>
@@ -49,6 +93,7 @@ import { storeToRefs } from 'pinia'
 import { API_BASE_URL } from '@/constants'
 import useAxios from '@/composable/useAxios'
 import { getCookie } from '@/helper/cookie'
+import ActionButton from '@/components/ActionButton.vue'
 
 const kontraks = ref<KontrakKaryawan[]>([])
 const isLoading = ref(false)
