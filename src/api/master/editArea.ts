@@ -1,6 +1,5 @@
-import useAxios from '@/composable/useAxios'
+import useAxios, { isAxiosError } from '@/composable/useAxios'
 import { DEFAULT_ERROR_MESSAGE } from '@/constants'
-import axios from 'axios'
 
 export interface EditAreaResponse {
   status: number
@@ -45,7 +44,7 @@ export async function editArea(payload: EditAreaPayload) {
       data: data
     }
   } catch (error: any) {
-    if (axios.isAxiosError(error)) {
+    if (isAxiosError(error)) {
       if (error.response) {
         return {
           success,

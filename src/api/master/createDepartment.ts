@@ -1,4 +1,4 @@
-import useAxios from '@/composable/useAxios'
+import useAxios, { isAxiosError } from '@/composable/useAxios'
 import { DEFAULT_ERROR_MESSAGE } from '@/constants'
 
 export interface createDepartmentResponse {
@@ -28,8 +28,7 @@ export async function createDepartment(payload: createDepartmentPayload) {
       }
     })
     const responseData = response.data as createDepartmentResponse
-    // const response = data.value as GetJabatan
-    if (responseData.status === 200) {
+    if (responseData.status === 201 || responseData.status === 200) {
       success = true
       data = responseData.data
     }
@@ -41,7 +40,7 @@ export async function createDepartment(payload: createDepartmentPayload) {
       data: data
     }
   } catch (error: any) {
-    if (axios.isAxiosError(error)) {
+    if (isAxiosError(error)) {
       if (error.response) {
         return {
           success,

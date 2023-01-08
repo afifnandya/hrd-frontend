@@ -1,4 +1,4 @@
-import useAxios from '@/composable/useAxios'
+import useAxios, { isAxiosError } from '@/composable/useAxios'
 import { DEFAULT_ERROR_MESSAGE } from '@/constants'
 
 export interface CreateAreaResponse {
@@ -31,7 +31,7 @@ export async function CreateArea(payload: CreateAreaPayload) {
     })
     const responseData = response.data as CreateAreaResponse
     // const response = data.value as GetArea
-    if (responseData.status === 200) {
+    if (responseData.status === 201 || responseData.status === 200) {
       success = true
       data = responseData.data
     }
@@ -43,7 +43,7 @@ export async function CreateArea(payload: CreateAreaPayload) {
       data: data
     }
   } catch (error: any) {
-    if (axios.isAxiosError(error)) {
+    if (isAxiosError(error)) {
       if (error.response) {
         return {
           success,
