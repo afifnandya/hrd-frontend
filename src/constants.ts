@@ -91,3 +91,4 @@ export const KARYAWAN_AKTIF = 'Aktif'
 export const STATUS_AKTIF_KARYAWAN = [KARYAWAN_AKTIF, KARYAWAN_NON_AKTIF]
 export const BUTTON_LOADING = 'Loading'
 export const BUTTON_SAVE = 'Simpan'
+export const API_BASE_URL = 'https://projek.alwaysdata.net/api'

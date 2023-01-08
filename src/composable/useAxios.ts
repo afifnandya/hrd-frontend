@@ -1,7 +1,8 @@
 import NProgress from 'nprogress'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { getCookie } from '@/helper/cookie'
 import { isNil, omitBy } from 'lodash-es'
+import { API_BASE_URL } from '@/constants'
 
 function setDefaultHeaders() {
   const token = getCookie('login-token')
@@ -18,8 +19,8 @@ function setDefaultHeaders() {
 
 const instance = axios.create({
   // baseURL: 'http://192.168.1.13:8000/api'
-  baseURL: 'https://projek.alwaysdata.net/api'
-  // headers: omitBy(setDefaultHeaders(), isNil),
+  baseURL: API_BASE_URL
+  // headers: omitBy(setDefaultHeaders(), isNil)
   // timeout: 1000,
 })
 
@@ -41,8 +42,12 @@ instance.interceptors.response.use(
     // Any status code that lie within the range of 2xx cause this function to trigger
     return response
   },
-  function (error) {
+  function (error: AxiosError) {
     NProgress.done()
+    if (error.response?.status == 401) {
+      window.location.href = '/login'
+      return
+    }
     return Promise.reject(error)
   }
 )
