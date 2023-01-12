@@ -18,8 +18,13 @@ function setDefaultHeaders() {
 
 const instance = axios.create({
   // baseURL: 'http://192.168.1.13:8000/api'
+<<<<<<<<< Temporary merge branch 1
+  baseURL: API_BASE_URL
+  // headers: omitBy(setDefaultHeaders(), isNil)
+=========
   baseURL: 'https://projek.alwaysdata.net/api'
   // headers: omitBy(setDefaultHeaders(), isNil),
+>>>>>>>>> Temporary merge branch 2
   // timeout: 1000,
 })
 
