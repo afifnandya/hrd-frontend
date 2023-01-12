@@ -19,7 +19,7 @@
           {{ data.id }}
         </template>
       </Column>
-      <Column field="Nama" :header="$t('nama')" :sortable="true">
+      <Column field="Nama" :header="$t('namaIstri')" :sortable="true">
         <template #body="{ data }">
           {{ data.name }}
         </template>
@@ -37,7 +37,7 @@
           {{ data.birthPlace }}
         </template>
       </Column>
-      <Column header="Action" header-style="min-width:10rem;">
+      <Column :header="$t('aksi')" header-style="min-width:10rem;">
         <template #body="slotProps">
           <Button
             icon="pi pi-pencil"

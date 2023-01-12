@@ -11,6 +11,8 @@ import { onMounted, reactive, ref } from 'vue'
 import { usePieChart } from '@/composable/usePieChart'
 import { EChartsType } from 'echarts/core'
 import useAxios, { isAxiosError } from '@/composable/useAxios'
+import { useI18n } from 'vue-i18n'
+
 
 const chartEl = ref<HTMLElement>()
 const { init, setData } = usePieChart()
@@ -32,11 +34,15 @@ async function getData() {
   }
 }
 
+const { t } = useI18n({
+  useScope: 'global'
+})
+
 onMounted(async () => {
   if (chartEl.value) {
     chartInstane.value = init({
       el: chartEl.value,
-      title: 'Status Kontrak'
+      title: t('statusKontrak')
     })
     chartInstane.value.showLoading()
     await getData()

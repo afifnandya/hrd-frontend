@@ -33,19 +33,19 @@
             {{ data.id }}
           </template>
         </Column>
-        <Column class="table-column-small" field="code" header="Kode WO" frozen>
+        <Column class="table-column-small" field="code" :header="$t('kodeWo')" frozen>
           <template #body="{ data }: { data: WorkOrder }">
             {{ data.code }}
           </template>
         </Column>
-        <Column field="status" header="Status" class="table-column-medium">
+        <Column field="status" :header="$t('status')" class="table-column-medium">
           <template #body="{ data }: { data: WorkOrder }">
             {{ data.status }}
           </template>
         </Column>
         <Column
           field="requestDate"
-          header="Tanggal W.O"
+          :header="$t('tanggalWo')"
           class="table-column-medium"
         >
           <template #body="{ data }: { data: WorkOrder }">
@@ -54,26 +54,26 @@
         </Column>
         <Column
           field="department"
-          header="Departemen"
+          :header="$t('departemen')"
           class="table-column-medium"
         >
           <template #body="{ data }: { data: WorkOrder }">
             {{ data.department.name }}
           </template>
         </Column>
-        <Column field="division" header="Divisi" class="table-column-medium">
+        <Column field="division" :header="$t('divisi')" class="table-column-medium">
           <template #body="{ data }: { data: WorkOrder }">
             {{ data.division.name }}
           </template>
         </Column>
-        <Column field="position" header="Jabatan" class="table-column-medium">
+        <Column field="position" :header="$t('jabatan')" class="table-column-medium">
           <template #body="{ data }: { data: WorkOrder }">
             {{ data.position.name }}
           </template>
         </Column>
         <Column
           field="neededPositionCount"
-          header="Jumlah Yang Dibutuhkan"
+          :header="$t('jumlahYangDibutuhkan')"
           class="table-column-medium"
         >
           <template #body="{ data }: { data: WorkOrder }">
@@ -82,7 +82,7 @@
         </Column>
         <Column
           field="existingPositionCount"
-          header="Jumlah Yang Terpenuhi"
+          :header="$t('jumlahYangTerpenuhi')"
           class="table-column-medium"
         >
           <template #body="{ data }: { data: WorkOrder }">
@@ -91,20 +91,20 @@
         </Column>
         <Column
           field="expireDate"
-          header="Tanggal Expired"
+          :header="$t('tanggalExpired')"
           class="table-column-medium"
         >
           <template #body="{ data }: { data: WorkOrder }">
             {{ formatDate(data.expireDate) }}
           </template>
         </Column>
-        <Column header="Siswa Waktu" class="table-column-medium">
+        <Column :header="$t('sisaWaktu')" class="table-column-medium">
           <template #body="{ data }: { data: WorkOrder }">
             {{ `${getRemainingTime(data.expireDate)} Hari` }}
           </template>
         </Column>
 
-        <Column header="Action" class="table-column-medium">
+        <Column :header="$t('aksi')" class="table-column-medium">
           <template #body="{ data }">
             <ActionButton>
               <template #trigger>
@@ -118,7 +118,7 @@
                       name: ROUTE_WORK_ORDER_DETAIL,
                       params: { id: data.id }
                     }"
-                    >Detail Work Order</router-link
+                    >{{ $t('detailWo') }}</router-link
                   >
                   <router-link
                     class="block button !text-sm whitespace-nowrap text-black"
@@ -126,13 +126,13 @@
                       name: ROUTE_WORK_ORDER_DETAIL,
                       params: { id: data.id }
                     }"
-                    >Edit Work Order</router-link
+                    >{{ $t('editWo') }}</router-link
                   >
                   <button
                     class="block button !text-sm whitespace-nowrap text-black"
                     @click="confirmDeleteWorkOrder(data)"
                   >
-                    Delete Work Order
+                  {{ $t('deleteWo') }}
                   </button>
                 </div>
               </template>

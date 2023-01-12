@@ -8,8 +8,8 @@
   "harianLepas": "Employee",
   "dataPelamar": "Applicant Data",
   "orangTua": "Parent",
-  "pasangan": "Couple",
-  "anak": "Child",
+  "pasangan": "Wife",
+  "anak": "Childs",
   "tempatLahir": "Place of birth",
   "tanggalLahir": "Date of birth",
   "umur": "Age",
@@ -60,7 +60,7 @@
   "provinsi": "Province",
   "sim": "SIM",
   "rekening": "Account",
-  "hubungan": "Relation",
+  "hubungan": "Status in Family",
   "pekerjaan": "Profession",
   "profile": "Profile",
   "kontrak": "Contract",
@@ -112,9 +112,10 @@
   "masterPerusahaan": "Master Company",
   "masterKategori": "Master Category",
   "masterArea": "Master Area",
+  
+  
   "aktif": "Active",
   "tidakAktif": "Non Active",
-
   "home": "Home",
   "masterData": "Master Data",
   "tambahdepartment": "Add Departement",
@@ -148,5 +149,46 @@
   "no": "No",
   "aksi": "Action",
   "ekspor": "Export",
-  "menuAplikasi": "Menu Application"
+  "menuAplikasi": "Menu Application",
+  "pelamar": "Applicant",
+  "training": "Training",
+
+  "namaAnak": "Childs Name",
+  "namaIbu": "Mother's Name",
+  "namaIstri": "Wife Name",
+
+  "statusKontrak": "Status Contract",
+  "tanggalMulaiKontrak": "Date Start",
+  "tanggalSelesaiKontrak": "Date Finish",
+  "durasi": "Duration",
+  "detailKontrak":"Detail Contract",
+
+  "totalKaryawan":"Total Employee",
+  "workOrder":"Work Order",
+  "totalHarianLepas": "Total HL",
+  "totalPelamar": "Total Applicant",
+  "totalKaryawanTetap" : "Total Permanent Employees",
+  "statusNikah" : "Marriage Status",
+  "grafikPertumbuhanKaryawan" : "Employee Growth Chart",
+
+  "biodata": "Biodata",
+  "noHp" : "Handphone",
+  "noHpDarurat" : "Emergency Number",
+  "sertifikat" : "Sertificat",
+  "pengalamanKerja" : "Experience",
+  "informasiLamaran" : "Informasi Lamaran",
+  "tanggalBerkas" : "Date Document",
+  "lainLain" : "others",
+  "keterangan" : "Description",
+  "rekomendasi" : "Recomendation",
+
+  "searchByKategori": "Search By Category",
+  "searchByBantex": "Search By Bantex",
+  "kodeWo" : "Code Work Order",
+  "tanggalWo" : "Date Work Order",
+  "jumlahYangDibutuhkan" : "Sum required",
+  "jumlahYangTerpenuhi" : "Sum Filled",
+  "sisaWaktu" : "Remaining time"
+
+
 }
