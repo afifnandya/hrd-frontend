@@ -17,19 +17,19 @@
               <div>{{ index + 1 }}</div>
             </template>
           </Column>
-          <Column field="contractType" header="Status Kontrak"></Column>
-          <Column field="startDate" header="Tanggal Mulai"></Column>
-          <Column field="endDate" header="Tanggal Selesai"></Column>
-          <Column field="duration" header="Durasi"></Column>
-          <Column field="positionName" header="Posisi"></Column>
-          <Column header="Aksi">
+          <Column field="contractType" :header="$t('statusKontrak')"></Column>
+          <Column field="startDate" :header="$t('tanggalMulaiKontrak')"></Column>
+          <Column field="endDate" :header="$t('tanggalSelesaiKontrak')"></Column>
+          <Column field="duration" :header="$t('durasi')"></Column>
+          <Column field="positionName" :header="$t('jabatan')"></Column>
+          <Column :header="$t('aksi')">
             <template #body="{ data }">
               <a
                 class="button button-primary"
                 target="_blank"
                 :href="documentContractUrl(data.id)"
               >
-                Detail
+              {{ $t('detailKontrak') }}
               </a>
             </template>
           </Column>

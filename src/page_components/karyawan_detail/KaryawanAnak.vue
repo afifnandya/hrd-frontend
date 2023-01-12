@@ -19,25 +19,25 @@
           {{ data.id }}
         </template>
       </Column>
-      <Column field="Nama" header="Nama" :sortable="true">
+      <Column field="Nama" :header="$t('namaAnak')" :sortable="true">
         <template #body="{ data }">
           {{ data.name }}
         </template>
       </Column>
-      <Column field="ktp" header="KTP"> </Column>
-      <Column field="relationship" header="Hubungan"> </Column>
-      <Column field="job" header="Pekerjaan"> </Column>
-      <Column field="birthDate" header="Tanggal Lahir">
+      <Column field="ktp" :header="$t('noKtp')"> </Column>
+      <Column field="relationship" :header="$t('hubungan')"> </Column>
+      <Column field="job" :header="$t('pekerjaan')"> </Column>
+      <Column field="birthDate" :header="$t('tanggalLahir')">
         <template #body="{ data }">
           {{ data.birthDate }}
         </template>
       </Column>
-      <Column field="birthPlace" header="Tempat Lahir">
+      <Column field="birthPlace" :header="$t('tempatLahir')">
         <template #body="{ data }">
           {{ data.birthPlace }}
         </template>
       </Column>
-      <Column header="Action" header-style="min-width:10rem;">
+      <Column :header="$t('aksi')" header-style="min-width:10rem;">
         <template #body="slotProps">
           <Button
             icon="pi pi-pencil"

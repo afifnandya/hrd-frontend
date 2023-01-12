@@ -137,7 +137,7 @@ const menu = reactive([
       //   to: '/karyawan'
       // },
       {
-        label: 'HR Recruitment',
+        label: 'rekruitmen',
         icon: 'pi pi-fw pi-bookmark',
         items: [
           {
@@ -146,7 +146,7 @@ const menu = reactive([
             to: '/pelamar'
           },
           {
-            label: 'Work Order',
+            label: 'workOrder',
             icon: 'pi pi-fw pi-bookmark',
             to: '/work-order'
           }

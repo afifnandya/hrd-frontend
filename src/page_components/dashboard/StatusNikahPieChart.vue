@@ -8,6 +8,10 @@
 import { onMounted, PropType, ref, watch } from 'vue'
 import { usePieChart } from '@/composable/usePieChart'
 import { EChartsType } from 'echarts/core'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n({
+  useScope: 'global'
+})
 
 const chartEl = ref<HTMLElement>()
 const { init, setData } = usePieChart()
@@ -23,7 +27,7 @@ onMounted(() => {
   if (chartEl.value) {
     chartInstance.value = init({
       el: chartEl.value,
-      title: 'Status Nikah',
+      title: t('statusNikah'),
       color
     })
     chartInstance.value.showLoading()

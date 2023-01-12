@@ -56,7 +56,7 @@
               v-model="filterModel.value"
               type="text"
               class=""
-              placeholder="Search by name"
+              :placeholder="$t('searchByName')"
               @keydown.enter="filterCallback()"
             />
           </template>
@@ -79,7 +79,7 @@
               v-model="filterModel.value"
               type="text"
               class=""
-              placeholder="Search by KTP"
+              :placeholder="$t('searchByKtp')"
               @keydown.enter="filterCallback()"
             />
           </template>
@@ -95,7 +95,7 @@
               v-model="filterModel.value"
               type="text"
               class=""
-              placeholder="Search by Bantex"
+              :placeholder="$t('searchByBantex')"
               @keydown.enter="filterCallback()"
             />
           </template>
@@ -119,7 +119,7 @@
               v-model="filterModel.value"
               type="text"
               class=""
-              placeholder="Search by Kategori"
+              :placeholder="$t('searchByKategori')"
               @keydown.enter="filterCallback()"
             />
           </template>
@@ -134,9 +134,10 @@
           <template #filter="{ filterModel, filterCallback }">
             <Dropdown
               v-model="filterModel.value"
+              :options="statusPelamar"
+              option-label="label"
               class="w-full"
-              :options="karyawanStatus"
-              placeholder="Status"
+              :placeholder="$t('statusPelamar')"
               @change="filterCallback()"
             >
             </Dropdown>
@@ -163,11 +164,11 @@
           :header="$t('zonaIndustri')"
           class="table-column-medium"
         ></Column>
-        <Column header="Action" class="table-column-medium">
+        <Column :header="$t('aksi')" class="table-column-medium">
           <template #body="{ data }">
             <ActionButton>
               <template #trigger>
-                <button class="button button-primary">Action</button>
+                <button class="button button-primary">{{ $t('aksi') }}</button>
               </template>
               <template #content>
                 <div>
@@ -226,13 +227,25 @@ import {
   GENDER,
   KARYAWAN_AKTIF,
   KARYAWAN_NON_AKTIF,
-  ROUTE_PELAMAR_DETAIL
+  ROUTE_PELAMAR_DETAIL,
+  PELAMAR,
+  TRAINING
 } from '@/constants'
 import GenderIcon from '@/components/icons/GenderIcon.vue'
 import { TOAST_TIMEOUT, ROUTE_ADD_PELAMAR } from '@/constants'
 import { pickBy } from 'lodash'
 import FormPelamarToPegawai from '@/page_components/pelamar/FormPelamarToPegawai.vue'
 import ActionButton from '@/components/ActionButton.vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
+
+const statusPelamar = [
+  { label: t('pelamar'), value: PELAMAR },
+  { label: t('training'), value: TRAINING }
+]
+
+
 
 type PageChangeEvent = {
   page: number
@@ -254,7 +267,7 @@ const tableFilters = ref({
   noBantex: { value: '', matchMode: 'contains' },
   kategori: { value: '', matchMode: 'contains' }
 })
-const karyawanStatus = [KARYAWAN_AKTIF, KARYAWAN_NON_AKTIF]
+
 const selectedPelamar = ref<PelamarInstance>()
 
 const toast = useToast()

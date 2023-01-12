@@ -19,6 +19,10 @@ import {
   VisualMapComponent,
   VisualMapComponentOption
 } from 'echarts/components'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n({
+  useScope: 'global'
+})
 
 type ECOption = echarts.ComposeOption<
   | GridComponentOption
@@ -56,7 +60,7 @@ echarts.use([
 const chartEl = ref<HTMLElement>()
 
 function initChart() {
-  const chartTitle = 'Grafik Pertumbuhan Karyawan'
+  const chartTitle = t('grafikPertumbuhanKaryawan')
   console.log('chartEl', chartEl.value)
   if (!chartEl.value) {
     return

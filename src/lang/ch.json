@@ -112,8 +112,6 @@
   "masterDivisi": "车间代码",
   "masterDepartemen": "部门代码 ",
   "masterKategori": "类型代码",
-  "masterArea": "地区代码",
-  "aktif": "Active",
-  "tidakAktif": "Non Active",
-  "menuAplikasi": "Menu Application"
+  "masterArea": "地区代码"
+  
 }

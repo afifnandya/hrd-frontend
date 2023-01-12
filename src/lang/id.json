@@ -49,7 +49,7 @@
   "statusAktif": "Status Aktif",
   "searchByKtp": "Cari by KTP",
   "searchByNIK": "Cari By NIK",
-  "searchByName": "Cari By Name",
+  "searchByName": "Cari By Nama",
   "nama": "Nama",
   "tambahKaryawan": "Tambah Karyawan",
   "edit": "Ubah",
@@ -60,7 +60,7 @@
   "provinsi": "Provinsi",
   "sim": "SIM",
   "rekening": "Rekening",
-  "hubungan": "Hubungan",
+  "hubungan": "Status Dalam Keluarga",
   "pekerjaan": "Pekerjaan",
   "profile": "Profile",
   "kontrak": "Kontrak",
@@ -103,7 +103,7 @@
   "area": "Area",
   "npwp": "NPWP",
   "nik": "NIK",
-  "rekruitmen": "Rekruitmen",
+  "rekruitmen": "Rekrutmen",
   "cuti": "Cuti",
   "reminderKontrak": "Reminder Kontrak",
   "masterJabatan": "Master Jabatan",
@@ -112,11 +112,11 @@
   "masterPerusahaan": "Master Perusahaan",
   "masterKategori": "Master Kategori",
   "masterArea": "Master Area",
-  "aktif": "Aktif",
-  "tidakAktif": "Tidak Aktif",
+  
 
   //  belum diterjemahkan ke bahasa china
-  "home": "Beranda",
+  "aktif": "Aktif",
+  "tidakAktif": "Tidak Aktif",
   "masterData": "Master Data",
   "tambahdepartment": "Tambah Departemen",
   "tambaharea": "Tambah Area",
@@ -149,5 +149,71 @@
   "no": "No",
   "aksi": "Aksi",
   "ekspor": "Ekspor",
-  "menuAplikasi": "Menu Aplikasi"
+  "menuAplikasi": "Menu Aplikasi",
+  "pelamar": "Pelamar",
+  "training": "Training",
+
+  "namaAnak": "Nama Anak",
+  "namaIbu": "Nama Ibu",
+  "namaIstri": "Nama Istri",
+
+  "statusKontrak": "Status Kontrak",
+  "tanggalMulaiKontrak": "Tanggal Mulai",
+  "tanggalSelesaiKontrak": "Tanggal Selesai",
+  "durasi": "Durasi",
+  "detailKontrak":"Detail Kontrak",
+
+  "totalKaryawan":"Total Karyawan",
+  "workOrder":"Work Order",
+  "totalHarianLepas": "Total Harian Lepas",
+  "totalPelamar": "Total Pelamar",
+  "totalKaryawanTetap" : "Total Karyawan Tetap",
+  "statusNikah" : "Status Nikah",
+  "grafikPertumbuhanKaryawan" : "Grafik Pertumbuhan Karyawan",
+
+  "biodata": "Biodata",
+  "noHp" : "No HP",
+  "noHpDarurat" : "No HP Darurat",
+  "sertifikat" : "Sertifikat",
+  "pengalamanKerja" : "Pengalaman Kerja",
+  "informasiLamaran" : "Informasi Lamaran",
+  "tanggalBerkas" : "Tanggal Berkas",
+  "lainLain" : "Lain-lain",
+  "keterangan" : "Keterangan",
+  "rekomendasi" : "Rekomendasi",
+  "searchByKategori": "Cari By Kategori",
+  "searchByBantex": "Cari By Bantex",
+  "kodeWo" : "Kode Work Order",
+  "tanggalWo" : "Tanggal Work Order",
+  "jumlahYangDibutuhkan" : "Jumlah Yang Dibutuhkan",
+  "jumlahYangTerpenuhi" : "Jumlah Yang Terpenuhi",
+  "sisaWaktu" : "Sisa Waktu"
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

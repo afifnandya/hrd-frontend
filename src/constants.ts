@@ -88,6 +88,9 @@ export const DEFAULT_ERROR_MESSAGE = 'Ops,Someting went wrong'
 export const NETWORK_ERROR_MESSAGE = 'Network Error'
 export const KARYAWAN_NON_AKTIF = 'Tidak Aktif'
 export const KARYAWAN_AKTIF = 'Aktif'
+export const PELAMAR = 'Pelamar'
+export const TRAINING = 'Training'
+
 export const STATUS_AKTIF_KARYAWAN = [KARYAWAN_AKTIF, KARYAWAN_NON_AKTIF]
 export const BUTTON_LOADING = 'Loading'
 export const BUTTON_SAVE = 'Simpan'

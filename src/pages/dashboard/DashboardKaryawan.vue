@@ -4,21 +4,17 @@
       <div class="mb-0 card">
         <div class="flex justify-between mb-3">
           <div>
-            <span class="block mb-3 font-medium text-gray-500"
-              >Total Karyawan</span
-            >
+            <span class="block mb-3 font-medium text-gray-500">{{ $t('totalKaryawan') }}</span>
             <div class="text-xl font-medium text-gray-900">
               {{ totalKaryawan.total }}
             </div>
           </div>
         </div>
         <div class="flex items-center">
-          <span class="font-medium text-green-500"
-            >{{ totalKaryawan.active }} Aktif
+          <span class="font-medium text-green-500">{{ totalKaryawan.active }} {{ $t('aktif') }}
           </span>
           <span class="mx-2">|</span>
-          <span class="text-gray-600"
-            >{{ totalKaryawan.inactive }} Non Aktif
+          <span class="text-gray-600">{{ totalKaryawan.inactive }} {{ $t('tidakAktif') }}
           </span>
         </div>
       </div>
@@ -27,21 +23,17 @@
       <div class="mb-0 card">
         <div class="flex justify-between mb-3">
           <div>
-            <span class="block mb-3 font-medium text-gray-500"
-              >Total Harian Lepas</span
-            >
+            <span class="block mb-3 font-medium text-gray-500">{{ $t('totalHarianLepas') }}</span>
             <div class="text-xl font-medium text-gray-900">
               {{ totalKaryawanHarian.total }}
             </div>
           </div>
         </div>
         <div class="flex items-center">
-          <span class="font-medium text-green-500"
-            >{{ totalKaryawanHarian.active }} Aktif
+          <span class="font-medium text-green-500">{{ totalKaryawanHarian.active }} {{ $t('aktif') }}
           </span>
           <span class="mx-2">|</span>
-          <span class="text-gray-600"
-            >{{ totalKaryawanHarian.inactive }} Non Aktif
+          <span class="text-gray-600">{{ totalKaryawanHarian.inactive }} {{ $t('tidakAktif') }}
           </span>
         </div>
       </div>
@@ -50,20 +42,17 @@
       <div class="!mb-0 card">
         <div class="flex justify-between mb-3">
           <div>
-            <span class="block mb-3 font-medium text-gray-500"
-              >Total Pelamar</span
-            >
+            <span class="block mb-3 font-medium text-gray-500">{{ $t('totalPelamar') }}</span>
             <div class="text-xl font-medium text-gray-900">
               {{ pelamar.total }}
             </div>
           </div>
         </div>
         <div class="flex items-center">
-          <span class="font-medium text-green-500"
-            >{{ pelamar.pelamar }} Pelamar
+          <span class="font-medium text-green-500">{{ pelamar.pelamar }} {{ $t('pelamar') }}
           </span>
           <span class="mx-2">|</span>
-          <span class="text-gray-600">{{ pelamar.training }} Training </span>
+          <span class="text-gray-600">{{ pelamar.training }} {{ $t('training') }}</span>
         </div>
       </div>
     </div>
@@ -71,21 +60,17 @@
       <div class="mb-0 card">
         <div class="flex justify-between mb-3">
           <div>
-            <span class="block mb-3 font-medium text-gray-500"
-              >Total Karyawan Tetap</span
-            >
+            <span class="block mb-3 font-medium text-gray-500">{{ $t('totalKaryawanTetap') }}</span>
             <div class="text-xl font-medium text-gray-900">
               {{ totalKaryawanTetap.total }}
             </div>
           </div>
         </div>
         <div class="flex items-center">
-          <span class="font-medium text-green-500"
-            >{{ totalKaryawanTetap.active }} Aktif
+          <span class="font-medium text-green-500">{{ totalKaryawanTetap.active }} {{ $t('aktif') }}
           </span>
           <span class="mx-2">|</span>
-          <span class="text-gray-600"
-            >{{ totalKaryawanTetap.inactive }} Non Aktif
+          <span class="text-gray-600">{{ totalKaryawanTetap.inactive }} {{ $t('tidakAktif') }}
           </span>
         </div>
       </div>

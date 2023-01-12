@@ -1,7 +1,7 @@
 <template>
   <BlockUI :blocked="isLoading">
     <div class="card">
-      <h5 class="mb-4 text-xl font-bold">Detail Pelamar</h5>
+      <h5 class="mb-4 text-xl font-bold">{{ $t('detailPelamar') }}</h5>
       <div class="flex flex-col">
         <div class="flex flex-col items-center justify-center">
           <div
@@ -19,14 +19,14 @@
                 class="button button-primary"
                 @click="enableEdit = !enableEdit"
               >
-                Edit
+              {{ $t('edit') }}
               </button>
               <button
                 v-else-if="enableEdit"
                 class="button"
                 @click="enableEdit = !enableEdit"
               >
-                Cancel
+              {{ $t('cancel') }}
               </button>
             </div>
 
@@ -35,17 +35,17 @@
               class="button button-success"
               @click="submitUpdate"
             >
-              Save
+            {{ $t('save') }}
             </button>
           </div>
         </div>
 
         <div class="flex mx-10 mt-10">
           <div class="w-1/2 mr-[100px]">
-            <div class="pb-2 mb-4 font-bold text-black border-b">Biodata</div>
+            <div class="pb-2 mb-4 font-bold text-black border-b">{{ $t('biodata') }}</div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="nama" class="input-label">Nama</label>
+              <label for="nama" class="input-label">{{ $t('namaPelamar') }}</label>
               <div class="w-full">
                 <InputText
                   id="nama"
@@ -58,7 +58,7 @@
               </div>
             </div>
             <div class="flex items-center justify-center mb-8">
-              <label for="tempatLahir" class="input-label">Tempat Lahir</label>
+              <label for="tempatLahir" class="input-label">{{ $t('tempatLahir') }}</label>
               <div class="w-full">
                 <InputText
                   id="nama"
@@ -71,7 +71,7 @@
               </div>
             </div>
             <div class="flex items-center justify-center mb-8">
-              <label for="tanggalLahir" class="input-label">Tangal Lahir</label>
+              <label for="tanggalLahir" class="input-label">{{ $t('tanggalLahir') }}</label>
               <div class="w-full">
                 <InputText
                   v-if="!enableEdit"
@@ -127,7 +127,7 @@
             </div>
           </div> -->
             <div class="flex items-center justify-center mb-8">
-              <label for="agama" class="input-label">Agama</label>
+              <label for="agama" class="input-label">{{ $t('agama') }}</label>
               <div class="w-full">
                 <Dropdown
                   v-if="enableEdit"
@@ -147,10 +147,10 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="agama" class="input-label">KTP</label>
+              <label for="noKtp" class="input-label">{{ $t('noKtp') }}</label>
               <div class="w-full">
                 <InputText
-                  id="agama"
+                  id="noKtp"
                   type="text"
                   :disabled="!enableEdit"
                   :value="pelamar.ktp"
@@ -161,10 +161,10 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="agama" class="input-label">NIK</label>
+              <label for="nik" class="input-label">{{ $t('nik') }}</label>
               <div class="w-full">
                 <InputText
-                  id="agama"
+                  id="nik"
                   type="text"
                   :disabled="!enableEdit"
                   :value="pelamar.nik"
@@ -175,10 +175,10 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="agama" class="input-label">Umur</label>
+              <label for="umur" class="input-label">{{ $t('umur') }}</label>
               <div class="w-full">
                 <InputText
-                  id="agama"
+                  id="umur"
                   type="text"
                   :disabled="true"
                   :value="pelamar.umur"
@@ -188,11 +188,11 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="agama" class="input-label">Jenis Kelamin</label>
+              <label for="jenisKelamin" class="input-label">{{ $t('jenisKelamin') }}</label>
               <div class="w-full">
                 <InputText
                   v-if="!enableEdit"
-                  id="agama"
+                  id="jenisKelamin"
                   type="text"
                   :disabled="true"
                   :value="pelamar.jenisKelamin"
@@ -208,12 +208,12 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="provinsi" class="input-label"
-                >Status Pernikahan</label
+              <label for="statusPerkawinan" class="input-label"
+                >{{ $t('statusPerkawinan') }}</label
               >
               <div v-if="!enableEdit" class="w-full">
                 <InputText
-                  id="provinsi"
+                  id="statusPerkawinan"
                   type="text"
                   :disabled="!enableEdit"
                   :value="pelamar.statusPernikahan"
@@ -231,10 +231,10 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="provinsi" class="input-label">Nomor Telpon</label>
+              <label for="noHp" class="input-label">{{ $t('noHp') }}</label>
               <div class="w-full">
                 <InputText
-                  id="provinsi"
+                  id="noHp"
                   type="text"
                   :disabled="!enableEdit"
                   :value="pelamar.nomorTelpon.telpon1"
@@ -246,7 +246,7 @@
 
             <div class="flex items-center justify-center mb-8">
               <label for="provinsi" class="input-label"
-                >Nomor Telpon Darurat</label
+                >{{ $t('noHpDarurat') }}</label
               >
               <div class="w-full">
                 <InputText
@@ -261,7 +261,7 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="provinsi" class="input-label">Pendidikan</label>
+              <label for="provinsi" class="input-label">{{ $t('pendidikan') }}</label>
               <div class="flex items-center w-full">
                 <div class="mr-4">
                   <InputText
@@ -294,7 +294,7 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="provinsi" class="input-label">Sertifikat</label>
+              <label for="provinsi" class="input-label">{{ $t('sertifikat') }}</label>
               <div class="mr-4">
                 <InputText
                   id="provinsi"
@@ -318,7 +318,7 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="provinsi" class="input-label">SIM</label>
+              <label for="provinsi" class="input-label">{{ $t('sim') }}</label>
               <div class="w-full">
                 <InputText
                   id="provinsi"
@@ -332,7 +332,7 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="provinsi" class="input-label">Pengalaman Kerja</label>
+              <label for="provinsi" class="input-label">{{ $t('pengalamanKerja') }}</label>
               <div class="w-full">
                 <InputText
                   id="provinsi"
@@ -348,11 +348,11 @@
 
           <div class="w-1/2">
             <div class="pb-2 font-bold text-black border-b">
-              Informasi Lamaran
+              {{ $t('informasiLamaran') }}
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="agama" class="input-label">No Bantex</label>
+              <label for="agama" class="input-label">{{ $t('noBantex') }}</label>
               <div class="w-full">
                 <InputText
                   id="agama"
@@ -365,7 +365,7 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="agama" class="input-label">Area</label>
+              <label for="agama" class="input-label">{{ $t('area') }}</label>
               <div v-if="!enableEdit" class="w-full">
                 <InputText
                   id="agama"
@@ -386,7 +386,7 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="agama" class="input-label">Status</label>
+              <label for="agama" class="input-label">{{ $t('status') }}</label>
               <div class="w-full">
                 <InputText
                   id="agama"
@@ -399,7 +399,7 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="agama" class="input-label">Status Aktif</label>
+              <label for="agama" class="input-label">{{ $t('statusAktif') }}</label>
               <div class="w-full">
                 <InputText
                   id="agama"
@@ -412,7 +412,7 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="agama" class="input-label">Kategori</label>
+              <label for="agama" class="input-label">{{ $t('kategori') }}</label>
               <div v-if="!enableEdit" class="w-full">
                 <InputText
                   id="agama"
@@ -432,7 +432,7 @@
               </div>
             </div>
             <div class="flex items-center justify-center mb-8">
-              <label for="agama" class="input-label">Tanggal Berkas</label>
+              <label for="agama" class="input-label">{{ $t('tanggalBerkas') }}</label>
               <div class="w-full">
                 <InputText
                   id="agama"
@@ -443,9 +443,9 @@
                 />
               </div>
             </div>
-            <div class="pb-2 font-bold text-black border-b">Alamat</div>
+            <div class="pb-2 font-bold text-black border-b">{{ $t('alamat') }}</div>
             <div class="flex items-center justify-center mb-8">
-              <label for="alamat" class="input-label">Alamat</label>
+              <label for="alamat" class="input-label">{{ $t('alamat') }}</label>
               <div class="w-full">
                 <InputText
                   id="alamat"
@@ -458,7 +458,7 @@
               </div>
             </div>
             <div class="flex items-center justify-center mb-8">
-              <label for="kecamatan" class="input-label">Kecamatan</label>
+              <label for="kecamatan" class="input-label">{{ $t('kecamatan') }}</label>
               <div class="w-full">
                 <InputText
                   id="kecamatan"
@@ -472,7 +472,7 @@
             </div>
             <div class="flex items-center justify-center mb-8">
               <label for="kabupatenKota" class="input-label"
-                >Kabupaten/Kota</label
+                >{{ $t('kabupatenKota') }}</label
               >
               <div class="w-full">
                 <InputText
@@ -486,7 +486,7 @@
               </div>
             </div>
             <div class="flex items-center justify-center mb-8">
-              <label for="provinsi" class="input-label">Provinsi</label>
+              <label for="provinsi" class="input-label">{{ $t('provinsi') }}</label>
               <div class="w-full">
                 <InputText
                   id="provinsi"
@@ -499,10 +499,10 @@
               </div>
             </div>
 
-            <div class="pb-2 font-bold text-black border-b">Lain-lain</div>
+            <div class="pb-2 font-bold text-black border-b">{{ $t('lainLain') }}</div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="provinsi" class="input-label">Keterangan</label>
+              <label for="provinsi" class="input-label">{{ $t('keterangan') }}</label>
               <div class="w-full">
                 <InputText
                   id="provinsi"
@@ -516,7 +516,7 @@
             </div>
 
             <div class="flex items-center justify-center mb-8">
-              <label for="provinsi" class="input-label">Rekomendasi</label>
+              <label for="provinsi" class="input-label">{{ $t('rekomendasi') }}</label>
               <div class="w-full">
                 <InputText
                   id="provinsi"
